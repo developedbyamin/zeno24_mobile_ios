@@ -1,0 +1,79 @@
+{
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Shared/GlassFrame.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/GlassFrame.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/GlassFrame.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/GlassFrame.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/GlassFrame.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/GlassFrame.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Shared/KeyboardAware.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/KeyboardAware.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/KeyboardAware.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/KeyboardAware.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/KeyboardAware.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/KeyboardAware.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Shared/SignSocialRow.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignSocialRow.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignSocialRow.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignSocialRow.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignSocialRow.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignSocialRow.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Sign/DialCodeSheet.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/DialCodeSheet.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/DialCodeSheet.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/DialCodeSheet.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/DialCodeSheet.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/DialCodeSheet.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Sign/SignAnimatedPhoneNumber.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignAnimatedPhoneNumber.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignAnimatedPhoneNumber.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignAnimatedPhoneNumber.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignAnimatedPhoneNumber.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignAnimatedPhoneNumber.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Sign/SignEmailInput.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignEmailInput.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignEmailInput.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignEmailInput.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignEmailInput.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignEmailInput.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Sign/SignInputSection.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignInputSection.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignInputSection.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignInputSection.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignInputSection.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignInputSection.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Sign/SignModeToggle.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignModeToggle.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignModeToggle.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignModeToggle.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignModeToggle.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignModeToggle.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Sign/SignPhoneInput.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignPhoneInput.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignPhoneInput.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignPhoneInput.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignPhoneInput.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SignPhoneInput.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Views/CreateNameView.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CreateNameView.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CreateNameView.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CreateNameView.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CreateNameView.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CreateNameView.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Views/OtpView.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OtpView.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OtpView.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OtpView.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OtpView.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OtpView.swiftdeps"
+  }
+}

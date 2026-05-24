@@ -1,0 +1,539 @@
+{
+  "source": "/Users/amin/Desktop/zeno24/zeno24/Localization/AppStrings.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "common.continue",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 16
+        },
+        "value": "Continue"
+      },
+      {
+        "comment": "",
+        "key": "common.cancel",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 17
+        },
+        "value": "Cancel"
+      },
+      {
+        "comment": "",
+        "key": "common.back",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 18
+        },
+        "value": "Back"
+      },
+      {
+        "comment": "",
+        "key": "common.search",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 19
+        },
+        "value": "Search"
+      },
+      {
+        "comment": "",
+        "key": "common.or",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 20
+        },
+        "value": "or continue with"
+      },
+      {
+        "comment": "",
+        "key": "brand.name",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 26
+        },
+        "value": "Zeno24"
+      },
+      {
+        "comment": "",
+        "key": "onboard.slide.1",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 33
+        },
+        "value": "Share your location with\nyour loved ones"
+      },
+      {
+        "comment": "",
+        "key": "onboard.slide.2",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 37
+        },
+        "value": "Stay connected with\nthe ones who matter"
+      },
+      {
+        "comment": "",
+        "key": "onboard.slide.3",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 41
+        },
+        "value": "Drive safely, together,\nin real time"
+      },
+      {
+        "comment": "",
+        "key": "onboard.cta",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 45
+        },
+        "value": "Use email or Whatsapp"
+      },
+      {
+        "comment": "",
+        "key": "onboard.terms.prefix",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 50
+        },
+        "value": "By clicking the buttons above you accept our"
+      },
+      {
+        "comment": "",
+        "key": "onboard.terms.privacy",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 54
+        },
+        "value": "Privacy Policy"
+      },
+      {
+        "comment": "",
+        "key": "onboard.terms.and",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 57
+        },
+        "value": " and "
+      },
+      {
+        "comment": "",
+        "key": "onboard.terms.service",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 60
+        },
+        "value": "Terms of Service."
+      },
+      {
+        "comment": "",
+        "key": "auth.signin.title.phone",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 70
+        },
+        "value": "Enter your phone number"
+      },
+      {
+        "comment": "",
+        "key": "auth.signin.title.email",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 74
+        },
+        "value": "Enter your email"
+      },
+      {
+        "comment": "",
+        "key": "auth.signin.subtitle",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 78
+        },
+        "value": "to get started"
+      },
+      {
+        "comment": "",
+        "key": "auth.signin.email.hint",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 81
+        },
+        "value": "example@mail.com"
+      },
+      {
+        "comment": "",
+        "key": "auth.toggle.dont_have_whatsapp",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 87
+        },
+        "value": "Don't have WhatsApp?"
+      },
+      {
+        "comment": "",
+        "key": "auth.toggle.dont_have_email",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 91
+        },
+        "value": "Don't have Email?"
+      },
+      {
+        "comment": "",
+        "key": "auth.toggle.use_email",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 95
+        },
+        "value": "Use email"
+      },
+      {
+        "comment": "",
+        "key": "auth.toggle.use_whatsapp",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 98
+        },
+        "value": "Whatsapp"
+      },
+      {
+        "comment": "",
+        "key": "auth.otp.sent.whatsapp",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 104
+        },
+        "value": "Code sent to WhatsApp\n%@"
+      },
+      {
+        "comment": "",
+        "key": "auth.otp.sent.email",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 108
+        },
+        "value": "Enter the code sent to\n%@"
+      },
+      {
+        "comment": "",
+        "key": "auth.otp.incorrect",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 112
+        },
+        "value": "Incorrect verification code"
+      },
+      {
+        "comment": "",
+        "key": "auth.otp.didnt_receive",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 116
+        },
+        "value": "Haven't received the code?"
+      },
+      {
+        "comment": "",
+        "key": "auth.otp.resend",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 120
+        },
+        "value": "Resend"
+      },
+      {
+        "comment": "",
+        "key": "auth.create_name.title",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 126
+        },
+        "value": "You look new here"
+      },
+      {
+        "comment": "",
+        "key": "auth.create_name.subtitle",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 129
+        },
+        "value": "What should we call you?"
+      },
+      {
+        "comment": "",
+        "key": "auth.create_name.placeholder",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 133
+        },
+        "value": "Enter your name"
+      },
+      {
+        "comment": "",
+        "key": "auth.social.apple",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 139
+        },
+        "value": "Apple"
+      },
+      {
+        "comment": "",
+        "key": "auth.social.google",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 140
+        },
+        "value": "Google"
+      },
+      {
+        "comment": "",
+        "key": "auth.social.continue_google",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 142
+        },
+        "value": "Continue with Google"
+      },
+      {
+        "comment": "",
+        "key": "country.title",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 151
+        },
+        "value": "Choose Country"
+      },
+      {
+        "comment": "",
+        "key": "country.search",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 154
+        },
+        "value": "Search"
+      },
+      {
+        "comment": "",
+        "key": "country.popular",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 157
+        },
+        "value": "★ Popular"
+      },
+      {
+        "comment": "",
+        "key": "country.empty.title",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 160
+        },
+        "value": "No country found"
+      },
+      {
+        "comment": "",
+        "key": "country.empty.subtitle",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 163
+        },
+        "value": "Try a different name or code"
+      },
+      {
+        "comment": "",
+        "key": "tab.home",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 171
+        },
+        "value": "Home"
+      },
+      {
+        "comment": "",
+        "key": "tab.messages",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 172
+        },
+        "value": "Messages"
+      },
+      {
+        "comment": "",
+        "key": "tab.notifications",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 173
+        },
+        "value": "Notifications"
+      },
+      {
+        "comment": "",
+        "key": "tab.profile",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 174
+        },
+        "value": "Profile"
+      },
+      {
+        "comment": "",
+        "key": "tab.settings",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 175
+        },
+        "value": "Settings"
+      },
+      {
+        "comment": "",
+        "key": "home.panel.title",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 182
+        },
+        "value": "Your circle"
+      },
+      {
+        "comment": "",
+        "key": "chat.title",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 187
+        },
+        "value": "Chat"
+      },
+      {
+        "comment": "",
+        "key": "chat.placeholder",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 188
+        },
+        "value": "Type a message"
+      },
+      {
+        "comment": "",
+        "key": "profile.settings",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 192
+        },
+        "value": "Settings"
+      },
+      {
+        "comment": "",
+        "key": "profile.premium",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 193
+        },
+        "value": "Premium"
+      },
+      {
+        "comment": "",
+        "key": "settings.language",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 197
+        },
+        "value": "Language"
+      },
+      {
+        "comment": "",
+        "key": "settings.appearance",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 198
+        },
+        "value": "Appearance"
+      },
+      {
+        "comment": "",
+        "key": "settings.theme",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 199
+        },
+        "value": "Theme"
+      },
+      {
+        "comment": "",
+        "key": "settings.logout",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 200
+        },
+        "value": "Log out"
+      },
+      {
+        "comment": "",
+        "key": "premium.title",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 204
+        },
+        "value": "Go Premium"
+      },
+      {
+        "comment": "",
+        "key": "premium.subtitle",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 205
+        },
+        "value": "Unlock everything"
+      },
+      {
+        "comment": "",
+        "key": "premium.cta",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 206
+        },
+        "value": "Start free trial"
+      },
+      {
+        "comment": "",
+        "key": "health.title",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 209
+        },
+        "value": "Health"
+      },
+      {
+        "comment": "",
+        "key": "kids.title",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 210
+        },
+        "value": "Kids"
+      },
+      {
+        "comment": "",
+        "key": "driving.title",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 211
+        },
+        "value": "Driving"
+      },
+      {
+        "comment": "",
+        "key": "units.kmh",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 216
+        },
+        "value": "km/h"
+      }
+    ]
+  },
+  "version": 1
+}

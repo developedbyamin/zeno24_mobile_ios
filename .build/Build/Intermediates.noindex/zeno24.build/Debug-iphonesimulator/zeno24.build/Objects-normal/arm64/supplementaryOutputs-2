@@ -1,0 +1,79 @@
+{
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Network/APIClient.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIClient.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIClient.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIClient.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIClient.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIClient.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Network/APIError.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIError.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIError.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIError.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIError.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIError.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Network/APIPaths.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIPaths.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIPaths.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIPaths.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIPaths.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/APIPaths.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Network/Interceptors/Logger.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Logger.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Logger.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Logger.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Logger.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Logger.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Router/AppRoute.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRoute.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRoute.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRoute.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRoute.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRoute.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Router/AppRouter.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRouter.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRouter.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRouter.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRouter.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AppRouter.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Router/AuthCoordinator.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthCoordinator.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthCoordinator.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthCoordinator.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthCoordinator.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthCoordinator.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Router/AuthRoute.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRoute.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRoute.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRoute.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRoute.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRoute.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Router/OnboardCoordinator.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OnboardCoordinator.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OnboardCoordinator.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OnboardCoordinator.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OnboardCoordinator.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/OnboardCoordinator.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Router/RouteNames.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/RouteNames.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/RouteNames.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/RouteNames.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/RouteNames.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/RouteNames.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Core/Utils/Helpers/Haptics.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Haptics.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Haptics.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Haptics.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Haptics.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/Haptics.swiftdeps"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Models/Markers/PanelSyncResponseModel.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/PanelSyncResponseModel.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/PanelSyncResponseModel.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/PanelSyncResponseModel.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/PanelSyncResponseModel.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/PanelSyncResponseModel.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Models/Settings/LangModel.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/LangModel.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/LangModel.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/LangModel.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/LangModel.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/LangModel.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Models/Settings/SettingsAccountModel.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsAccountModel.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsAccountModel.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsAccountModel.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsAccountModel.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsAccountModel.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Models/Settings/SettingsCircleModel.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsCircleModel.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsCircleModel.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsCircleModel.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsCircleModel.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsCircleModel.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Models/Settings/SettingsResponseModel.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsResponseModel.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsResponseModel.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsResponseModel.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsResponseModel.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsResponseModel.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Repositories/AuthRepository.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRepository.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRepository.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRepository.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRepository.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthRepository.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Repositories/CirclesRepository.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesRepository.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesRepository.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesRepository.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesRepository.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesRepository.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Repositories/MarkersRepository.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/MarkersRepository.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/MarkersRepository.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/MarkersRepository.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/MarkersRepository.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/MarkersRepository.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Repositories/SettingsRepository.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsRepository.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsRepository.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsRepository.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsRepository.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/SettingsRepository.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Services/AuthService.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthService.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthService.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthService.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthService.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/AuthService.swiftdeps"
+  },
+  "/Users/amin/Desktop/zeno24/zeno24/Data/Services/CirclesService.swift" : {
+    "const-values" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesService.swiftconstvalues",
+    "dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesService.d",
+    "diagnostics" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesService.dia",
+    "object" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesService.o",
+    "swift-dependencies" : "/Users/amin/Desktop/zeno24/.build/Build/Intermediates.noindex/zeno24.build/Debug-iphonesimulator/zeno24.build/Objects-normal/arm64/CirclesService.swiftdeps"
+  }
+}

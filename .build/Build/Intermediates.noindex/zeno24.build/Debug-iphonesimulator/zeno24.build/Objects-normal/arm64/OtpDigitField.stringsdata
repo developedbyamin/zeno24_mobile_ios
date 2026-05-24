@@ -1,0 +1,24 @@
+{
+  "source": "/Users/amin/Desktop/zeno24/zeno24/Views/Auth/Components/Otp/OtpDigitField.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "-",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 67
+        }
+      }
+    ]
+  },
+  "version": 1
+}
