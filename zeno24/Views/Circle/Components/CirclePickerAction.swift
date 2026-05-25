@@ -15,6 +15,7 @@ struct OpenCirclePickerAction {
 extension EnvironmentValues {
     @Entry var openCirclePicker: OpenCirclePickerAction = OpenCirclePickerAction {}
     @Entry var openCreateCircle: OpenCirclePickerAction = OpenCirclePickerAction {}
+    @Entry var openJoinCircle: OpenCirclePickerAction = OpenCirclePickerAction {}
     @Entry var openInviteFlow: OpenInviteFlowAction = OpenInviteFlowAction { _ in }
     @Entry var circlePillNamespace: Namespace.ID? = nil
     @Entry var circlePickerOpen: Bool = false

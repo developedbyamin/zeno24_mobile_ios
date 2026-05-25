@@ -6,6 +6,7 @@ struct CirclePickerSheet: View {
 
     @Environment(CirclesStore.self) private var circles
     @Environment(\.openCreateCircle) private var openCreate
+    @Environment(\.openJoinCircle) private var openJoin
     @Environment(\.openInviteFlow) private var openInviteFlow
     @State private var loadingCircleId: String?
 
@@ -264,6 +265,7 @@ struct CirclePickerSheet: View {
     private var actionRow: some View {
         HStack(spacing: 8) {
             actionButton(title: "Join a circle", style: .secondary) {
+                openJoin()
             }
             actionButton(title: "Create a Circle", style: .primary) {
                 openCreate()

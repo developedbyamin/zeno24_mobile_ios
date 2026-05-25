@@ -9,21 +9,17 @@ struct HomeTopBar: View {
     var onNotification: (() -> Void)? = nil
     var onChat: (() -> Void)? = nil
 
-    @Environment(\.circlePillNamespace) private var pillNS
-    @Environment(\.circlePickerOpen) private var pickerOpen
-
     var body: some View {
         HStack(alignment: .top, spacing: 4) {
             HomeGlassCircleButton(asset: AppVectors.setting, action: onSettings)
 
-            Group {
-                if !pickerOpen {
-                    HomeCirclePill(title: circleTitle, action: onCircle)
-                        .modifier(CirclePillHeroModifier(namespace: pillNS))
-                } else {
-                    Color.clear
-                }
-            }
+            // Glass pill opens the full circle picker overlay (not the menu
+            // — that's reserved for the bottom dark pill on Kids/Driving/Health).
+            CirclePill(
+                variant: .glass,
+                fallbackTitle: circleTitle,
+                onTap: { onCircle?() }
+            )
             .frame(maxWidth: .infinity)
 
             VStack(spacing: 4) {
@@ -78,54 +74,12 @@ private struct HomeGlassCircleButton: View {
     }
 }
 
-// MARK: - Circle pill
-
-private struct HomeCirclePill: View {
-    let title: String
-    var action: (() -> Void)?
-
-    var body: some View {
-        Button { action?() } label: {
-            ZStack {
-                HomeGlassBackground(shape: Capsule())
-
-                HStack(spacing: 8) {
-                    Image(AppVectors.circleGridInterface)
-                        .renderingMode(.template)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(AppColors.brand)
-
-                    Text(title)
-                        .font(.custom("PlusJakartaSans-Bold", size: 13))
-                        .foregroundStyle(AppColors.secondaryBlack)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
-                }
-                .padding(.horizontal, 14)
-
-                Image(AppVectors.arrowDown)
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 16, height: 16)
-                    .foregroundStyle(AppColors.mainBlack)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 12)
-                    .allowsHitTesting(false)
-            }
-            .frame(height: 40)
-        }
-        .buttonStyle(GlassPressStyle())
-    }
-}
-
 // MARK: - Glass background
 
 /// Reusable glass surface — ultra-thin material blur + 56% white tint +
 /// 2 pt white border + subtle drop shadow. Matches UIKit `HomeGlassView`.
-private struct HomeGlassBackground<S: InsettableShape>: View {
+/// Shared with `CirclePill` (glass variant).
+struct HomeGlassBackground<S: InsettableShape>: View {
     let shape: S
 
     var body: some View {
@@ -144,7 +98,7 @@ private struct HomeGlassBackground<S: InsettableShape>: View {
 // MARK: - Press feedback
 
 /// Mirrors UIKit's `isHighlighted` fade — 0.7 alpha on press, 0.12s ease.
-private struct GlassPressStyle: ButtonStyle {
+struct GlassPressStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .opacity(configuration.isPressed ? 0.7 : 1.0)

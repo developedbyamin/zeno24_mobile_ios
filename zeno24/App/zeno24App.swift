@@ -8,6 +8,8 @@ struct zeno24App: App {
     @State private var localeStore = LocaleStore()
     @State private var permissionsStore = PermissionsStore()
     @State private var deepLinkStore = DeepLinkStore()
+    @State private var premiumStore = PremiumStore()
+    @State private var circlesStore = CirclesStore()
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
@@ -20,6 +22,8 @@ struct zeno24App: App {
                 .environment(localeStore)
                 .environment(permissionsStore)
                 .environment(deepLinkStore)
+                .environment(premiumStore)
+                .environment(circlesStore)
                 .environment(\.appTheme, .default)
                 .environment(\.locale, localeStore.locale)
                 .preferredColorScheme(.light)

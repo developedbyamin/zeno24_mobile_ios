@@ -1,6 +1,16 @@
 import Foundation
 
+struct InfoCircleDataModel: Decodable, Hashable {
+    let id: String?
+    let title: String?
+}
+
 struct InfoCircleResponseModel: Decodable {
-    let circle: CircleModel
-    let members: [CircleMemberModel]
+    let circleData: InfoCircleDataModel?
+    let membersData: [CircleMemberModel]?
+
+    enum CodingKeys: String, CodingKey {
+        case circleData = "circle_data"
+        case membersData = "members_data"
+    }
 }

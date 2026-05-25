@@ -3,7 +3,6 @@ import SwiftUI
 struct PremiumView: View {
     @State private var selectedPlan: Plan = .monthly
     @State private var isSubscribed: Bool = true
-    @Environment(\.tabBarHeight) private var tabBarHeight
 
     private enum Plan { case monthly, yearly }
 
@@ -32,7 +31,7 @@ struct PremiumView: View {
                     bottomCTA
                 }
 
-                Color.clear.frame(height: tabBarHeight + 16)
+                Color.clear.frame(height: 16)
             }
             .padding(.horizontal, 16)
             .padding(.top, 8)

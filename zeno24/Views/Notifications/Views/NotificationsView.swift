@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct NotificationsView: View {
-    @Environment(\.tabBarHeight) private var tabBarHeight
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -16,7 +16,7 @@ struct NotificationsView: View {
                     NotificationSectionHeader(title: AppStrings.Notifications.sectionOlder)
                     olderSection
 
-                    Color.clear.frame(height: tabBarHeight + 64)
+                    Color.clear.frame(height: 80)
                 }
             }
             .background(Color.white)
@@ -29,12 +29,15 @@ struct NotificationsView: View {
                     .padding(.trailing, 16)
             }
             .overlay {
-                NotificationsCirclePill()
+                CirclePill(fallbackTitle: AppStrings.Notifications.circleName)
             }
-            .padding(.bottom, tabBarHeight + 16)
+            .padding(.bottom, 14)
         }
-        .navigationTitle(AppStrings.Notifications.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            AppTopBar(title: AppStrings.Notifications.title) { dismiss() }
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
 
     // MARK: - Sections

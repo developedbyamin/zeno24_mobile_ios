@@ -25,8 +25,8 @@ final class CirclesRepository {
         )
     }
 
-    func info(circleId: String) async throws -> InfoCircleResponseModel {
-        let response = try await service.info(.init(circleId: circleId))
+    func info(code: String) async throws -> InfoCircleResponseModel {
+        let response = try await service.info(.init(code: code))
         guard let data = response.data else { throw APIError.invalidResponse }
         return data
     }

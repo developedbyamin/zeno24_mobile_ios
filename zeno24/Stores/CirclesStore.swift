@@ -55,4 +55,21 @@ final class CirclesStore {
     func invite(circleId: String, role: String? = nil) async throws -> InviteCircleResponseModel {
         try await repository.invite(circleId: circleId, role: role)
     }
+
+    func info(code: String) async throws -> InfoCircleResponseModel {
+        try await repository.info(code: code)
+    }
+
+    @discardableResult
+    func join(code: String) async throws -> CircleModel {
+        errorMessage = nil
+        let joined = try await repository.join(code: code)
+        if let idx = circles.firstIndex(where: { $0.id == joined.id }) {
+            circles[idx] = joined
+        } else {
+            circles.insert(joined, at: 0)
+        }
+        selectedCircleId = joined.id
+        return joined
+    }
 }

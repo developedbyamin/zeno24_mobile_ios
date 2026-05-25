@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(AuthStore.self) private var auth
-    @Environment(\.tabBarHeight) private var tabBarHeight
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -29,11 +29,14 @@ struct SettingsView: View {
                     }
                 }
 
-                Color.clear.frame(height: tabBarHeight + 16)
+                Color.clear.frame(height: 16)
             }
         }
         .background(Color(hex: 0xF6F6F6).ignoresSafeArea())
-        .navigationTitle(AppStrings.Settings.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            AppTopBar(title: AppStrings.Settings.title) { dismiss() }
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
 }

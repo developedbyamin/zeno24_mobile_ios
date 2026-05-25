@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MessagesView: View {
-    @Environment(\.tabBarHeight) private var tabBarHeight
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -62,7 +62,7 @@ struct MessagesView: View {
                         avatarAsset: AppImages.avatarFidan
                     )
 
-                    Color.clear.frame(height: tabBarHeight + 64)
+                    Color.clear.frame(height: 80)
                 }
                 .padding(8)
             }
@@ -70,11 +70,14 @@ struct MessagesView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .background(Color(hex: 0xF6F6F6).ignoresSafeArea())
 
-            MessageCirclePill()
-                .padding(.bottom, tabBarHeight + 16)
+            CirclePill(fallbackTitle: AppStrings.Messages.circleName)
+                .padding(.bottom, 14)
         }
-        .navigationTitle(AppStrings.Messages.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            AppTopBar(title: AppStrings.Messages.title) { dismiss() }
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
 
     private var divider: some View {

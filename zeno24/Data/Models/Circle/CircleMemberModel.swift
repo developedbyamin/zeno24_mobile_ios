@@ -2,9 +2,12 @@ import Foundation
 
 struct CircleMemberModel: Codable, Identifiable, Hashable {
     let id: String
-    let name: String
+    let title: String?
     let avatarUrl: String?
-    let phone: String?
-    let role: String?
-    let joinedAt: Date?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case avatarUrl = "avatar_url"
+    }
 }

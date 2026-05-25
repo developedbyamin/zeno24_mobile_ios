@@ -2,6 +2,7 @@ import SwiftUI
 
 struct KidsView: View {
     @Environment(\.tabBarHeight) private var tabBarHeight
+    @Environment(\.isTabActive) private var isTabActive
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -12,15 +13,19 @@ struct KidsView: View {
                     KidsLiveLocationCard()
                     KidsScreenTimeCard()
                     KidsUsedAppsCard()
-                    Color.clear.frame(height: tabBarHeight + 64)
+                    Color.clear.frame(height: tabBarHeight + 16)
                 }
             }
             .background(Color(hex: 0xF6F6F6).ignoresSafeArea())
-
-            KidsBoardPill()
-                .padding(.bottom, tabBarHeight + 16)
+            if isTabActive {
+                CirclePill(fallbackTitle: AppStrings.Driving.circleName)
+                    .padding(.bottom, tabBarHeight)
+            }
         }
-        .navigationTitle(AppStrings.Kids.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            AppTopBar(title: AppStrings.Kids.title)
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
 }

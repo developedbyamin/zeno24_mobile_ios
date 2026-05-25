@@ -107,7 +107,7 @@ struct HomeBottomPanel: View {
             anchored(.places)  { HomePlacesContent() }
             anchored(.pets)    { HomePetsContent() }
             anchored(.alerts)  { HomeAlertsContent() }
-            Spacer().frame(height: tabBarHeight + 16)
+            Spacer().frame(height: tabBarHeight)
         }
         .coordinateSpace(name: Self.scrollSpace)
         .onPreferenceChange(SectionAnchorKey.self) { anchors in

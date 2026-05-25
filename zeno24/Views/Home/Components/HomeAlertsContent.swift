@@ -2,8 +2,7 @@ import SwiftUI
 
 struct HomeAlertsContent: View {
     @State private var vm = HomeAlertsViewModel()
-
-    var onPremiumTap: (() -> Void)? = nil
+    @Environment(PremiumStore.self) private var premium
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -31,7 +30,7 @@ struct HomeAlertsContent: View {
 
             Spacer().frame(height: 16)
 
-            PremiumPromoCard(onTap: onPremiumTap)
+            PremiumPromoCard(onTap: { premium.presentOutcomeDialog() })
         }
         .padding(16)
     }

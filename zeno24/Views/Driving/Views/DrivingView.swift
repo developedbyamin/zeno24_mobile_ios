@@ -3,6 +3,7 @@ import SwiftUI
 struct DrivingView: View {
     @State private var segment: DrivingHeaderHero.Segment = .today
     @Environment(\.tabBarHeight) private var tabBarHeight
+    @Environment(\.isTabActive) private var isTabActive
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -19,15 +20,20 @@ struct DrivingView: View {
                     DrivingMemberCard(avatar: AppImages.avatarNigar,  name: AppStrings.Driving.memberNigar,  risksLabel: AppStrings.Driving.risks2)
                     DrivingMemberCard(avatar: AppImages.avatarFiruza, name: AppStrings.Driving.memberFiruza, risksLabel: AppStrings.Driving.risks1)
 
-                    Color.clear.frame(height: tabBarHeight + 64)
+                    Color.clear.frame(height: 80)
                 }
             }
             .background(Color(hex: 0xF6F6F6).ignoresSafeArea())
 
-            DrivingCirclePill()
-                .padding(.bottom, tabBarHeight + 16)
+            if isTabActive {
+                CirclePill(fallbackTitle: AppStrings.Driving.circleName)
+                    .padding(.bottom, tabBarHeight)
+            }
         }
-        .navigationTitle(AppStrings.Driving.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            AppTopBar(title: AppStrings.Driving.title)
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
 }

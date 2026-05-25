@@ -1,101 +1,49 @@
 import SwiftUI
 
+/// Authenticated tab shell — just five tab roots and a bottom `MainTabBar`.
+/// Navigation is owned by the root `NavigationStack` in `RootView`, so any
+/// `router.push(...)` from a tab pushes the new screen above this shell,
+/// hiding the tab bar naturally (no manual visibility toggles).
 struct MainView: View {
     @State private var selectedTab: AppTab = .home
     @State private var tabBarHeight: CGFloat = 0
-    @State private var showMapTypePicker = false
-    @State private var mapType: HomeMapType = .auto
-    @State private var homeRouter    = AppRouter()
-    @State private var kidsRouter    = AppRouter()
-    @State private var drivingRouter = AppRouter()
-    @State private var healthRouter  = AppRouter()
-    @State private var premiumRouter = AppRouter()
+    @Environment(AppRouter.self) private var router
 
     var body: some View {
-        CircleFlowHost {
+        ZStack(alignment: .bottom) {
             ZStack {
-                tabRoot(.home,    router: homeRouter)    { HomeView(mapType: $mapType, showMapTypePicker: $showMapTypePicker) }
-                tabRoot(.kids,    router: kidsRouter)    { KidsView() }
-                tabRoot(.driving, router: drivingRouter) { DrivingView() }
-                tabRoot(.health,  router: healthRouter)  { HealthView() }
-                tabRoot(.premium, router: premiumRouter) { PremiumView() }
-
-                if showMapTypePicker {
-                    HomeMapTypePicker(isPresented: $showMapTypePicker, selected: $mapType)
-                        .zIndex(999)
-                }
-            }
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                MainTabBar(selection: $selectedTab) { tab in
-                    router(for: tab).popToRoot()
-                }
-                .background(
-                    GeometryReader { proxy in
-                        let total = proxy.size.height + proxy.safeAreaInsets.bottom
-                        Color.clear.task(id: total) {
-                            tabBarHeight = total
-                        }
-                    }
-                )
+                tabRoot(.home)    { HomeView() }
+                tabRoot(.kids)    { KidsView() }
+                tabRoot(.driving) { DrivingView() }
+                tabRoot(.health)  { HealthView() }
+                tabRoot(.premium) { PremiumView() }
             }
             .environment(\.tabBarHeight, tabBarHeight)
+            MainTabBar(selection: $selectedTab) { _ in
+                router.popToRoot()
+            }
+            .background(
+                GeometryReader { proxy in
+                    let total = proxy.size.height + proxy.safeAreaInsets.bottom
+                    Color.clear.task(id: total) {
+                        tabBarHeight = total
+                    }
+                }
+            )
         }
-    }
-
-    // MARK: - Helpers
-
-    private func router(for tab: AppTab) -> AppRouter {
-        switch tab {
-        case .home:    return homeRouter
-        case .kids:    return kidsRouter
-        case .driving: return drivingRouter
-        case .health:  return healthRouter
-        case .premium: return premiumRouter
-        }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
     @ViewBuilder
     private func tabRoot<Content: View>(
         _ tab: AppTab,
-        router: AppRouter,
         @ViewBuilder content: () -> Content
     ) -> some View {
-        @Bindable var router = router
-        NavigationStack(path: $router.path) {
-            content()
-                .navigationDestination(for: AppRoute.self) { route in
-                    AppRouteBuilder.view(for: route)
-                }
-        }
-        .environment(router)
-        .opacity(selectedTab == tab ? 1 : 0)
-        .allowsHitTesting(selectedTab == tab)
+        let isActive = selectedTab == tab
+        content()
+            .environment(\.isTabActive, isActive)
+            .opacity(isActive ? 1 : 0)
+            .allowsHitTesting(isActive)
     }
 }
 
-// MARK: - Tab model
-
-enum AppTab: Int, CaseIterable, Identifiable {
-    case home, kids, driving, health, premium
-    var id: Int { rawValue }
-
-    var title: String {
-        switch self {
-        case .home:    return AppStrings.Tab.home
-        case .kids:    return AppStrings.Tab.kids
-        case .driving: return AppStrings.Tab.driving
-        case .health:  return AppStrings.Tab.health
-        case .premium: return AppStrings.Tab.premium
-        }
-    }
-
-    var iconAsset: String {
-        switch self {
-        case .home:    return AppVectors.home
-        case .kids:    return AppVectors.sleeping
-        case .driving: return AppVectors.car
-        case .health:  return AppVectors.heart
-        case .premium: return AppVectors.gem
-        }
-    }
-}

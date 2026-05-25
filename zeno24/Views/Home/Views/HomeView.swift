@@ -1,14 +1,14 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Binding var mapType: HomeMapType
-    @Binding var showMapTypePicker: Bool
-
     @Environment(AppRouter.self) private var router
     @Environment(\.openCirclePicker) private var openCirclePicker
     @Environment(CirclesStore.self) private var circles
+    @Environment(PremiumStore.self) private var premium
     @State private var home = HomeStore()
     @State private var markers = MarkersStore()
+    @State private var mapType: HomeMapType = .auto
+    @State private var showMapTypePicker = false
     @State private var sheetTopY: CGFloat = 0
     @State private var normalizedSheetOffset: CGFloat = 0
     
@@ -57,9 +57,19 @@ struct HomeView: View {
                 sheetTopY = topY
                 normalizedSheetOffset = normalized
             }
+
+            if showMapTypePicker {
+                HomeMapTypePicker(isPresented: $showMapTypePicker, selected: $mapType)
+                    .zIndex(999)
+            }
         }
         .task { markers.startSyncing() }
         .onDisappear { markers.stopSyncing() }
+        .onAppear {
+            // Surface the premium upsell on first home mount (1:1 with the
+            // Flutter `addPostFrameCallback` on home_view.dart).
+            premium.presentOnFirstLaunchIfNeeded()
+        }
         .navigationTitle(AppStrings.Tab.home)
         .toolbar(.hidden, for: .navigationBar)
     }

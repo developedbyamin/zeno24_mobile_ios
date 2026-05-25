@@ -1,5 +1,34 @@
 import SwiftUI
 
+// MARK: - Tab model
+
+enum AppTab: Int, CaseIterable, Identifiable {
+    case home, kids, driving, health, premium
+    var id: Int { rawValue }
+
+    var title: String {
+        switch self {
+        case .home:    return AppStrings.Tab.home
+        case .kids:    return AppStrings.Tab.kids
+        case .driving: return AppStrings.Tab.driving
+        case .health:  return AppStrings.Tab.health
+        case .premium: return AppStrings.Tab.premium
+        }
+    }
+
+    var iconAsset: String {
+        switch self {
+        case .home:    return AppVectors.home
+        case .kids:    return AppVectors.sleeping
+        case .driving: return AppVectors.car
+        case .health:  return AppVectors.heart
+        case .premium: return AppVectors.gem
+        }
+    }
+}
+
+// MARK: - Tab bar
+
 struct MainTabBar: View {
     @Binding var selection: AppTab
     var onReselect: (AppTab) -> Void = { _ in }
