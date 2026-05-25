@@ -8,7 +8,6 @@ import Foundation
 /// flat and switch with `.transition`.
 enum AppRoute: Hashable {
     // Main
-    case home
     case messages
     case chat(circleId: String)
     case notifications

@@ -4,27 +4,80 @@ import SwiftUI
 /// the Flutter project. Mirrors `lib/src/presentation/home/views/ios_views_home_view.dart`
 /// minus the Flutter platform channels.
 struct HomeView: View {
+    @Binding var mapType: HomeMapType
+    @Binding var showMapTypePicker: Bool
+
+    @Environment(AppRouter.self) private var router
+    @Environment(\.openCirclePicker) private var openCirclePicker
+    @Environment(CirclesStore.self) private var circles
     @State private var home = HomeStore()
     @State private var markers = MarkersStore()
+    @State private var sheetTopY: CGFloat = 0
+    @State private var normalizedSheetOffset: CGFloat = 0
+    
+    /// Computed opacity for top bar — fades out smoothly after panel reaches halfway (0.5)
+    private var topBarOpacity: CGFloat {
+        // normalized: 0 = collapsed, 0.5 = half, 1.0 = fully expanded
+        // We want to fade out after 0.5 (halfway point)
+        if normalizedSheetOffset <= 0.5 {
+            return 1.0
+        } else {
+            // Map 0.5...1.0 to 1.0...0.0
+            return max(0, 1.0 - (normalizedSheetOffset - 0.5) * 2)
+        }
+    }
+    
+    /// Computed scale for top bar — scales up smoothly as it fades out
+    private var topBarScale: CGFloat {
+        if normalizedSheetOffset <= 0.5 {
+            return 1.0
+        } else {
+            // Map 0.5...1.0 to 1.0...1.15 (15% bigger)
+            return 1.0 + (normalizedSheetOffset - 0.5) * 0.3
+        }
+    }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             NativeMapHostView(
                 markers: markers.markers,
-                mapType: mapTypeKey(for: home.mapType)
+                mapType: mapTypeKey(for: mapType)
             )
             .ignoresSafeArea()
-            HomeBottomPanel(store: home, members: markers.markers)
+
+            HomeTopBar(
+                circleTitle: circles.selectedCircle?.name ?? AppStrings.Home.panelTitle,
+                opacity: topBarOpacity,
+                scale: topBarScale,
+                onSettings:     { router.push(.settings) },
+                onCircle:       { openCirclePicker() },
+                onNotification: { router.push(.notifications) },
+                onChat:         { router.push(.messages) }
+            )
+
+            HomeSideActions(
+                sheetTopY: sheetTopY,
+                normalizedOffset: normalizedSheetOffset,
+                onMapType: { showMapTypePicker = true },
+                onZoomSelf: { }
+            )
+
+            HomeBottomPanel(store: home, members: markers.markers) { topY, normalized in
+                sheetTopY = topY
+                normalizedSheetOffset = normalized
+            }
         }
         .task { markers.startSyncing() }
         .onDisappear { markers.stopSyncing() }
+        .navigationTitle(AppStrings.Tab.home)
+        .toolbar(.hidden, for: .navigationBar)
     }
 
-    private func mapTypeKey(for type: HomeStore.MapType) -> String {
+    private func mapTypeKey(for type: HomeMapType) -> String {
         switch type {
-        case .standard:  return "default"
+        case .auto:      return "default"
+        case .street:    return "default"
         case .satellite: return "satellite"
-        case .hybrid:    return "satellite"
         }
     }
 }

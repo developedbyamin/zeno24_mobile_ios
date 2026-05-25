@@ -32,7 +32,6 @@ struct AppRouteBuilder {
     @ViewBuilder
     static func view(for route: AppRoute) -> some View {
         switch route {
-        case .home:                  HomeView()
         case .messages:              MessagesView()
         case .chat(let circleId):    ChatView(circleId: circleId)
         case .notifications:         NotificationsView()

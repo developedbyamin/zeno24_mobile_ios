@@ -1,14 +1,27 @@
 import SwiftUI
 
-/// Kids monitoring — mirrors kids views
+/// Kids "Parental control" — 1:1 port of Figma node 6937:6052.
 struct KidsView: View {
+    @Environment(\.tabBarHeight) private var tabBarHeight
+
     var body: some View {
-        VStack(spacing: AppSpacing.l) {
-            Text(AppStrings.Kids.title).font(AppTypography.heading2XlBold)
-            // TODO: child profile cards
-            Spacer()
+        ZStack(alignment: .bottom) {
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 4) {
+                    KidsProfileCard()
+                    KidsPromoActionsCard()
+                    KidsLiveLocationCard()
+                    KidsScreenTimeCard()
+                    KidsUsedAppsCard()
+                    Color.clear.frame(height: tabBarHeight + 64)
+                }
+            }
+            .background(Color(hex: 0xF6F6F6).ignoresSafeArea())
+
+            KidsBoardPill()
+                .padding(.bottom, tabBarHeight + 16)
         }
-        .padding(AppSpacing.l)
         .navigationTitle(AppStrings.Kids.title)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

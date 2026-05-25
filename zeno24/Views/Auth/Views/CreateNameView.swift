@@ -1,12 +1,8 @@
 import SwiftUI
 
-/// Step 3 — collect the display name. Figma 1829:2926 / 2796:2552.
-/// Three vertical sections (header / input / button) with equal flexible
-/// space above and below the input, so the field sits centered between
-/// the title block and the CTA — matches the Figma `justify-between`.
 struct CreateNameView: View {
     @Environment(AuthStore.self) private var store
-    @State private var didAppear = false
+    @State private var vm = CreateNameViewModel()
     @FocusState private var isFieldFocused: Bool
 
     var body: some View {
@@ -42,14 +38,12 @@ struct CreateNameView: View {
                 .padding(.bottom, 12)
             }
             .padding(.horizontal, 16)
-            .opacity(didAppear ? 1 : 0)
-            .offset(y: didAppear ? 0 : 8)
-            .animation(.easeOut(duration: 0.28), value: didAppear)
+            .opacity(vm.didAppear ? 1 : 0)
+            .offset(y: vm.didAppear ? 0 : 8)
+            .animation(.easeOut(duration: 0.28), value: vm.didAppear)
         }
         .task {
-            await Task.yield()
-            didAppear = true
-            try? await Task.sleep(for: .milliseconds(400))
+            await vm.onAppear()
             isFieldFocused = true
         }
         .onChange(of: store.errorMessage) { _, message in

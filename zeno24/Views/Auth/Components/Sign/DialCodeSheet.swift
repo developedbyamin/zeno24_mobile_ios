@@ -1,13 +1,10 @@
 import SwiftUI
 
-/// Country dial-code picker — 1:1 mirror of Flutter `dial_code_modal.dart`.
-/// Presented as a 90 %-screen sheet with a search bar and sticky letter
-/// headers above each alphabetical section.
 struct DialCodeSheet: View {
     @Binding var selected: Country
     let onPick: () -> Void
 
-    @State private var query: String = ""
+    @State private var vm = DialCodeViewModel()
     @FocusState private var searchFocused: Bool
 
     var body: some View {
@@ -20,26 +17,21 @@ struct DialCodeSheet: View {
         .presentationDragIndicator(.visible)
     }
 
-    // MARK: - Header (title + search)
+    // MARK: - Header
 
     private var header: some View {
         VStack(spacing: 16) {
-            // Title row — always in the tree; we collapse via opacity + height
-            // so the layout glides instead of snapping like Flutter's
-            // `AnimatedCrossFade`.
             titleRow
                 .frame(height: searchFocused ? 0 : 24, alignment: .top)
                 .opacity(searchFocused ? 0 : 1)
                 .scaleEffect(searchFocused ? 0.96 : 1, anchor: .top)
                 .clipped()
 
-            // Search row — Cancel button is always in the hierarchy too,
-            // its width animates from 0 to its natural size.
             HStack(spacing: 12) {
                 searchField
 
                 Button {
-                    query = ""
+                    vm.clearQuery()
                     searchFocused = false
                 } label: {
                     Text(AppStrings.Common.cancel)
@@ -49,8 +41,7 @@ struct DialCodeSheet: View {
                 }
                 .buttonStyle(.plain)
                 .opacity(searchFocused ? 1 : 0)
-                .frame(width: searchFocused ? nil : 0,
-                       alignment: .trailing)
+                .frame(width: searchFocused ? nil : 0, alignment: .trailing)
             }
         }
         .padding(.horizontal, 16)
@@ -67,9 +58,7 @@ struct DialCodeSheet: View {
 
             HStack {
                 Spacer()
-                Button {
-                    onPick()
-                } label: {
+                Button { onPick() } label: {
                     ZStack {
                         Circle()
                             .fill(AppColors.mainGray)
@@ -90,18 +79,19 @@ struct DialCodeSheet: View {
                 .font(.system(size: 16, weight: .medium))
                 .foregroundStyle(AppColors.secondaryBlack)
 
-            TextField(AppStrings.CountryPicker.search, text: $query)
-                .font(AppTypography.bodySmMedium)
-                .foregroundStyle(AppColors.mainBlack)
-                .tint(AppColors.brand)
-                .focused($searchFocused)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
+            TextField(AppStrings.CountryPicker.search, text: Binding(
+                get: { vm.query },
+                set: { vm.query = $0 }
+            ))
+            .font(AppTypography.bodySmMedium)
+            .foregroundStyle(AppColors.mainBlack)
+            .tint(AppColors.brand)
+            .focused($searchFocused)
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
 
-            if !query.isEmpty {
-                Button {
-                    query = ""
-                } label: {
+            if !vm.query.isEmpty {
+                Button { vm.clearQuery() } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 18))
                         .foregroundStyle(AppColors.bodyTextGray)
@@ -118,7 +108,7 @@ struct DialCodeSheet: View {
 
     @ViewBuilder
     private var countryList: some View {
-        if query.isEmpty {
+        if vm.query.isEmpty {
             groupedList
         } else {
             flatList
@@ -127,12 +117,12 @@ struct DialCodeSheet: View {
 
     @ViewBuilder
     private var flatList: some View {
-        if filtered.isEmpty {
+        if vm.filtered.isEmpty {
             emptyState
         } else {
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    ForEach(filtered) { country in
+                    ForEach(vm.filtered) { country in
                         CountryRow(country: country, isSelected: country.id == selected.id)
                             .contentShape(Rectangle())
                             .onTapGesture { pick(country) }
@@ -142,7 +132,6 @@ struct DialCodeSheet: View {
         }
     }
 
-    /// Friendly placeholder shown when the search yields no countries.
     private var emptyState: some View {
         VStack(spacing: 12) {
             ZStack {
@@ -172,7 +161,7 @@ struct DialCodeSheet: View {
         ScrollViewReader { proxy in
             ScrollView {
                 LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    let popular = sortedPopular
+                    let popular = vm.sortedPopular
                     if !popular.isEmpty {
                         Section {
                             ForEach(popular) { country in
@@ -186,9 +175,9 @@ struct DialCodeSheet: View {
                         }
                     }
 
-                    ForEach(letters, id: \.self) { letter in
+                    ForEach(vm.letters, id: \.self) { letter in
                         Section {
-                            ForEach(grouped[letter] ?? []) { country in
+                            ForEach(vm.grouped[letter] ?? []) { country in
                                 CountryRow(country: country, isSelected: country.id == selected.id)
                                     .id(country.id)
                                     .contentShape(Rectangle())
@@ -201,7 +190,8 @@ struct DialCodeSheet: View {
                 }
             }
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                Task {
+                    try? await Task.sleep(for: .milliseconds(150))
                     let target = selected.isPopular ? "popular_\(selected.id)" : selected.id
                     withAnimation { proxy.scrollTo(target, anchor: .center) }
                 }
@@ -220,33 +210,6 @@ struct DialCodeSheet: View {
         .frame(height: 28)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(AppColors.secondaryGray)
-    }
-
-    // MARK: - Data
-
-    private var filtered: [Country] {
-        let q = query.lowercased()
-        return CountriesData.all.filter {
-            $0.name.lowercased().contains(q) || $0.dialCode.contains(query)
-        }
-    }
-
-    private var sortedPopular: [Country] {
-        CountriesData.all.filter(\.isPopular).sorted { $0.name < $1.name }
-    }
-
-    private var sortedRegular: [Country] {
-        CountriesData.all.filter { !$0.isPopular }.sorted { $0.name < $1.name }
-    }
-
-    private var grouped: [String: [Country]] {
-        Dictionary(grouping: sortedRegular) {
-            String($0.name.prefix(1)).uppercased()
-        }
-    }
-
-    private var letters: [String] {
-        grouped.keys.sorted()
     }
 
     private func pick(_ country: Country) {

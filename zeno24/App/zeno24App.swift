@@ -22,7 +22,7 @@ struct zeno24App: App {
                 .environment(deepLinkStore)
                 .environment(\.appTheme, .default)
                 .environment(\.locale, localeStore.locale)
-                .preferredColorScheme(themeStore.colorScheme)
+                .preferredColorScheme(.light)
                 .id(localeStore.languageCode)
         }
     }

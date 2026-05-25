@@ -1,14 +1,9 @@
 import SwiftUI
 
-/// Step 2 — 6-digit OTP entry. Figma node `4024:6256` (Enter email).
-/// Single layout for both phone (WhatsApp) and email channels.
 struct OtpView: View {
     @Environment(AuthStore.self) private var store
-    @State private var didAppear = false
-    @State private var countdown = OtpCountdown(seconds: 0)
+    @State private var vm = OtpViewModel()
     @FocusState private var isFieldFocused: Bool
-
-    private let resendCooldown = 120
 
     var body: some View {
         @Bindable var store = store
@@ -26,8 +21,8 @@ struct OtpView: View {
                 Spacer().frame(height: 24)
 
                 OtpTimerPill(
-                    formatted: countdown.formatted,
-                    isVisible: !countdown.isFinished
+                    formatted: vm.countdown.formatted,
+                    isVisible: !vm.countdown.isFinished
                 )
 
                 Spacer().frame(height: 24)
@@ -48,7 +43,7 @@ struct OtpView: View {
 
                 Spacer()
 
-                OtpResendRow(isEnabled: countdown.isFinished) {
+                OtpResendRow(isEnabled: vm.countdown.isFinished) {
                     Task { await store.resendOtp() }
                 }
                 .padding(.bottom, 12)
@@ -63,21 +58,17 @@ struct OtpView: View {
                 .padding(.bottom, 12)
             }
             .padding(.horizontal, 16)
-            .opacity(didAppear ? 1 : 0)
-            .offset(y: didAppear ? 0 : 8)
-            .animation(.easeOut(duration: 0.28), value: didAppear)
+            .opacity(vm.didAppear ? 1 : 0)
+            .offset(y: vm.didAppear ? 0 : 8)
+            .animation(.easeOut(duration: 0.28), value: vm.didAppear)
         }
         .task {
-            await Task.yield()
-            didAppear = true
-            try? await Task.sleep(for: .milliseconds(400))
+            await vm.onAppear()
             isFieldFocused = true
         }
-        .onAppear { countdown.start(from: resendCooldown) }
-        .onDisappear { countdown.stop() }
-        .onChange(of: store.otpResendNonce) { _, _ in
-            countdown.start(from: resendCooldown)
-        }
+        .onAppear { vm.startCountdown() }
+        .onDisappear { vm.stopCountdown() }
+        .onChange(of: store.otpResendNonce) { _, _ in vm.startCountdown() }
         .onChange(of: store.errorMessage) { _, message in
             guard let message else { return }
             OverlayHelper.shared.show(message, kind: .error)

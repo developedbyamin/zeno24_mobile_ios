@@ -306,21 +306,175 @@ enum AppStrings {
     }
 
     enum Settings {
+        static var title: String      { String(localized: "settings.title",      defaultValue: "Profile") }
         static var language: String   { String(localized: "settings.language",   defaultValue: "Language") }
         static var appearance: String { String(localized: "settings.appearance", defaultValue: "Appearance") }
         static var theme: String      { String(localized: "settings.theme",      defaultValue: "Theme") }
         static var logout: String     { String(localized: "settings.logout",     defaultValue: "Log out") }
+
+        // Profile card
+        static var userName: String   { String(localized: "settings.user.name",  defaultValue: "Nigar") }
+        static var userEmail: String  { String(localized: "settings.user.email", defaultValue: "Fidanguluzada@gmail.com") }
+        static var heroLine1: String  { String(localized: "settings.hero.line1", defaultValue: "Boost your journey") }
+        static var heroLine2: String  { String(localized: "settings.hero.line2", defaultValue: "for better experiences!") }
+        static var upgradeNow: String { String(localized: "settings.upgradeNow", defaultValue: "Upgrade now") }
+
+        // Menu items
+        static var manageCircle: String         { String(localized: "settings.row.manageCircle",  defaultValue: "Manage Circle") }
+        static var notificationSettings: String { String(localized: "settings.row.notifications", defaultValue: "Notification Settings") }
+        static var permissions: String          { String(localized: "settings.row.permissions",   defaultValue: "Permissions") }
+        static var onRoadSafety: String         { String(localized: "settings.row.onRoadSafety",  defaultValue: "On-road safety") }
+        static var shareFeedback: String        { String(localized: "settings.row.shareFeedback", defaultValue: "Share Feedback") }
+        static var restorePurchases: String     { String(localized: "settings.row.restore",       defaultValue: "Restore Purchases") }
+        static var shareWithFriends: String     { String(localized: "settings.row.share",         defaultValue: "Share with Friends") }
+        static var privacyPolicy: String        { String(localized: "settings.row.privacy",       defaultValue: "Privacy Policy & Terms of Use") }
     }
 
     enum Premium {
         static var title: String    { String(localized: "premium.title",    defaultValue: "Go Premium") }
         static var subtitle: String { String(localized: "premium.subtitle", defaultValue: "Unlock everything") }
-        static var cta: String      { String(localized: "premium.cta",      defaultValue: "Start free trial") }
+        static var cta: String      { String(localized: "premium.cta",      defaultValue: "Start 7-day free trial") }
+
+        static var heroLine1: String  { String(localized: "premium.hero.line1",  defaultValue: "Boost your journey") }
+        static var heroLine2: String  { String(localized: "premium.hero.line2",  defaultValue: "for better experiences!") }
+
+        static var planPopular: String      { String(localized: "premium.plan.popular",     defaultValue: "Popular") }
+        static var planBestValue: String    { String(localized: "premium.plan.bestValue",   defaultValue: "Best Value") }
+        static var planMonthlyPrice: String { String(localized: "premium.plan.monthlyPrice", defaultValue: "USD 2.99") }
+        static var planYearlyPrice: String  { String(localized: "premium.plan.yearlyPrice",  defaultValue: "USD 12.99") }
+        static var planMonthlyCaption: String { String(localized: "premium.plan.monthlyCaption", defaultValue: "Billed monthly") }
+        static var planYearlyCaption: String  { String(localized: "premium.plan.yearlyCaption",  defaultValue: "Billed yearly") }
+        static var planSaveBadge: String      { String(localized: "premium.plan.saveBadge",      defaultValue: "Save 20%") }
+
+        static var includedHeader: String     { String(localized: "premium.included.header",     defaultValue: "WHAT`S INCLUDED") }
+        static var featureParentalControl: String { String(localized: "premium.feature.parentalControl", defaultValue: "Parental Control") }
+        static var featureDrivingSafety: String   { String(localized: "premium.feature.drivingSafety",   defaultValue: "Driving Safety") }
+        static var featureHealthGoals: String     { String(localized: "premium.feature.healthGoals",     defaultValue: "Health Goals") }
+        static var featurePlaceAlerts: String     { String(localized: "premium.feature.placeAlerts",     defaultValue: "Unlimited Place Alerts") }
+        static var featureLocationHistory: String { String(localized: "premium.feature.locationHistory", defaultValue: "30 days Location History") }
+
+        static var trialFootnote: String { String(localized: "premium.trial.footnote", defaultValue: "First 7 days free, then $2.99/month") }
+
+        // Subscribed state — Figma 5865:6896 "Your Plan"
+        static var subscribedTitle: String       { String(localized: "premium.subscribed.title",       defaultValue: "Your Premium") }
+        static var yourPlanBadge: String         { String(localized: "premium.subscribed.badge",       defaultValue: "Your Plan") }
+        static var managePlan: String            { String(localized: "premium.subscribed.manage",      defaultValue: "Manage Plan") }
+        static var cancelSubscription: String    { String(localized: "premium.subscribed.cancel",      defaultValue: "Cancle Subscription") }
+        static func untilDate(_ date: String) -> String {
+            String(localized: "premium.subscribed.until", defaultValue: "Until: \(date)")
+        }
+        static var featureBonus: String          { String(localized: "premium.feature.bonus",          defaultValue: "Lorem Ipsum Dolor") }
     }
 
-    enum Health { static var title: String { String(localized: "health.title", defaultValue: "Health") } }
-    enum Kids    { static var title: String { String(localized: "kids.title",    defaultValue: "Kids") } }
-    enum Driving { static var title: String { String(localized: "driving.title", defaultValue: "Driving") } }
+    enum Messages {
+        static var title: String          { String(localized: "messages.title",          defaultValue: "Messages") }
+        static var circlePill: String     { String(localized: "messages.circle.pill",    defaultValue: "Circle:") }
+        static var circleName: String     { String(localized: "messages.circle.name",    defaultValue: "Family") }
+    }
+
+    enum Notifications {
+        static var title: String        { String(localized: "notifications.title",       defaultValue: "Notifications") }
+        static var sectionToday: String { String(localized: "notifications.today",       defaultValue: "Today") }
+        static var sectionYesterday: String { String(localized: "notifications.yesterday", defaultValue: "Yesterday") }
+        static var sectionOlder: String { String(localized: "notifications.older",       defaultValue: "Older") }
+        static var preview: String      { String(localized: "notifications.preview",     defaultValue: "Lorem ipsum dololor lorem dolor mess...") }
+        static var circlePill: String   { String(localized: "notifications.circle.pill", defaultValue: "Circle:") }
+        static var circleName: String   { String(localized: "notifications.circle.name", defaultValue: "Family") }
+    }
+
+    enum Health {
+        static var title: String           { String(localized: "health.title",            defaultValue: "Health") }
+        static var segLastWeek: String     { String(localized: "health.seg.lastWeek",     defaultValue: "Last Week") }
+        static var segYesterday: String    { String(localized: "health.seg.yesterday",    defaultValue: "Yesterday") }
+        static var segToday: String        { String(localized: "health.seg.today",        defaultValue: "Today") }
+        static var dailySteps: String      { String(localized: "health.dailySteps",       defaultValue: "Daily Steps") }
+        static var stepsValue: String      { String(localized: "health.steps.value",      defaultValue: "4,500") }
+        static var stepsTotal: String      { String(localized: "health.steps.total",      defaultValue: "of 10,000") }
+        static var changeGoal: String      { String(localized: "health.changeGoal",       defaultValue: "Change Goal") }
+        static var totalDistance: String   { String(localized: "health.totalDistance",    defaultValue: "Total Distance") }
+        static var calories: String        { String(localized: "health.calories",         defaultValue: "Calories") }
+        static var activeTime: String      { String(localized: "health.activeTime",       defaultValue: "Active Time") }
+        static var distanceValue: String   { String(localized: "health.distance.value",   defaultValue: "24,5 km") }
+        static var caloriesValue: String   { String(localized: "health.calories.value",   defaultValue: "358 cal") }
+        static var activeTimeValue: String { String(localized: "health.activeTime.value", defaultValue: "1h 24m") }
+        static var motivationLine1: String { String(localized: "health.motivation.line1", defaultValue: "Motivation feels") }
+        static var motivationLine2: String { String(localized: "health.motivation.line2", defaultValue: "stronger with friends") }
+        static var createHabit: String     { String(localized: "health.createHabit",      defaultValue: "Create a Habit") }
+        static var challengeBoard: String  { String(localized: "health.challengeBoard",   defaultValue: "Challenge Board") }
+        static var inviteFriends: String   { String(localized: "health.inviteFriends",    defaultValue: "Invite friends") }
+        static var memberFidan: String     { String(localized: "health.member.fidan",     defaultValue: "Fidan") }
+        static var memberYou: String       { String(localized: "health.member.you",       defaultValue: "You") }
+        static var todayLabel: String      { String(localized: "health.today",            defaultValue: "Today") }
+        static var monthlySummary: String  { String(localized: "health.monthlySummary",   defaultValue: "Monthly Summary") }
+        static var movingHistory: String   { String(localized: "health.movingHistory",    defaultValue: "Moving History") }
+        static var getAlerts: String       { String(localized: "health.getAlerts",        defaultValue: "Get Alerts") }
+        static var address1: String        { String(localized: "health.address.1",        defaultValue: "83 Tabriz St, Narimanov District") }
+        static var address2: String        { String(localized: "health.address.2",        defaultValue: "105 Shafayat Mehdiyev St") }
+        static var time1: String           { String(localized: "health.time.1",           defaultValue: "09:45") }
+        static var time2: String           { String(localized: "health.time.2",           defaultValue: "10:05") }
+    }
+    enum Kids {
+        static var title: String           { String(localized: "kids.title",            defaultValue: "Parental control") }
+        static var board: String           { String(localized: "kids.board",            defaultValue: "Fidan’s board") }
+        static var deviceName: String      { String(localized: "kids.device.name",      defaultValue: "Fidan’s device") }
+        static var deviceOwner: String     { String(localized: "kids.device.owner",     defaultValue: "Rovshan Aliyev, Baku Azerbaijan") }
+        static var heroLine1: String       { String(localized: "kids.hero.line1",       defaultValue: "Boost your journey") }
+        static var heroLine2: String       { String(localized: "kids.hero.line2",       defaultValue: "for better experiences!") }
+        static var heroCTA: String         { String(localized: "kids.hero.cta",         defaultValue: "Upgrade now") }
+        static var actionScreenshot: String { String(localized: "kids.action.screenshot", defaultValue: "Screenshot") }
+        static var actionListen: String    { String(localized: "kids.action.listen",    defaultValue: "Listen") }
+        static var actionScreenLimit: String { String(localized: "kids.action.screenLimit", defaultValue: "Screen limit") }
+        static var actionUnlock: String    { String(localized: "kids.action.unlock",    defaultValue: "Unlock") }
+        static var liveLocation: String    { String(localized: "kids.liveLocation",     defaultValue: "Live location") }
+        static var details: String         { String(localized: "kids.details",          defaultValue: "Details") }
+        static var liveAddress: String     { String(localized: "kids.live.address",     defaultValue: "83 Tabriz St, Narimanov District") }
+        static var liveSince: String       { String(localized: "kids.live.since",       defaultValue: "Since Jan 12, 21:45") }
+        static var screenTime: String      { String(localized: "kids.screenTime",       defaultValue: "Screen Time") }
+        static var setLimits: String       { String(localized: "kids.setLimits",        defaultValue: "Set limits") }
+        static var screenTimeUsed: String  { String(localized: "kids.screenTime.used",  defaultValue: "4h 18m") }
+        static var screenTimeTotal: String { String(localized: "kids.screenTime.total", defaultValue: "of 5h 30 min") }
+        static var legendSocial: String    { String(localized: "kids.legend.social",    defaultValue: "Social") }
+        static var legendGames: String     { String(localized: "kids.legend.games",     defaultValue: "Games") }
+        static var legendOther: String     { String(localized: "kids.legend.other",     defaultValue: "Other") }
+        static var statMostUsed: String    { String(localized: "kids.stat.mostUsed",    defaultValue: "Most Used") }
+        static var statPickups: String     { String(localized: "kids.stat.pickups",     defaultValue: "Pickups") }
+        static var statLastUsed: String    { String(localized: "kids.stat.lastUsed",    defaultValue: "Last Used") }
+        static var statPickupsValue: String { String(localized: "kids.stat.pickups.value", defaultValue: "32") }
+        static var statLastUsedValue: String { String(localized: "kids.stat.lastUsed.value", defaultValue: "12:45") }
+        static var usedApps: String        { String(localized: "kids.usedApps",         defaultValue: "Used Apps") }
+        static var appPubg: String         { String(localized: "kids.app.pubg",         defaultValue: "Pubg Mobile") }
+        static var appPubgTime: String     { String(localized: "kids.app.pubg.time",    defaultValue: "1h 24min") }
+        static var appTiktok: String       { String(localized: "kids.app.tiktok",       defaultValue: "Tiktok") }
+        static var appTiktokTime: String   { String(localized: "kids.app.tiktok.time",  defaultValue: "54min") }
+        static var appYoutube: String      { String(localized: "kids.app.youtube",      defaultValue: "Youtube") }
+        static var appYoutubeTime: String  { String(localized: "kids.app.youtube.time", defaultValue: "2h 04min") }
+        static var appInstagram: String    { String(localized: "kids.app.instagram",    defaultValue: "Instagram") }
+        static var appInstagramTime: String { String(localized: "kids.app.instagram.time", defaultValue: "2h 12min") }
+    }
+    enum Driving {
+        static var title: String           { String(localized: "driving.title",           defaultValue: "Driving") }
+        static var reportTitle: String     { String(localized: "driving.reportTitle",     defaultValue: "Safe Drive Report") }
+        static var reportSubtitle: String  { String(localized: "driving.reportSubtitle",  defaultValue: "A quick summary of driving activity for all members in this circle.") }
+        static var segmentToday: String    { String(localized: "driving.segment.today",   defaultValue: "Today") }
+        static var segmentWeek: String     { String(localized: "driving.segment.week",    defaultValue: "This Week") }
+        static var dateRange: String       { String(localized: "driving.dateRange",       defaultValue: "22-29 Jan") }
+        static var statDriveCount: String  { String(localized: "driving.stat.driveCount", defaultValue: "Drive Count") }
+        static var statDistance: String    { String(localized: "driving.stat.distance",   defaultValue: "Total Distance") }
+        static var statMaxSpeed: String    { String(localized: "driving.stat.maxSpeed",   defaultValue: "Max Speed") }
+        static var circleSummary: String   { String(localized: "driving.circleSummary",   defaultValue: "Circle Summary") }
+        static var peakSpeed: String       { String(localized: "driving.peakSpeed",       defaultValue: "Peak speed") }
+        static var suddenSpeedUp: String   { String(localized: "driving.suddenSpeedUp",   defaultValue: "Sudden speed-up") }
+        static var sharpStop: String       { String(localized: "driving.sharpStop",       defaultValue: "Sharp stop") }
+        static var distractions: String    { String(localized: "driving.distractions",    defaultValue: "Distractions") }
+        static var drivesLabel: String     { String(localized: "driving.drives",          defaultValue: "12 Drives") }
+        static var kilometresLabel: String { String(localized: "driving.kilometres",      defaultValue: "70 kilometres") }
+        static var risks2: String          { String(localized: "driving.risks.two",       defaultValue: "2 Risks") }
+        static var risks1: String          { String(localized: "driving.risks.one",       defaultValue: "1 Risk") }
+        static var circlePill: String      { String(localized: "driving.circle.pill",     defaultValue: "Circle:") }
+        static var circleName: String      { String(localized: "driving.circle.name",     defaultValue: "Family") }
+        static var memberNigar: String     { String(localized: "driving.member.nigar",    defaultValue: "Nigar") }
+        static var memberFiruza: String    { String(localized: "driving.member.firuza",   defaultValue: "Firuza") }
+    }
 
     // MARK: Units
 

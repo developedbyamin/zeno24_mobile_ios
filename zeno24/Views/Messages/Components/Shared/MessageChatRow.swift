@@ -1,30 +1,94 @@
 import SwiftUI
 
+/// Single chat row — Figma 4991:18818 "Profile notifications".
 struct MessageChatRow: View {
     let title: String
-    let preview: String?
-    let avatarUrl: String?
+    let preview: String
+    let time: String
+    /// When non-nil, displays an image asset as the avatar. When nil, shows
+    /// the first letter of `title` on a colored circle (`initialBackground`).
+    let avatarAsset: String?
+    let initialBackground: Color
+    /// Optional unread count. When > 0, shows red dot badge instead of seen check.
+    let unreadCount: Int
+    /// Highlights the entire row with a #F2F5F9 background (used for unread).
+    let highlighted: Bool
+
+    init(title: String,
+         preview: String,
+         time: String,
+         avatarAsset: String? = nil,
+         initialBackground: Color = .gray,
+         unreadCount: Int = 0,
+         highlighted: Bool = false) {
+        self.title = title
+        self.preview = preview
+        self.time = time
+        self.avatarAsset = avatarAsset
+        self.initialBackground = initialBackground
+        self.unreadCount = unreadCount
+        self.highlighted = highlighted
+    }
 
     var body: some View {
-        HStack(spacing: AppSpacing.m) {
-            Circle()
-                .fill(AppColors.bgSecondary)
-                .frame(width: 48, height: 48)
-                .overlay {
-                    Text(TextHelpers.initials(from: title))
-                        .font(AppTypography.bodyLgSemiBold)
-                        .foregroundStyle(AppColors.labelSecondary)
+        HStack(spacing: 10) {
+            avatar
+            VStack(spacing: 4) {
+                HStack {
+                    Text(title)
+                        .font(AppTypography.bodySmSemiBold)
+                        .foregroundStyle(AppColors.mainBlack)
+                    Spacer()
+                    Text(time)
+                        .font(AppTypography.bodyXsSemiBold)
+                        .foregroundStyle(Color(hex: 0x8B98A8))
                 }
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title).font(AppTypography.bodyLgSemiBold)
-                if let preview {
-                    Text(preview)
-                        .font(AppTypography.bodySmRegular)
-                        .foregroundStyle(AppColors.labelSecondary)
-                        .lineLimit(1)
+                HStack {
+                    HStack(spacing: 4) {
+                        Image(AppVectors.chatSeenCheck)
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 16, height: 16)
+                            .foregroundStyle(AppColors.brand)
+                        Text(preview)
+                            .font(.custom("PlusJakartaSans-Regular", size: 14))
+                            .foregroundStyle(Color(hex: 0x8B98A8))
+                            .lineLimit(1)
+                    }
+                    Spacer(minLength: 0)
+                    if unreadCount > 0 {
+                        Text("\(unreadCount)")
+                            .font(AppTypography.body2XsBold)
+                            .foregroundStyle(.white)
+                            .frame(minWidth: 16, minHeight: 16)
+                            .background(Color(hex: 0xF70505), in: Circle())
+                    }
                 }
             }
+        }
+        .padding(8)
+        .frame(maxWidth: .infinity)
+        .background(highlighted ? Color(hex: 0xF2F5F9) : .clear,
+                    in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+    }
+
+    @ViewBuilder
+    private var avatar: some View {
+        if let avatarAsset {
+            Image(avatarAsset)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 48, height: 48)
+                .clipShape(Circle())
+        } else {
+            ZStack {
+                Circle().fill(initialBackground)
+                Text(String(title.prefix(1)))
+                    .font(AppTypography.bodyMdBold)
+                    .foregroundStyle(.white)
+            }
+            .frame(width: 48, height: 48)
         }
     }
 }

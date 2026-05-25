@@ -1,9 +1,7 @@
 import SwiftUI
 
-/// Generic white card with rounded top corners that hosts a section's
-/// content. Performs the same manual-scroll bookkeeping as the previous
-/// `HomeMembersCard`: reports its `contentHeight` upward and lets the
-/// parent drive `scrollOffset` from a unified drag gesture.
+/// Generic card that hosts a section's content with manual scroll offset
+/// driven by the parent's unified drag gesture.
 struct HomeSectionCard<Content: View>: View {
     let scrollOffset: CGFloat
     let visibleHeight: CGFloat
@@ -19,16 +17,22 @@ struct HomeSectionCard<Content: View>: View {
                         .preference(key: SectionContentHeightKey.self, value: proxy.size.height)
                 }
             )
-            .onPreferenceChange(SectionContentHeightKey.self) { contentHeight = $0 }
+            .onPreferenceChange(SectionContentHeightKey.self) { newHeight in
+                // Throttle height updates to reduce re-renders
+                guard abs(newHeight - contentHeight) > 0.5 else { return }
+                contentHeight = newHeight
+            }
             .offset(y: scrollOffset)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .frame(height: max(visibleHeight, 0), alignment: .top)
             .background(Color.white)
-            .clipShape(
+            .compositingGroup()
+            .mask {
                 UnevenRoundedRectangle(
                     cornerRadii: .init(topLeading: 24, topTrailing: 24)
                 )
-            )
+                .fill(Color.black)
+            }
     }
 }
 

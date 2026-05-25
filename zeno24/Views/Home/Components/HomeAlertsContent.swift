@@ -1,14 +1,7 @@
 import SwiftUI
 
-/// Alerts tab content — Flutter iOS UIKit `HomeAlertsPanel`.
-/// "Alerts & notifications" header, 5 toggle rows, then the Premium
-/// promo card with gradient text and feature bullets.
 struct HomeAlertsContent: View {
-    @State private var placeAlerts = false
-    @State private var startOfMovement = true
-    @State private var endOfMovement = true
-    @State private var safeDrive = false
-    @State private var lowBattery = false
+    @State private var vm = HomeAlertsViewModel()
 
     var onPremiumTap: (() -> Void)? = nil
 
@@ -21,19 +14,19 @@ struct HomeAlertsContent: View {
             VStack(spacing: 12) {
                 AlertToggleRow(asset: AppVectors.pin,
                                title: AppStrings.Home.alertPlaceAlerts,
-                               isOn: $placeAlerts)
+                               isOn: Binding(get: { vm.placeAlerts }, set: { vm.placeAlerts = $0 }))
                 AlertToggleRow(asset: AppVectors.turnRight,
                                title: AppStrings.Home.alertStartMovement,
-                               isOn: $startOfMovement)
+                               isOn: Binding(get: { vm.startOfMovement }, set: { vm.startOfMovement = $0 }))
                 AlertToggleRow(asset: AppVectors.turnLeft,
                                title: AppStrings.Home.alertEndMovement,
-                               isOn: $endOfMovement)
+                               isOn: Binding(get: { vm.endOfMovement }, set: { vm.endOfMovement = $0 }))
                 AlertToggleRow(asset: AppVectors.car,
                                title: AppStrings.Home.alertSafeDrive,
-                               isOn: $safeDrive)
+                               isOn: Binding(get: { vm.safeDrive }, set: { vm.safeDrive = $0 }))
                 AlertToggleRow(asset: AppVectors.lowBattery,
                                title: AppStrings.Home.alertLowBattery,
-                               isOn: $lowBattery)
+                               isOn: Binding(get: { vm.lowBattery }, set: { vm.lowBattery = $0 }))
             }
 
             Spacer().frame(height: 16)

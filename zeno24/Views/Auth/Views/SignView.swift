@@ -1,9 +1,8 @@
 import SwiftUI
 
-/// Step 1 of the auth flow — Figma node `1829:2776` / `5376:2602`.
 struct SignView: View {
     @Environment(AuthStore.self) private var store
-    @State private var didAppear = false
+    @State private var vm = SignViewModel()
     @FocusState private var focus: SignFocus?
 
     var body: some View {
@@ -29,14 +28,12 @@ struct SignView: View {
                 .padding(.bottom, 12)
             }
             .padding(.horizontal, 16)
-            .opacity(didAppear ? 1 : 0)
-            .offset(y: didAppear ? 0 : 8)
-            .animation(.easeOut(duration: 0.28), value: didAppear)
+            .opacity(vm.didAppear ? 1 : 0)
+            .offset(y: vm.didAppear ? 0 : 8)
+            .animation(.easeOut(duration: 0.28), value: vm.didAppear)
         }
         .task {
-            await Task.yield()
-            didAppear = true
-            try? await Task.sleep(for: .milliseconds(450))
+            await vm.onAppear(store: store)
             focus = store.contactMode == .phone ? .phone : .email
         }
         .onChange(of: store.contactMode) { _, mode in
