@@ -1,6 +1,5 @@
 import Foundation
 
-/// Auth API service — mirrors auth_service.dart
 final class AuthService {
     private let client: APIClient
 

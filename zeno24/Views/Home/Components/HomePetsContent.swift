@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Pets tab content — 1:1 with Figma node 4991:13776. "Pets" title above
-/// a 100pt gradient card with the spaniel asset on the trailing edge,
-/// two soft white glow circles, and a "Pair now" capsule CTA.
 struct HomePetsContent: View {
     var onPair: (() -> Void)? = nil
 
@@ -76,12 +73,8 @@ private struct PetsPromoCard: View {
     }
 }
 
-/// Soft white highlight circle matching Figma's Ellipse 236/237.
-/// SVG source: linear gradient white → white(0.6), wrapping group opacity 0.3.
 private struct GlowCircle: View {
     let size: CGFloat
-    /// When true, the gradient direction flips (white(0.6) top → white bottom),
-    /// matching Figma's `-scale-y-100` on Ellipse 237.
     let flipped: Bool
 
     var body: some View {

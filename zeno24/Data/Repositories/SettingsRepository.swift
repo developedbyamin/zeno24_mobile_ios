@@ -1,6 +1,5 @@
 import Foundation
 
-/// Settings repository — mirrors settings_repository.dart
 final class SettingsRepository {
     private let service: SettingsService
 

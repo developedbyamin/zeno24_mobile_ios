@@ -1,19 +1,5 @@
 import SwiftUI
 
-/// Owns all circle-related state, environment wiring, and overlay sheets
-/// for the authenticated shell. Wraps the rest of the UI as content so
-/// `MainView` (and future hosts) stay focused on their own concerns.
-///
-/// Provides to descendants:
-///   • `CirclesStore` via `.environment(circles)`
-///   • `\.circlePillNamespace` for the hero pill ↔ overlay morph
-///   • `\.circlePickerOpen` flag for layouts that hide while the picker is up
-///   • `\.openCirclePicker`, `\.openCreateCircle`, `\.openInviteFlow` actions
-///
-/// Renders on top of the content (in z-order):
-///   • CirclePickerSheet (circle list)
-///   • CreateCircleSheet (new circle flow)
-///   • RolePickerSheet → InviteMemberSheet (invite a member chain)
 struct CircleFlowHost<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
@@ -47,9 +33,6 @@ struct CircleFlowHost<Content: View>: View {
                         set: { if !$0 { rolePickerCircleId = nil } }
                     ),
                     circleTitle: title,
-                    // Role sheet now dismisses itself before firing these
-                    // callbacks, so the invite modal lands on a clean
-                    // root VC instead of racing the role dismiss.
                     onSelect: { _ in inviteCircleId = id },
                     onSkip: { inviteCircleId = id }
                 )

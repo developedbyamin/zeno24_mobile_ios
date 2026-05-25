@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// "Don't have WhatsApp? Use email" pill — Figma 2797:15244.
-/// Pops back to SignView and flips contact mode so the user can try
-/// the alternative channel.
 struct OtpModeToggle: View {
     @Bindable var store: AuthStore
 
@@ -34,6 +31,6 @@ struct OtpModeToggle: View {
         Haptics.selection()
         store.contactMode = .email
         store.phoneNumber = ""
-        store.goBack()      // pop OTP off the stack
+        store.goBack()
     }
 }

@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Two-line title — Figma node `1829:2781`.
-///   Both lines: 20pt SemiBold White, line-height ~normal, center.
 struct AuthTitle: View {
     let primary: String
     let secondary: String

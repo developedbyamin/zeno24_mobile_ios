@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Brand-colored splash that covers the screen for ~500ms while the video
-/// initializes. The wordmark animates a shimmer sweep — matches the
-/// Flutter `Shimmer.fromColors(Colors.white, Colors.white70)` look.
 struct OnboardSplashOverlay: View {
     let isVisible: Bool
 
@@ -21,16 +18,13 @@ struct OnboardSplashOverlay: View {
     }
 }
 
-/// Highlight sweep that slides across a piece of text. Uses a fixed-stop
-/// gradient and a translation animation — keeps stop locations stable
-/// (SwiftUI logs a runtime warning when locations go out of order).
 private struct ShimmerText: View {
     let text: String
     let font: Font
     let baseColor: Color
     let highlightColor: Color
 
-    @State private var offsetX: CGFloat = -1   // -1 = off-screen left, 1 = off-screen right
+    @State private var offsetX: CGFloat = -1
 
     var body: some View {
         Text(text)

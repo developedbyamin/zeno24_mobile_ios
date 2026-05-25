@@ -1,6 +1,5 @@
 import Foundation
 
-/// Injects Bearer token + common headers — mirrors dio_auth_interceptor.dart
 enum AuthInterceptor {
     static func apply(to request: inout URLRequest, tokens: AuthTokens) {
         if let token = tokens.accessToken {

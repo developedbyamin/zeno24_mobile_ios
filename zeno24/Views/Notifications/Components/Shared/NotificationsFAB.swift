@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Floating action button — Figma 5421:8679. Orange 40pt inner circle inside
-/// a 44pt white capsule with subtle shadow.
 struct NotificationsFAB: View {
     var action: (() -> Void)? = nil
 

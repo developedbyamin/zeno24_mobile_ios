@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Bottom-anchored gradient that fades the video into black so the
-/// text/CTA stay readable. Reproduces the Flutter version: occupies the
-/// bottom third of the screen with stops `0.0 → 0.8771`.
 struct OnboardBottomGradient: View {
     var body: some View {
         GeometryReader { proxy in

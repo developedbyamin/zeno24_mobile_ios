@@ -1,17 +1,5 @@
 import SwiftUI
 
-/// Staggered entrance shared by all auth screens.
-/// Each step starts 60 ms after the previous one, runs for 320 ms,
-/// and combines a 12-px upward slide with an opacity fade.
-///
-/// Usage:
-///     @State private var didAppear = false
-///
-///     content
-///         .authEntrance(.header, isVisible: didAppear)
-///         .authEntrance(.icon,   isVisible: didAppear)
-///         …
-///         .onAppear { didAppear = true }
 enum AuthEntranceStep: Double, CaseIterable {
     case header = 0.00
     case icon   = 0.06

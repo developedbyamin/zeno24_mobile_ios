@@ -1,6 +1,5 @@
 import Foundation
 
-/// API-layer errors — mirrors lib/core/utils/network/errors/failure_handler.dart
 enum APIError: Error, LocalizedError {
     case invalidURL
     case invalidResponse
@@ -46,7 +45,5 @@ enum APIError: Error, LocalizedError {
 }
 
 extension Notification.Name {
-    /// Posted when the backend returns `error_code == 1001` — clients should
-    /// reset their auth state and route back to the unauthenticated flow.
     static let sessionExpired = Notification.Name("com.zeno24.session.expired")
 }

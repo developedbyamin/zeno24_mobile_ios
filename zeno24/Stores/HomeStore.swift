@@ -1,7 +1,6 @@
 import Foundation
 import CoreLocation
 
-/// Home / map screen state — mirrors home_action_controller.dart + map_type_provider.dart
 @MainActor
 @Observable
 final class HomeStore {

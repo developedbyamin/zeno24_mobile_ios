@@ -1,15 +1,5 @@
 import SwiftUI
 
-/// Mode toggle — Figma node `4076:6626`.
-///
-/// Outer pill (glass):
-///   • bg `rgba(255,255,255,0.12)`, border `rgba(255,255,255,0.16)`
-///   • corner 50, padding 10/6, gap 8
-///   • Label "Don't have WhatsApp?" / "Don't have Email?" — 14pt SemiBold White
-///
-/// Inner pill (solid white):
-///   • bg white, corner 50, padding 12/6
-///   • Label "Use email" / "Whatsapp" — 12pt Bold #121212
 struct SignModeToggle: View {
     @Bindable var store: AuthStore
     @FocusState.Binding var focus: SignFocus?

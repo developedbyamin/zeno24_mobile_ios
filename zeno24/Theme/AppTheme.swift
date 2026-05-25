@@ -1,10 +1,5 @@
 import SwiftUI
 
-/// Centralised design-system theme. Lives in `@Environment(\.appTheme)`
-/// so every view picks up the same tokens without prop-drilling.
-///
-/// Adapting to light / dark is automatic — each token is a `Color` built
-/// with `init(light:dark:)` which resolves at draw time.
 struct AppTheme {
     var palette: Palette
     var typography: Typography
@@ -23,26 +18,21 @@ struct AppTheme {
 
 extension AppTheme {
     struct Palette {
-        // Brand
         var brand: Color
         var brandDeep: Color
-        var onBrand: Color                // text/icon over brand color
+        var onBrand: Color
 
-        // Surfaces
-        var background: Color             // page bg
-        var surface: Color                // card / sheet
-        var surfaceElevated: Color        // hover / pressed bg
+        var background: Color
+        var surface: Color
+        var surfaceElevated: Color
 
-        // Labels
         var labelPrimary: Color
         var labelSecondary: Color
         var labelTertiary: Color
 
-        // Lines
         var separator: Color
         var border: Color
 
-        // Status
         var success: Color
         var warning: Color
         var destructive: Color
@@ -135,9 +125,6 @@ private struct AppThemeKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    /// Active design-system theme. Inject at the root once
-    /// (`.environment(\.appTheme, …)`); read inside any view with
-    /// `@Environment(\.appTheme) private var theme`.
     var appTheme: AppTheme {
         get { self[AppThemeKey.self] }
         set { self[AppThemeKey.self] = newValue }

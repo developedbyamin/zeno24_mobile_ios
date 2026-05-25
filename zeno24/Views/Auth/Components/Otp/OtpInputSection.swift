@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Field + shake-on-error wrapper. The shake animates the offset while
-/// `triggerShake` flips — same idea as Flutter's `AnimationController.forward(from: 0)`.
 struct OtpInputSection: View {
     @Bindable var store: AuthStore
     @FocusState.Binding var focus: Bool
@@ -26,7 +24,6 @@ struct OtpInputSection: View {
             performShake()
         }
         .onChange(of: store.otpCode) { _, _ in
-            // Typing again clears the error.
             store.clearOtpError()
         }
     }

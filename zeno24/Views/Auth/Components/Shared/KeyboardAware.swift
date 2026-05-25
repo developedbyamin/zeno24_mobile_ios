@@ -1,8 +1,6 @@
 import SwiftUI
 import Combine
 
-/// Observes keyboard frame so the bottom CTA can lift in sync with the
-/// keyboard — same behavior as Flutter's `MediaQuery.viewInsets.bottom`.
 @MainActor
 @Observable
 final class KeyboardObserver {

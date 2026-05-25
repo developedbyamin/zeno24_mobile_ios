@@ -2,7 +2,6 @@ import Foundation
 import CoreLocation
 import UserNotifications
 
-/// Runtime permission state — mirrors permissions_provider.dart
 @MainActor
 @Observable
 final class PermissionsStore: NSObject {

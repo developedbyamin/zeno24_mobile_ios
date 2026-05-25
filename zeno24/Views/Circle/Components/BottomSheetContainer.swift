@@ -1,22 +1,6 @@
 import SwiftUI
 import UIKit
 
-/// Flutter `showModalBottomSheet` equivalent built on top of the existing
-/// UIKit pattern (`HomeInviteCircleSheetContainerVC` from the Flutter iOS
-/// runner). Internally the SwiftUI content is hosted inside a UIKit
-/// `BottomSheetCardContainerVC` presented `.overFullScreen` — that gives
-/// us:
-///
-///   • Native `UIPanGestureRecognizer` drag-to-dismiss that composes
-///     correctly with child Button taps (no SwiftUI gesture priority
-///     gymnastics).
-///   • A real UIKit modal so the gradient/background bleeds to the screen
-///     edge below the home indicator without safe-area workarounds.
-///   • Spring slide-up / ease-out slide-down matching the Flutter port.
-///
-/// API surface stays SwiftUI-native: mount this view inside a parent
-/// ZStack via `if isPresented { BottomSheetContainer(...) }` and the
-/// representable below drives the UIKit presentation lifecycle.
 struct BottomSheetContainer<Content, Fill>: View where Content: View, Fill: ShapeStyle {
     @Binding var isPresented: Bool
     var topCornerRadius: CGFloat = 30
@@ -65,13 +49,8 @@ struct BottomSheetDismissAction {
     private let action: (@escaping () -> Void) -> Void
     init(_ action: @escaping (@escaping () -> Void) -> Void) { self.action = action }
 
-    /// Dismiss without a completion callback.
     func callAsFunction() { action({}) }
 
-    /// Dismiss and run `completion` after the slide-down animation
-    /// + UIKit dismissal finish. Use this when you need to open a
-    /// follow-on sheet (e.g. role → invite) so the new modal isn't
-    /// presented on top of the still-dismissing card.
     func callAsFunction(then completion: @escaping () -> Void) { action(completion) }
 }
 
@@ -119,8 +98,6 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
             backdropOpacity: backdropOpacity,
             buildContent: buildContent,
             onDismissed: {
-                // Avoid feedback loops: only flip if SwiftUI still thinks
-                // the sheet is presented.
                 if isPresented { isPresented = false }
             }
         )
@@ -185,8 +162,6 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
                 isDismissing = true
                 card.animatedDismiss()
             } else {
-                // Binding has propagated back to `false` and the card is
-                // gone — safe to allow future presentations again.
                 isDismissing = false
             }
         }
@@ -199,14 +174,14 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
             isDismissing = false
         }
 
-        /// SwiftUI can run `updateUIViewController` before the host view
-        /// is attached to a window. Scene-based lookup + retry survives
-        /// that race so the modal actually appears.
-        ///
-        /// Additionally retries while the topmost presenter is mid-
-        /// dismiss/present — without this, the follow-on invite sheet
-        /// could land on a still-dismissing role card and end up nested
-        /// inside it (which kept the role card alive behind the invite).
+        // SwiftUI can run `updateUIViewController` before the host view
+        // is attached to a window. Scene-based lookup + retry survives
+        // that race so the modal actually appears.
+        //
+        // Additionally retries while the topmost presenter is mid-
+        // dismiss/present — without this, the follow-on invite sheet
+        // could land on a still-dismissing role card and end up nested
+        // inside it.
         private static func present(card: BottomSheetCardContainerVC, attempts: Int) {
             DispatchQueue.main.async {
                 if let presenter = topmostPresenter(),
@@ -255,8 +230,7 @@ private final class _BottomSheetTriggerVC: UIViewController {
     }
 }
 
-// MARK: - UIKit card container (port of HomeInviteCircleSheetContainerVC,
-// genericized to host any UIViewController content).
+// MARK: - UIKit card container
 
 final class BottomSheetCardContainerVC: UIViewController {
     private let content: UIViewController

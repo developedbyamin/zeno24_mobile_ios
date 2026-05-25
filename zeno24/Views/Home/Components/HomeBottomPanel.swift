@@ -1,20 +1,8 @@
 import SwiftUI
 
-/// Persistent bottom sheet — SwiftUI port of the Flutter iOS UIKit
-/// `HomeBottomSheet` + `HomeMembersList`. All four sections live in one
-/// long vertical scroll; the tab row both reflects and controls the
-/// current scroll position:
-///
-///   • Tap a tab → scrolls the content to that section's anchor.
-///   • Drag the content past a section's anchor → tab updates to that section.
-///   • Drag interactions also drive the 3-detent sheet (collapsed / half /
-///     expanded) with rubber-band + spring snap.
 struct HomeBottomPanel: View {
     let store: HomeStore
     let members: [MarkerModel]
-    /// Fires when the sheet position changes with (sheetTopY, normalized).
-    /// sheetTopY — the panel's top edge Y in the shared ZStack coordinate space.
-    /// normalized — 0 = collapsed, 0.5 = half-expanded, 1 = fully expanded.
     var onSheetOffset: ((_ sheetTopY: CGFloat, _ normalized: CGFloat) -> Void)? = nil
 
     @State private var vm = HomeBottomPanelViewModel()
@@ -38,12 +26,10 @@ struct HomeBottomPanel: View {
                 .offset(y: liveY)
                 .gesture(unifiedGesture(height: height, cardHeight: visibleCardHeight))
                 .onChange(of: liveY) { oldValue, newValue in
-                    // Throttle updates by only firing when change is significant
                     guard abs(newValue - oldValue) > 0.5 else { return }
                     onSheetOffset?(newValue, normalized)
                 }
                 .onChange(of: normalized) { oldValue, newValue in
-                    // Throttle updates by only firing when change is significant
                     guard abs(newValue - oldValue) > 0.01 else { return }
                     onSheetOffset?(liveY, newValue)
                 }
@@ -53,7 +39,6 @@ struct HomeBottomPanel: View {
         }
         .background(
             GeometryReader { g in
-                // Fix: capture real safe area so collapsed detent clears the home indicator.
                 Color.clear.task(id: g.safeAreaInsets.bottom) {
                     vm.bottomInset = g.safeAreaInsets.bottom
                 }
@@ -100,9 +85,8 @@ struct HomeBottomPanel: View {
             .padding(.horizontal, 10)
         }
         .onPreferenceChange(HeaderHeightKey.self) { h in
-            // Throttle header height updates to reduce re-renders
-            if h > 0 && abs(h - vm.headerHeight) > 0.5 { 
-                vm.headerHeight = h 
+            if h > 0 && abs(h - vm.headerHeight) > 0.5 {
+                vm.headerHeight = h
             }
         }
         .frame(maxWidth: .infinity)
@@ -117,10 +101,6 @@ struct HomeBottomPanel: View {
         .contentShape(Rectangle())
     }
 
-    /// All four sections in one vertical stack. Each section reports its
-    /// Y origin (within the `scroll` coordinate space) so the tab row can
-    /// jump to it and so the active tab can be inferred from the current
-    /// scroll position.
     private var unifiedScrollContent: some View {
         VStack(spacing: 0) {
             anchored(.members) { HomeMembersContent(members: members) }
@@ -131,7 +111,6 @@ struct HomeBottomPanel: View {
         }
         .coordinateSpace(name: Self.scrollSpace)
         .onPreferenceChange(SectionAnchorKey.self) { anchors in
-            // Only update if there's a meaningful change to prevent re-renders
             let hasChanges = anchors.contains { key, value in
                 guard let existing = vm.sectionAnchors[key] else { return true }
                 return abs(existing - value) > 0.5
@@ -184,8 +163,6 @@ struct HomeBottomPanel: View {
 
 // MARK: - Stable background
 
-/// Stateless wrapper so SwiftUI can diff the material/gradient layer as
-/// unchanged across drag-driven body updates of the parent panel.
 private struct PanelBackground: View {
     var body: some View {
         ZStack {

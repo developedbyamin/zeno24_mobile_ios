@@ -9,7 +9,6 @@ struct KidsScreenTimeCard: View {
                     .foregroundStyle(AppColors.mainBlack)
                 Spacer()
                 Button {
-                    // TODO: set limits
                 } label: {
                     Text(AppStrings.Kids.setLimits)
                         .font(AppTypography.bodySmSemiBold)

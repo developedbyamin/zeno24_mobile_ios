@@ -1,15 +1,7 @@
 import SwiftUI
 
-/// Bottom navigation bar — Figma `4991:14591`.
-///
-/// Five tabs: Home / Kids / Driving / Health / Premium. Active tab uses
-/// the brand color (#9171F4); inactive labels use secondary black.
-/// Container is a translucent material with a hairline top border —
-/// matches `backdrop-blur(12) + bg-white-76%` from Figma.
 struct MainTabBar: View {
     @Binding var selection: AppTab
-    /// Called when the user taps the already-selected tab. Use it to
-    /// pop the current tab's NavigationStack to root (iOS convention).
     var onReselect: (AppTab) -> Void = { _ in }
 
     var body: some View {
@@ -26,8 +18,6 @@ struct MainTabBar: View {
         .padding(.top, 4)
         .padding(.horizontal, 12)
         .background {
-            // Material extends below into the home-indicator zone so the
-            // map / underlying content doesn't peek through the gap.
             Rectangle()
                 .fill(.regularMaterial)
                 .ignoresSafeArea(.container, edges: .bottom)

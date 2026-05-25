@@ -1,6 +1,5 @@
 import Foundation
 
-/// Phone formatting / parsing — 1:1 mirror of `phone_formatting_utils.dart`.
 enum PhoneFormattingUtils {
     static func sanitize(_ raw: String) -> String {
         raw.filter(\.isNumber)
@@ -11,8 +10,6 @@ enum PhoneFormattingUtils {
         return digits.count >= 7 && digits.count <= 15
     }
 
-    /// Country-aware spacing — `"70 383 12 34"` for AZ etc.
-    /// `digits` must already be sanitized (digits-only).
     static func format(_ digits: String, isoCode: String) -> String {
         let n = digits.count
         func sub(_ from: Int, _ to: Int? = nil) -> String {
@@ -96,8 +93,6 @@ enum PhoneFormattingUtils {
         }
     }
 
-    /// Per-country digit cap — caps the raw digit count, not the formatted
-    /// string length.
     static func maxLength(isoCode: String) -> Int {
         switch isoCode {
         case "AZ": return 9

@@ -50,7 +50,6 @@ struct KidsPromoActionsCard: View {
                 Spacer(minLength: 0)
 
                 Button {
-                    // TODO: upgrade
                 } label: {
                     Text(AppStrings.Kids.heroCTA)
                         .font(AppTypography.bodyXsBold)

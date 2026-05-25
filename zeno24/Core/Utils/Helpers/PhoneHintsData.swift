@@ -1,7 +1,5 @@
 import Foundation
 
-/// Per-country phone number placeholders — 1:1 mirror of
-/// lib/constants/phone_hints_data.dart.
 enum PhoneHintsData {
     static let placeholders: [String: String] = [
         "AF": "70 123 4567",
@@ -181,7 +179,6 @@ enum PhoneHintsData {
         "ZW": "71 234 5678",
     ]
 
-    /// Mirrors Flutter `PhoneHintsData.getHint(isoCode)`.
     static func getHint(_ isoCode: String) -> String {
         placeholders[isoCode] ?? "123 456 7890"
     }

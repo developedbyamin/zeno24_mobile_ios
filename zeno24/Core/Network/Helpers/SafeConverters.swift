@@ -1,6 +1,5 @@
 import Foundation
 
-/// Safe type conversions for JSON values — mirrors safe_converters.dart
 enum SafeConverters {
     static func toInt(_ value: Any?) -> Int? {
         if let v = value as? Int { return v }

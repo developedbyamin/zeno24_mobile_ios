@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Animation tokens — single source of truth for durations & curves.
 enum AppMotion {
     static let fast    = Animation.easeOut(duration: 0.15)
     static let medium  = Animation.easeInOut(duration: 0.25)

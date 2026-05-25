@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Vertical brand gradient used on every auth screen.
-/// Mirrors `AppColors.mainGradient` with the same 3-stop positions.
 struct AuthGradientBackground: View {
     var body: some View {
         LinearGradient(

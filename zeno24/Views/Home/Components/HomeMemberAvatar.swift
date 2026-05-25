@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// 56×56 avatar circle with a battery pill anchored to its bottom edge
-/// (extends 10pt below the circle) — SwiftUI port of Flutter iOS UIKit
-/// `HomeMemberCell` avatar layout.
 struct HomeMemberAvatar: View {
     let avatarUrl: String
     let fallbackInitial: String

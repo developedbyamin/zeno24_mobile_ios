@@ -100,7 +100,6 @@ struct HealthDailyStepsCard: View {
 
     private var changeGoalPill: some View {
         Button {
-            // TODO: change goal
         } label: {
             HStack(spacing: 4) {
                 Text(AppStrings.Health.changeGoal)
@@ -195,7 +194,6 @@ struct HealthDailyStepsCard: View {
                 Spacer(minLength: 0)
 
                 Button {
-                    // TODO: create habit
                 } label: {
                     Text(AppStrings.Health.createHabit)
                         .font(AppTypography.bodyXsBold)

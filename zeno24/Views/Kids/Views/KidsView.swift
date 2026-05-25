@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Kids "Parental control" — 1:1 port of Figma node 6937:6052.
 struct KidsView: View {
     @Environment(\.tabBarHeight) private var tabBarHeight
 

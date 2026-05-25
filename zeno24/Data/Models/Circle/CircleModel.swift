@@ -4,7 +4,6 @@ struct CircleModel: Codable, Identifiable, Hashable {
     let id: String
     let name: String
     let memberCount: Int
-    /// 1 when this circle is the user's active selection (from `/circles/list`).
     let isCurrent: Bool
     let code: String?
     let avatarUrl: String?

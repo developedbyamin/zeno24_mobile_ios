@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Theme mode state — mirrors theme_provider.dart
 @MainActor
 @Observable
 final class ThemeStore {

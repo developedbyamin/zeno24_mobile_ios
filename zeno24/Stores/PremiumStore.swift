@@ -1,6 +1,5 @@
 import Foundation
 
-/// Premium / paywall state — mirrors premium_sheet_controller.dart
 @MainActor
 @Observable
 final class PremiumStore {

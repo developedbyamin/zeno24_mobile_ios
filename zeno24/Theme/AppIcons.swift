@@ -1,8 +1,5 @@
 import Foundation
 
-/// SF Symbol names for tab bars and system-style chrome. The brand-specific
-/// vector glyphs (back arrow, apple logo, google logo etc.) live in
-/// `AppVectors` — this enum holds only Apple's built-in symbols.
 enum AppIcons {
     static let home          = "house"
     static let homeFill      = "house.fill"

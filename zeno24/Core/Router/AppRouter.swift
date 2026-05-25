@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Centralized navigation state — mirrors app_router.dart (go_router).
-/// Provides a single NavigationPath; views push/pop via `router.push(...)`.
 @MainActor
 @Observable
 final class AppRouter {
@@ -26,7 +24,6 @@ final class AppRouter {
     }
 }
 
-/// Builds the destination view for a given AppRoute.
 @MainActor
 struct AppRouteBuilder {
     @ViewBuilder

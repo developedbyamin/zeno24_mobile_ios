@@ -2,10 +2,6 @@ import SwiftUI
 
 // MARK: - Auth text field
 
-/// White-on-gradient TextField style used by every auth-flow input.
-/// Apply via `.authTextField()` and provide the placeholder via
-/// `placeholder:` (lets us draw it ourselves — `prompt:` ignores
-/// custom opacity on iOS).
 struct AuthTextFieldStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -18,15 +14,14 @@ struct AuthTextFieldStyle: ViewModifier {
 }
 
 extension View {
-    /// Apply the shared auth-screen TextField styling.
     func authTextField() -> some View { modifier(AuthTextFieldStyle()) }
 }
 
 // MARK: - Placeholder overlay helper
 
-/// Draws a white/54 placeholder *behind* a TextField when its bound
-/// value is empty — the only reliable way to control placeholder colour
-/// independently of `prompt:` on current iOS.
+// Draws a white/54 placeholder *behind* a TextField when its bound value is
+// empty — the only reliable way to control placeholder colour independently
+// of `prompt:` on current iOS.
 struct AuthPlaceholder: ViewModifier {
     let placeholder: String
     let isEmpty: Bool
@@ -54,7 +49,6 @@ struct AuthPlaceholder: ViewModifier {
 }
 
 extension View {
-    /// Overlay a 54%-white placeholder over a TextField.
     func authPlaceholder(_ text: String,
                         when isEmpty: Bool,
                         alignment: HorizontalAlignment = .center) -> some View {
@@ -64,8 +58,6 @@ extension View {
 
 // MARK: - Default themed TextField (light/dark surface)
 
-/// Default text field used outside the auth flow — adapts to the active
-/// `AppTheme.palette`. Background is `surface`, text uses `labelPrimary`.
 struct ThemedTextFieldStyle: ViewModifier {
     @Environment(\.appTheme) private var theme
 
@@ -82,6 +74,5 @@ struct ThemedTextFieldStyle: ViewModifier {
 }
 
 extension View {
-    /// Apply the default scheme-aware TextField look.
     func themedTextField() -> some View { modifier(ThemedTextFieldStyle()) }
 }

@@ -1,9 +1,8 @@
 import Foundation
 
-/// API endpoint paths — mirrors lib/core/network/api_paths.dart
 enum APIPaths {
-    /// Mirrors Flutter `test.env` → `BASE_URL`. Plain HTTP requires the
-    /// matching `NSAppTransportSecurity` exception in Info.plist.
+    /// Plain HTTP requires the matching `NSAppTransportSecurity`
+    /// exception in Info.plist.
     static let baseURL = "http://46.224.105.203:84"
 
     // MARK: Auth

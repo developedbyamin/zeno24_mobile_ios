@@ -1,11 +1,5 @@
 import SwiftUI
 
-/// Borderless phone input — Figma node `1829:2782`.
-///
-/// Row centered (Flutter `mainAxisAlignment.center, mainAxisSize.min`):
-///   ├─ Country chip (flag, "+994" 20pt SemiBold, chevron 20×20)
-///   ├─ 1px white vertical divider (height 20)
-///   └─ Phone digits / hint (20pt SemiBold, white/54 when empty)
 struct SignPhoneInput: View {
     @Bindable var store: AuthStore
     @FocusState.Binding var focus: SignFocus?
@@ -43,7 +37,7 @@ struct SignPhoneInput: View {
                 focus: $focus
             )
         }
-        .frame(maxWidth: .infinity)            // centred horizontally
+        .frame(maxWidth: .infinity)
         .sheet(isPresented: $showCountryPicker) {
             DialCodeSheet(selected: $store.selectedCountry) {
                 showCountryPicker = false

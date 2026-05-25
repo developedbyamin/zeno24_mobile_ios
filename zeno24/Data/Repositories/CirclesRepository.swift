@@ -1,6 +1,5 @@
 import Foundation
 
-/// Circles repository — mirrors circles_repository.dart
 final class CirclesRepository {
     private let service: CirclesService
 
@@ -13,10 +12,6 @@ final class CirclesRepository {
         return response.data ?? []
     }
 
-    /// Returns a freshly built `CircleModel` synthesised from the request +
-    /// the server-issued id. Backend's `/circles/add` only returns the id; a
-    /// subsequent `/circles/list` (driven by `CirclesStore.add`) hydrates the
-    /// rest of the fields.
     func add(name: String, avatarUrl: String? = nil) async throws -> CircleModel {
         let response = try await service.add(.init(title: name, avatarUrl: avatarUrl))
         guard let id = response.data?.id else { throw APIError.invalidResponse }

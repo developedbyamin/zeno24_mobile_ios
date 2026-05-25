@@ -1,23 +1,16 @@
 import SwiftUI
 
-/// Notification row — Figma 5421:8154 "Profile notifications".
-/// 48pt avatar (image or colored circle + first letter) with a 24pt colored
-/// status badge overlaid bottom-right.
 struct NotificationRow: View {
     let title: String
     let time: String
     let preview: String
-    /// When non-nil, displays an image asset as the avatar. When nil, shows
-    /// `title.prefix(1)` on `avatarBackground`.
     let avatarAsset: String?
     let avatarBackground: Color
-    /// Color of the bottom-right status badge.
     let badgeColor: Color
-    /// Asset name OR SF Symbol name used inside the badge.
     let badgeAsset: BadgeAsset
 
     enum BadgeAsset {
-        case vector(String)   // AppVectors.* name (template)
+        case vector(String)
         case systemImage(String)
     }
 

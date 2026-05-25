@@ -1,9 +1,5 @@
 import SwiftUI
 
-/// Locale state holder. Drives both `Environment.locale` (for SwiftUI's
-/// built-in `LocalizedStringKey` lookups) and `LocalizedBundle`
-/// (which intercepts every `NSLocalizedString` / `String(localized:)`
-/// call so the app can switch languages without a system-Settings trip).
 @MainActor
 @Observable
 final class LocaleStore {
@@ -25,8 +21,6 @@ final class LocaleStore {
             ?? Locale.current.language.languageCode?.identifier
             ?? AppLanguage.english.rawValue
         self.languageCode = resolved
-        // Pre-load the bundle for the initial language so the very first
-        // string lookup already returns the right translation.
         LocalizedBundle.setLanguage(resolved)
     }
 

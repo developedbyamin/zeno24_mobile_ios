@@ -1,6 +1,5 @@
 import Foundation
 
-/// String helpers — mirrors text_helpers.dart
 enum TextHelpers {
     static func initials(from name: String?) -> String {
         guard let parts = name?.split(separator: " "), !parts.isEmpty else { return "?" }

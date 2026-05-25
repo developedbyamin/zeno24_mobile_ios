@@ -1,12 +1,5 @@
 import SwiftUI
 
-/// 4-tab pill row — SwiftUI port of Flutter iOS `HomeSheetTabRow`.
-///
-/// `active` reflects the currently visible scroll section (set by the
-/// parent's scroll inference); `onTap` fires when the user taps a pill —
-/// the parent reacts by scrolling the content to that section's anchor.
-/// Selected pill takes its natural width (icon + label), unselected
-/// pills share the remaining row equally with a spring transition.
 struct HomeNavRow: View {
     let active: HomeBottomSection
     let onTap: (HomeBottomSection) -> Void

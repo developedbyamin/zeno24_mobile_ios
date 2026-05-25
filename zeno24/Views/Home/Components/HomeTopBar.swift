@@ -1,17 +1,5 @@
 import SwiftUI
 
-/// Top bar overlay above the map — SwiftUI port of the Flutter iOS UIKit
-/// `HomeTopBar`. Layout:
-///
-///   [settings (40)]   [circle pill (flex)]   [notification (40)]
-///                                            [    chat     (40)]
-///
-/// • Settings, pill, and notification share the same top edge (12 pt from
-///   the bar's top); chat stacks below notification with a 4 pt gap.
-/// • The pill expands to fill the horizontal space between settings and
-///   the notification/chat column.
-/// • Notification and chat carry a "2" badge that overlaps their
-///   top-right corner.
 struct HomeTopBar: View {
     let circleTitle: String
     var opacity: CGFloat = 1.0
@@ -63,8 +51,6 @@ struct HomeTopBar: View {
 
 // MARK: - Glass circle button
 
-/// 40×40 glass-circle button with optional top-right badge. Matches
-/// UIKit `HomeGlassCircleButton`.
 private struct HomeGlassCircleButton: View {
     let asset: String
     var badgeCount: Int? = nil
@@ -94,8 +80,6 @@ private struct HomeGlassCircleButton: View {
 
 // MARK: - Circle pill
 
-/// Glass pill with leading icon, centered title, and trailing arrow.
-/// Matches UIKit `HomeCirclePill`.
 private struct HomeCirclePill: View {
     let title: String
     var action: (() -> Void)?

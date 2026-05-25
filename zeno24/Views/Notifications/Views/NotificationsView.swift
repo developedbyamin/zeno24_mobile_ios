@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Notifications inbox — 1:1 port of Figma node 5421:8154.
 struct NotificationsView: View {
     @Environment(\.tabBarHeight) private var tabBarHeight
 

@@ -1,8 +1,5 @@
 import Foundation
 
-/// Singleton-style service locator (mirrors lib/service_locator.dart).
-/// Prefer @Environment injection in views; this is for non-view layers
-/// (services/repositories/stores) that need shared instances.
 @MainActor
 final class ServiceLocator {
     static let shared = ServiceLocator()

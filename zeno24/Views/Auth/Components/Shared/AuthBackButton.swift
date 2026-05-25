@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// 36×36 glass square with a back-arrow vector — Figma node `3714:6402`.
 struct AuthBackButton: View {
     let action: () -> Void
 

@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Centralized presenter for sheets / alerts — mirrors modal_service.dart
 @MainActor
 @Observable
 final class ModalService {

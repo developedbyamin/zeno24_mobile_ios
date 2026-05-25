@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Reusable primary button — mirrors custom_button.dart
 struct CustomButton: View {
     let title: String
     var icon: String? = nil

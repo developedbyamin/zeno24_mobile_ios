@@ -2,25 +2,11 @@ import SwiftUI
 import CoreImage.CIFilterBuiltins
 import UIKit
 
-/// Purple-gradient bottom sheet for inviting a circle member — 1:1
-/// SwiftUI port of the Flutter `HomeInviteCircleSheet` (Figma 4991:17798).
-///
-/// Lifecycle:
-///   • Opens in loading state (QR + code shimmer skeletons).
-///   • Caller drives `applyPayload(...)` once `/circles/invite` resolves.
-///   • Tap the code box to copy + flash "Copied 🎉 / This code is valid for
-///     2 hours" for 3 s.
-///   • Primary CTA: "Send Invite Code" — opens iOS share sheet with link.
-///   • Secondary CTA: "Send later" — dismisses without sharing.
 struct InviteMemberSheet: View {
     @Binding var isPresented: Bool
     let circleId: String
     let avatarUrl: String?
-    /// Async invite fetcher — MainView wires this to `CirclesStore.invite`
-    /// so the sheet does not need to forward `CirclesStore` across the
-    /// UIHostingController boundary.
     let invite: (String) async throws -> InviteCircleResponseModel
-    /// Optional pre-filled payload (e.g. cached invite from previous open).
     var initialCode: String?
     var initialQRBase64: String?
     var initialLink: String?
@@ -52,8 +38,7 @@ struct InviteMemberSheet: View {
     )
 }
 
-// MARK: - Panel (mounted inside BottomSheetContainer so it reads the
-// correct `\.dismissBottomSheet` environment value)
+// MARK: - Panel
 
 private struct InvitePanel: View {
     let circleId: String
@@ -118,7 +103,6 @@ private struct InvitePanel: View {
 
     private var qrCard: some View {
         ZStack {
-            // White inner card
             ZStack {
                 if let img = qrImage {
                     Image(uiImage: img)
@@ -131,7 +115,6 @@ private struct InvitePanel: View {
                         .frame(width: 236, height: 236)
                 }
 
-                // Avatar ring in the QR center (Figma)
                 ZStack {
                     Circle().fill(Color(hex: 0xF8F7FF))
                         .frame(width: 56, height: 56)
@@ -368,7 +351,7 @@ private struct InvitePanel: View {
     }
 }
 
-// MARK: - Skeleton (gray base + sliding white sweep, 1.2 s loop)
+// MARK: - Skeleton
 
 private struct Skeleton: View {
     @State private var animating = false

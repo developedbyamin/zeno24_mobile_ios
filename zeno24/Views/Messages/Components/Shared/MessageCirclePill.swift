@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Floating dark "Circle: Family" pill — Figma 4991:18818.
 struct MessageCirclePill: View {
     @Environment(\.openCirclePicker) private var openPicker
     @Environment(CirclesStore.self) private var circles

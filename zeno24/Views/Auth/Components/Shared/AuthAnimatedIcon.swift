@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// 81×81 glass square holding an animated emoji image —
-/// Figma node `1829:2779`. Cross-fades when the source changes
-/// (envelope ⇄ phone when the user toggles modes).
 struct AuthAnimatedIcon: View {
     enum Source: Equatable, Hashable {
         case asset(String)

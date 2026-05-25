@@ -3,7 +3,6 @@ import SwiftUI
 struct HealthMovingHistoryCard: View {
     var body: some View {
         VStack(spacing: 12) {
-            // Purple sub-header
             Text(AppStrings.Health.movingHistory)
                 .font(AppTypography.bodyXsSemiBold)
                 .foregroundStyle(Color(hex: 0x8B98A8))
@@ -53,7 +52,6 @@ struct HealthMovingHistoryCard: View {
                 .clipped()
                 .background(Color(hex: 0xF6F7F9))
 
-            // Polyline (purple dashed line approximation)
             Path { path in
                 path.move(to: CGPoint(x: 67, y: 30))
                 path.addCurve(
@@ -64,7 +62,6 @@ struct HealthMovingHistoryCard: View {
             }
             .stroke(AppColors.brand, style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [6, 4]))
 
-            // Start glow + end glow
             Circle().fill(AppColors.brand).frame(width: 12, height: 12)
                 .overlay(Circle().stroke(AppColors.brand.opacity(0.3), lineWidth: 8))
                 .position(x: 74, y: 36)
@@ -72,7 +69,6 @@ struct HealthMovingHistoryCard: View {
                 .overlay(Circle().stroke(Color(hex: 0xFF5F03).opacity(0.3), lineWidth: 8))
                 .position(x: 246, y: 130)
 
-            // Get Alerts chip top-left
             if showAlerts {
                 HStack(spacing: 6) {
                     ZStack {
@@ -94,7 +90,6 @@ struct HealthMovingHistoryCard: View {
                 .position(x: 70, y: 22)
             }
 
-            // Bottom chips
             HStack(spacing: 8) {
                 if let leftChip {
                     chipPill(image: leftChip.image, text: leftChip.text)

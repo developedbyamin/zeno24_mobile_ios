@@ -1,12 +1,5 @@
 import SwiftUI
 
-/// "Choose Role" bottom sheet — 1:1 SwiftUI port of the Flutter
-/// `HomeRolePickerSheet` (Figma 8970:16217 header + role list).
-///
-/// Two white sections separated by a 4 pt gray gap:
-///   • Header section: drag handle + 32 pt back chip + "Choose Role" title.
-///   • Roles section: 7 brand-outlined role pills + filled "Skip now role"
-///     pill + a dark "Circle: <name>" floating pill.
 struct RolePickerSheet: View {
     @Binding var isPresented: Bool
     let circleTitle: String
@@ -28,8 +21,7 @@ struct RolePickerSheet: View {
     }
 }
 
-// MARK: - Panel (mounted inside BottomSheetContainer so it reads the
-// correct `\.dismissBottomSheet` environment value)
+// MARK: - Panel
 
 private struct RolePanel: View {
     let circleTitle: String
@@ -60,7 +52,6 @@ private struct RolePanel: View {
 
     private var headerSection: some View {
         VStack(spacing: 12) {
-            // Drag indicator (48 × 5).
             Capsule()
                 .fill(Color(hex: 0xF2F5F9))
                 .frame(width: 48, height: 5)

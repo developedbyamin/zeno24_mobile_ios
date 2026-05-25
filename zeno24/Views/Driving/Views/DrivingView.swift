@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Driving safety dashboard — 1:1 port of Figma node 6406:2183.
 struct DrivingView: View {
     @State private var segment: DrivingHeaderHero.Segment = .today
     @Environment(\.tabBarHeight) private var tabBarHeight

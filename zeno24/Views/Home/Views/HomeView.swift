@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Map-based home screen — hosts the UIKit `NativeMapView` ported from
-/// the Flutter project. Mirrors `lib/src/presentation/home/views/ios_views_home_view.dart`
-/// minus the Flutter platform channels.
 struct HomeView: View {
     @Binding var mapType: HomeMapType
     @Binding var showMapTypePicker: Bool
@@ -15,24 +12,18 @@ struct HomeView: View {
     @State private var sheetTopY: CGFloat = 0
     @State private var normalizedSheetOffset: CGFloat = 0
     
-    /// Computed opacity for top bar — fades out smoothly after panel reaches halfway (0.5)
     private var topBarOpacity: CGFloat {
-        // normalized: 0 = collapsed, 0.5 = half, 1.0 = fully expanded
-        // We want to fade out after 0.5 (halfway point)
         if normalizedSheetOffset <= 0.5 {
             return 1.0
         } else {
-            // Map 0.5...1.0 to 1.0...0.0
             return max(0, 1.0 - (normalizedSheetOffset - 0.5) * 2)
         }
     }
-    
-    /// Computed scale for top bar — scales up smoothly as it fades out
+
     private var topBarScale: CGFloat {
         if normalizedSheetOffset <= 0.5 {
             return 1.0
         } else {
-            // Map 0.5...1.0 to 1.0...1.15 (15% bigger)
             return 1.0 + (normalizedSheetOffset - 0.5) * 0.3
         }
     }

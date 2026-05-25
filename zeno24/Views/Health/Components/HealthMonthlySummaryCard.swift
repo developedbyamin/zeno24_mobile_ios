@@ -3,7 +3,7 @@ import SwiftUI
 struct HealthMonthlySummaryCard: View {
     private let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     private let dates = ["10", "11", "12", "13", "14", "15"]
-    private let selectedIndex = 4 // Fri 14
+    private let selectedIndex = 4
     private let stepValues: [CGFloat] = [0.3, 0.5, 0.4, 0.45, 0.85, 0.5]
 
     var body: some View {
@@ -53,7 +53,6 @@ struct HealthMonthlySummaryCard: View {
 
     private var chartArea: some View {
         ZStack(alignment: .bottomLeading) {
-            // Dashed grid verticals
             GeometryReader { proxy in
                 let w = proxy.size.width
                 let cols = days.count
@@ -68,7 +67,6 @@ struct HealthMonthlySummaryCard: View {
                 .stroke(Color(hex: 0xF2F5F9), style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
             }
 
-            // Chart fill + line
             GeometryReader { proxy in
                 let w = proxy.size.width
                 let h = proxy.size.height
@@ -78,7 +76,6 @@ struct HealthMonthlySummaryCard: View {
                     CGPoint(x: step * CGFloat(idx) + step / 2, y: h - (h - 24) * v)
                 }
 
-                // Fill
                 Path { path in
                     guard let first = points.first else { return }
                     path.move(to: CGPoint(x: first.x, y: h))
@@ -99,7 +96,6 @@ struct HealthMonthlySummaryCard: View {
                     )
                 )
 
-                // Line
                 Path { path in
                     guard let first = points.first else { return }
                     path.move(to: first)
@@ -109,7 +105,6 @@ struct HealthMonthlySummaryCard: View {
                 }
                 .stroke(AppColors.brand, style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
 
-                // Callout for selected
                 if selectedIndex < points.count {
                     let pt = points[selectedIndex]
                     HStack {

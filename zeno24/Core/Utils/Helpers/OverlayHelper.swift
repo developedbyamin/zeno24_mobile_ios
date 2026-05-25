@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Toast / overlay banner state — mirrors overlay_helper.dart.
-/// The visual is rendered by `OverlayBanner` mounted at the root.
 @MainActor
 @Observable
 final class OverlayHelper {
@@ -29,8 +27,6 @@ final class OverlayHelper {
         }
     }
 
-    /// Bumped on every `show()` so the same message + kind still triggers
-    /// the SwiftUI transition. View observes this value via the message id.
     private(set) var current: Message?
 
     struct Message: Identifiable, Equatable {
@@ -58,9 +54,6 @@ final class OverlayHelper {
     }
 
     func showFailure(_ error: Error, duration: TimeInterval = 3) {
-        // Match overlay_helper.dart `showFailure` — backend errors with a
-        // non-empty description take priority; other errors fall back to
-        // `localizedDescription`.
         if let api = error as? APIError, case .backend(_, let desc) = api {
             guard let desc, !desc.trimmingCharacters(in: .whitespaces).isEmpty else { return }
             show(desc, kind: .error, duration: duration)

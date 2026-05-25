@@ -1,17 +1,12 @@
 import SwiftUI
 
-/// Single chat row — Figma 4991:18818 "Profile notifications".
 struct MessageChatRow: View {
     let title: String
     let preview: String
     let time: String
-    /// When non-nil, displays an image asset as the avatar. When nil, shows
-    /// the first letter of `title` on a colored circle (`initialBackground`).
     let avatarAsset: String?
     let initialBackground: Color
-    /// Optional unread count. When > 0, shows red dot badge instead of seen check.
     let unreadCount: Int
-    /// Highlights the entire row with a #F2F5F9 background (used for unread).
     let highlighted: Bool
 
     init(title: String,

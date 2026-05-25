@@ -52,8 +52,6 @@ struct DestructiveButtonStyle: ButtonStyle {
 
 // MARK: - Auth CTA (white pill, brand-color label)
 
-/// White pill matching Figma `4117:6487`. Pass `isEnabled` so the
-/// disabled state can fade both the background and the label.
 struct AuthCTAButtonStyle: ButtonStyle {
     var isEnabled: Bool = true
 
@@ -70,7 +68,6 @@ struct AuthCTAButtonStyle: ButtonStyle {
 
 // MARK: - Glass pill (social / mode toggle)
 
-/// Translucent capsule with white tint — Figma `3682:6024` / `4076:6626`.
 struct GlassPillButtonStyle: ButtonStyle {
     var fillOpacity: Double = 0.24
     var borderOpacity: Double = 0.0

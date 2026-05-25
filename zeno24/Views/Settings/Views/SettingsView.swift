@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Profile / Settings — 1:1 port of Figma node 4991:29476.
 struct SettingsView: View {
     @Environment(AuthStore.self) private var auth
     @Environment(\.tabBarHeight) private var tabBarHeight
@@ -9,8 +8,8 @@ struct SettingsView: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 4) {
                 SettingsProfileCard(
-                    onProfileTap: { /* TODO: open profile */ },
-                    onUpgradeTap: { /* TODO: open premium */ }
+                    onProfileTap: { },
+                    onUpgradeTap: { }
                 )
 
                 SettingsMenuCard {

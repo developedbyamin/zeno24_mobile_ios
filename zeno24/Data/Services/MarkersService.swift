@@ -1,16 +1,9 @@
 import Foundation
 
-/// Navimax `panelobjects/synclist` client — mirrors `markers_service.dart`.
-///
-/// Talks to a different host than the main backend (`api.navimax.net`)
-/// with a fixed `app_id` + `token` payload, so it bypasses `APIClient`'s
-/// envelope wrapper and auth interceptor entirely.
 final class MarkersService {
-    /// `markers_service.dart`-dakı default-larla eyni.
     private enum Const {
         static let endpoint = URL(string: "https://api.navimax.net/api/navimax/panelobjects/synclist")!
         static let appId = 608
-        // TODO: real istifadəçi auth-una bağlanmalıdır — hələ ki Flutter-də olduğu kimi hard-coded.
         static let token = "1-e0Hc4d4dxdg0M0B1h0z0JcS0We64OfP0Q0cedH1W692gaJ1L0lg8Yax6G0x0k0g3X8O6_043dda907f981c00ec0afd26160ce30804d6301e"
     }
 

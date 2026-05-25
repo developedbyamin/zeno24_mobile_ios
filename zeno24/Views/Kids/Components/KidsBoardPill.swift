@@ -18,7 +18,6 @@ struct KidsBoardPill: View {
             .background(Color.white.opacity(0.16), in: Capsule())
 
             Button {
-                // TODO: switch board
             } label: {
                 Image(systemName: "chevron.up")
                     .font(.system(size: 12, weight: .bold))

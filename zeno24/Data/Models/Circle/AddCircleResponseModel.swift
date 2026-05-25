@@ -1,8 +1,7 @@
 import Foundation
 
-/// `/circles/add` `data` field — backend returns only the new circle's
-/// MongoDB id wrapped in extended-JSON (`{"$oid": "..."}`). Mirrors the
-/// Flutter `MongoIdHook` behaviour by unwrapping `$oid` to a plain string.
+/// Backend returns the new circle's MongoDB id wrapped in
+/// extended-JSON (`{"$oid": "..."}`); unwrap it to a plain string.
 struct AddCircleResponseModel: Decodable {
     let id: String
 

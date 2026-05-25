@@ -1,8 +1,5 @@
 import Foundation
 
-/// Circles API service — mirrors circles_service.dart. Every call goes
-/// through `AppRequestModel(token: ..., data: ...)` and the response is
-/// decoded as `AppResponseModel<T>`.
 final class CirclesService {
     private let client: APIClient
 

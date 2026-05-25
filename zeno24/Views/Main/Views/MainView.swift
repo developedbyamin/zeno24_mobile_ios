@@ -1,15 +1,5 @@
 import SwiftUI
 
-/// Bottom-tab shell for the authenticated experience — Figma `4991:14591`.
-///
-/// Five tabs (Home / Kids / Driving / Health / Premium) over a custom
-/// translucent bar that matches Figma 1:1. Each tab owns its own
-/// `NavigationStack` + `AppRouter`, so push state survives a tab switch
-/// — same behaviour as Apple's stock apps. Tapping an already-selected
-/// tab pops that tab's stack back to root.
-///
-/// Circle-related state, environment wiring, and overlay sheets live in
-/// [CircleFlowHost] so this file stays focused on the tab shell.
 struct MainView: View {
     @State private var selectedTab: AppTab = .home
     @State private var tabBarHeight: CGFloat = 0

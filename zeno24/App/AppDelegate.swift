@@ -8,7 +8,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         // Swizzle `Bundle.main` so user-driven language switches affect
         // every `NSLocalizedString` / `String(localized:)` call site.
         LocalizedBundle.install()
-        // TODO: Firebase / Push / Crashlytics konfiqurasiyası buraya
         return true
     }
 

@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Onboarding flow stack.
 struct OnboardCoordinator: View {
     @State private var router = AppRouter()
 

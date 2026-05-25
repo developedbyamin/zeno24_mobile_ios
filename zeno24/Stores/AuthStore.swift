@@ -1,20 +1,13 @@
 import Foundation
 import SwiftUI
 
-/// Single source of truth for the entire auth flow.
-///
-/// Mirrors the combined behavior of Flutter's `authNotifier` + `signStep1Provider` +
-/// `signStep2Provider` + `signStep3Provider`. Keeping them in one observable store
-/// avoids the cross-provider read/write coordination that the Riverpod code does.
 @MainActor
 @Observable
 final class AuthStore {
-    // MARK: - Root state (drives RootView)
+    // MARK: - Root state
     var state: AuthState = .loading
 
     // MARK: - Auth NavigationStack path
-    /// Routes pushed on top of `SignView` so the OS handles the native
-    /// Cupertino push transition. Mutate via `pushAuthRoute(_:)` etc.
     var authPath = NavigationPath()
 
     // MARK: - Contact entry
@@ -23,18 +16,14 @@ final class AuthStore {
     var selectedCountry: Country = CountriesData.byCode("AZ") ?? CountriesData.all[0]
     var email: String = ""
 
-    /// Display value shown on the OTP screen ("+994 70 383 12 34" or
-    /// masked email "fidan******@gmail.com" — `maskedContactDisplay`).
     var contactDisplay: String = ""
 
-    /// The channel used by step 1 so the OTP screen can switch between
-    /// "Code sent to WhatsApp" (phone) and "Enter the code sent to" (email).
     var lastOtpChannel: AuthContactMode = .email
 
     // MARK: - OTP entry
     var otpCode: String = ""
     var otpHash: String?
-    var otpResendNonce: Int = 0    // Bump to restart the timer.
+    var otpResendNonce: Int = 0
     var showOtpError: Bool = false
 
     // MARK: - Create name
@@ -58,9 +47,6 @@ final class AuthStore {
     // MARK: - Dependencies
     private let repository: AuthRepository
 
-    /// Last step-1 payload — replayed verbatim by `resendOtp` so the
-    /// backend gets the full phone/country/email body, not just the hash.
-    /// Mirrors Flutter's `SignStep1Notifier._lastRequest`.
     private var lastSignStep1Request: SignStep1RequestModel?
 
     init(repository: AuthRepository? = nil) {
@@ -72,9 +58,6 @@ final class AuthStore {
         observeSessionExpiry()
     }
 
-    /// Listen for `error_code == 1001` events from APIClient. Tokens are
-    /// already cleared by the client; we just have to flip the root state
-    /// so RootView swings back to the auth flow.
     private func observeSessionExpiry() {
         NotificationCenter.default.addObserver(
             forName: .sessionExpired,
@@ -97,17 +80,11 @@ final class AuthStore {
     // MARK: - Lifecycle
 
     private func bootstrap() {
-        // Authenticated users skip the auth stack entirely. Everyone
-        // else lands on `OnboardView` (the stack's root) and proceeds
-        // by pushing `.sign` / `.otp` / `.createName` onto `authPath`.
         state = ServiceLocator.shared.authTokens.isAuthenticated
             ? .authenticated
             : .unauthenticated
     }
 
-    /// Called when the user taps the primary CTA on the onboarding screen.
-    /// Pushes the sign-in screen — same Cupertino slide as the rest of
-    /// the auth flow.
     func finishOnboarding() {
         authPath.append(AuthRoute.sign)
     }
@@ -176,10 +153,8 @@ final class AuthStore {
         do {
             let response = try await repository.verifyOtp(hash: otpHash, code: otpCode)
             if let token = response.token, !token.isEmpty {
-                // Existing user — token already persisted by repository.
                 withTransition { state = .authenticated }
             } else {
-                // New user — hash updated, push to name screen.
                 self.otpHash = response.hash ?? otpHash
                 authPath.append(AuthRoute.createName)
             }
@@ -234,14 +209,10 @@ final class AuthStore {
     }
 
     func signInWithGoogle() async {
-        // TODO: integrate Google Sign-In SDK then forward idToken/username
-        // to repository.signInWithApple-style backend handshake.
     }
 
     // MARK: - Navigation helpers
 
-    /// Pop one step on the auth NavigationStack. At the root (OnboardView)
-    /// there's nothing to pop — the call is a no-op.
     func goBack() {
         guard !authPath.isEmpty else { return }
         authPath.removeLast()
@@ -266,8 +237,6 @@ final class AuthStore {
     }
 
     private func withTransition(_ change: () -> Void) {
-        // Animation is applied at the call site via `.animation` on the
-        // coordinator; this hook exists for future telemetry / haptics.
         change()
     }
 
@@ -278,8 +247,6 @@ final class AuthStore {
         options: .caseInsensitive
     )
 
-    /// Mask everything between the first 5 chars of the local part and
-    /// the `@` — e.g. `fidan****@gmail.com`. Matches the Figma copy.
     static func maskEmail(_ email: String) -> String {
         guard let at = email.firstIndex(of: "@") else { return email }
         let local = email[..<at]
@@ -290,8 +257,6 @@ final class AuthStore {
         return prefix + stars + domain
     }
 
-    /// Add spaces every three digits — "70 383 12 34" style. Keeps the
-    /// OTP "Code sent to" header readable.
     func prettyPhone(_ digits: String) -> String {
         var spaced = ""
         for (i, ch) in digits.enumerated() {

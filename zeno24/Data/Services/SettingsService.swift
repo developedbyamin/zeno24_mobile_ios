@@ -1,10 +1,5 @@
 import Foundation
 
-/// Settings API service — mirrors settings_service.dart.
-/// Request goes through `AppRequestModel(token: ...)`. The response shape
-/// is non-standard (no AppResponseModel envelope) — `account_data`,
-/// `circle_data`, `lang`, `langs`, `permissions` live at the root, so we
-/// decode `SettingsResponseModel` directly.
 final class SettingsService {
     private let client: APIClient
     private let authTokens: AuthTokens

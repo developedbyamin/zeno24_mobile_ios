@@ -1,13 +1,5 @@
 import Foundation
 
-/// Type-safe accessors for every user-facing string in the app.
-///
-/// Each property pulls from `Localizable.xcstrings` via
-/// `String(localized:)`. Add new entries here, then let Xcode auto-extract
-/// the keys into the String Catalog when you build.
-///
-/// Mirrors Flutter's `AppLocalizations.of(context)!.continueKey` pattern,
-/// but type-safe so renames break the build.
 enum AppStrings {
 
     // MARK: Common
@@ -206,7 +198,6 @@ enum AppStrings {
         }
         static var justNow: String { String(localized: "home.just_now", defaultValue: "Just now") }
 
-        // Places tab
         static var placesTitle: String {
             String(localized: "home.places.title", defaultValue: "Places")
         }
@@ -224,7 +215,6 @@ enum AppStrings {
                    defaultValue: "Get alerts for arrivals and departures.")
         }
 
-        // Pets tab
         static var petsTitle: String {
             String(localized: "home.pets.title", defaultValue: "Pets")
         }
@@ -241,7 +231,6 @@ enum AppStrings {
             String(localized: "home.new_badge", defaultValue: "NEW")
         }
 
-        // Alerts tab
         static var alertsHeader: String {
             String(localized: "home.alerts.header", defaultValue: "Alerts & notifications")
         }
@@ -261,7 +250,6 @@ enum AppStrings {
             String(localized: "home.alerts.low_battery", defaultValue: "Low battery")
         }
 
-        // Premium promo
         static var premiumTitle: String {
             String(localized: "home.premium.title", defaultValue: "Unlock for\nPremium")
         }
@@ -312,14 +300,12 @@ enum AppStrings {
         static var theme: String      { String(localized: "settings.theme",      defaultValue: "Theme") }
         static var logout: String     { String(localized: "settings.logout",     defaultValue: "Log out") }
 
-        // Profile card
         static var userName: String   { String(localized: "settings.user.name",  defaultValue: "Nigar") }
         static var userEmail: String  { String(localized: "settings.user.email", defaultValue: "Fidanguluzada@gmail.com") }
         static var heroLine1: String  { String(localized: "settings.hero.line1", defaultValue: "Boost your journey") }
         static var heroLine2: String  { String(localized: "settings.hero.line2", defaultValue: "for better experiences!") }
         static var upgradeNow: String { String(localized: "settings.upgradeNow", defaultValue: "Upgrade now") }
 
-        // Menu items
         static var manageCircle: String         { String(localized: "settings.row.manageCircle",  defaultValue: "Manage Circle") }
         static var notificationSettings: String { String(localized: "settings.row.notifications", defaultValue: "Notification Settings") }
         static var permissions: String          { String(localized: "settings.row.permissions",   defaultValue: "Permissions") }
@@ -355,7 +341,6 @@ enum AppStrings {
 
         static var trialFootnote: String { String(localized: "premium.trial.footnote", defaultValue: "First 7 days free, then $2.99/month") }
 
-        // Subscribed state — Figma 5865:6896 "Your Plan"
         static var subscribedTitle: String       { String(localized: "premium.subscribed.title",       defaultValue: "Your Premium") }
         static var yourPlanBadge: String         { String(localized: "premium.subscribed.badge",       defaultValue: "Your Plan") }
         static var managePlan: String            { String(localized: "premium.subscribed.manage",      defaultValue: "Manage Plan") }

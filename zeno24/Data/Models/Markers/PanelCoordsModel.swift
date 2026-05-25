@@ -1,7 +1,6 @@
 import Foundation
 import CoreLocation
 
-/// Navimax coordinates — `panel_coords_model.dart`.
 struct PanelCoordsModel: Decodable, Hashable {
     let lat: Double?
     let lng: Double?

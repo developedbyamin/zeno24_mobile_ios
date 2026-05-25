@@ -1,9 +1,5 @@
 import SwiftUI
 
-/// 6-cell OTP field — Figma 3987:6184 / 2797:15244.
-///   • Each slot shows the entered digit, blinking caret, or a faded "-".
-///   • Slots share a 1-pt underline (no surrounding box).
-///   • Hidden TextField gives us iOS SMS AutoFill above the keyboard.
 struct OtpDigitField: View {
     @Binding var code: String
     let length: Int

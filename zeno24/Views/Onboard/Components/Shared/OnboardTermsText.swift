@@ -1,11 +1,5 @@
 import SwiftUI
 
-/// Two-line legal copy with two tappable links — Figma node `3682:6034`.
-///   • Both lines centered, lineHeight 1.5, font size 12pt.
-///   • Line 1 (`white/50` Regular): "By clicking the buttons above you accept our"
-///   • Line 2 link "Privacy Policy"    — white Medium underlined
-///   •         separator " and "       — `white/50` Regular
-///   •         link "Terms of Service." — white Medium underlined
 struct OnboardTermsText: View {
     var onPrivacyTap: () -> Void = {}
     var onTermsTap: () -> Void = {}

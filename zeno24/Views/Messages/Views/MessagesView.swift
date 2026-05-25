@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Messages list — 1:1 port of Figma node 4991:18818.
 struct MessagesView: View {
     @Environment(\.tabBarHeight) private var tabBarHeight
 

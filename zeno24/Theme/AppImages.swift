@@ -1,10 +1,5 @@
 import Foundation
 
-/// PNG image asset names — 1:1 mirror of lib/core/config/constants/app_images.dart.
-/// All assets live in `Assets.xcassets/Images/` and are looked up by the
-/// file's basename (e.g. `emoji_clapping_hands.png` → `"emoji_clapping_hands"`).
-///
-/// Usage: `Image(AppImages.emojiCrown)`
 enum AppImages {
     // MARK: Auth / generic emojis
     static let emojiClappingHands = "emoji_clapping_hands"

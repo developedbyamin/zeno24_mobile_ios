@@ -1,13 +1,5 @@
 import Foundation
 
-/// SVG vector asset names — 1:1 mirror of lib/core/config/constants/app_icons.dart's `AppVectors`.
-/// All assets live in `Assets.xcassets/Vectors/` and are configured with
-/// `preserves-vector-representation = true` so they scale and tint cleanly.
-///
-/// Usage:
-///   Image(AppVectors.appleLogo)              // raw asset
-///   Image(AppVectors.appleLogo)              //  templated — apply .foregroundStyle
-///       .renderingMode(.template)
 enum AppVectors {
     // MARK: Generic
     static let backArrow          = "back_arrow"
@@ -19,7 +11,7 @@ enum AppVectors {
     static let search             = "search"
     static let closeSmall         = "close_small"
     static let closeCircle        = "close_circle"
-    static let cancleOutline      = "cancle_outline"   // sic — matches Flutter typo
+    static let cancleOutline      = "cancle_outline"
     static let checkmark          = "checkmark"
     static let chevronDown        = "chevron_down"
     static let refresh            = "refresh"

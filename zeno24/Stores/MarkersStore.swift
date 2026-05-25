@@ -1,6 +1,5 @@
 import Foundation
 
-/// Live circle members on the map — mirrors `markers_provider.dart`.
 @MainActor
 @Observable
 final class MarkersStore {

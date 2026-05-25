@@ -1,7 +1,6 @@
 import Foundation
 import CoreLocation
 
-/// Native overlay routing on top of the map — mirrors native_route_overlay provider folder
 @MainActor
 @Observable
 final class NativeRouteOverlayStore {

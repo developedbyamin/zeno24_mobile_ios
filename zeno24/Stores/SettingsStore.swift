@@ -1,6 +1,5 @@
 import Foundation
 
-/// Settings + current account state — mirrors settings_provider.dart
 @MainActor
 @Observable
 final class SettingsStore {

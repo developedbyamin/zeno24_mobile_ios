@@ -1,9 +1,6 @@
 import SwiftUI
 import AVKit
 
-/// Muted, looping, cover-fitted background video for the onboarding screen.
-/// Falls back to a solid black surface when the asset is missing.
-/// Mirrors `onboard_video_background.dart`.
 struct OnboardVideoBackground: View {
     var video: AppVideos.Video = AppVideos.onboard
     var isPlaying: Bool = true
@@ -34,11 +31,6 @@ private struct VideoBackgroundLayer: UIViewRepresentable {
     // player instance is cached on `PlayerContainerView.sharedPlayer`.
 }
 
-/// Hosts an `AVPlayerLayer` and keeps it sized to its bounds. Loops via
-/// `AVPlayerLooper` — the official Apple API for seamless playback.
-///
-/// Players are cached by URL on `Self.cache`, so navigating away from the
-/// onboarding screen and back does NOT re-parse the asset.
 final class PlayerContainerView: UIView {
 
     // MARK: - Per-URL shared player cache
@@ -60,7 +52,6 @@ final class PlayerContainerView: UIView {
         return slot
     }
 
-    // MARK: - Layer
     private let playerLayer = AVPlayerLayer()
     private var player: AVQueuePlayer?
 

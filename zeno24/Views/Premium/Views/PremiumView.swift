@@ -1,11 +1,8 @@
 import SwiftUI
 
-/// Premium screen — 1:1 ports of two Figma states:
-///   • Not subscribed: paywall (Figma 4991:15208 "Go Premium")
-///   • Subscribed:     plan summary (Figma 5865:6896 "Your Plan")
 struct PremiumView: View {
     @State private var selectedPlan: Plan = .monthly
-    @State private var isSubscribed: Bool = true   // TODO: bind to PremiumStore.isPremium
+    @State private var isSubscribed: Bool = true
     @Environment(\.tabBarHeight) private var tabBarHeight
 
     private enum Plan { case monthly, yearly }
@@ -202,7 +199,6 @@ struct PremiumView: View {
 
             VStack(alignment: .trailing, spacing: 0) {
                 Button {
-                    // TODO: open manage plan
                 } label: {
                     Text(AppStrings.Premium.managePlan)
                         .font(AppTypography.bodyXsBold)
@@ -288,8 +284,6 @@ private struct PlanCard: View {
     let price: String
     let caption: String
     let isSelected: Bool
-    /// When non-nil, the price is painted with this gradient (used for the
-    /// "Popular" card). Plain `mainBlack` otherwise.
     let priceGradient: LinearGradient?
 
     var body: some View {

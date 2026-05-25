@@ -7,7 +7,6 @@ struct DrivingMemberCard: View {
 
     var body: some View {
         ZStack {
-            // Inner white card with content (blurred behind locked overlay)
             HStack(spacing: 12) {
                 Image(avatar)
                     .resizable()
@@ -54,7 +53,6 @@ struct DrivingMemberCard: View {
             .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
             .blur(radius: 4)
 
-            // Lock overlay
             Color.white.opacity(0.35)
                 .background(.ultraThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))

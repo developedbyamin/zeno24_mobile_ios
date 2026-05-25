@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Health dashboard — 1:1 port of Figma node 6040:13519.
 struct HealthView: View {
     @State private var segment: HealthDailyStepsCard.Segment = .lastWeek
     @Environment(\.tabBarHeight) private var tabBarHeight

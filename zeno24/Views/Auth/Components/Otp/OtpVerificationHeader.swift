@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Two-line OTP header — Figma 4024:6261.
-///   • "Welcome back!"
-///   • "Check your email"  /  "Check your WhatsApp"
 struct OtpVerificationHeader: View {
     let channel: AuthContactMode
 

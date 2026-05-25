@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Top-of-screen toast — visual mirror of `_AnimatedOverlay` from
-/// `overlay_helper.dart`. Pinned to the safe-area top, slides in + fades.
-/// Mount once at the app root and let `OverlayHelper.shared` drive it.
 struct OverlayBanner: View {
     private var overlay: OverlayHelper { OverlayHelper.shared }
 

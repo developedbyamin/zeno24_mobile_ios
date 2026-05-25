@@ -1,7 +1,5 @@
 import Foundation
 
-/// Raw object as returned by navimax — mirrors `panel_object_model.dart`.
-/// The repository converts these into `MarkerModel`.
 struct PanelObjectModel: Decodable {
     let id: String?
     let title: String?

@@ -1,7 +1,5 @@
 import UIKit
 
-/// Haptic feedback shortcuts. Wraps `UIFeedbackGenerator` types behind a
-/// neutral API so call sites don't have to import UIKit.
 enum Haptics {
     enum ImpactStyle {
         case light, medium, heavy, soft, rigid

@@ -1,20 +1,12 @@
 import SwiftUI
 
-/// Two glass-circle action buttons on the right edge of the map.
-///
-/// Positioning: always 16 pt above the bottom panel's top edge, 16 pt from
-/// the trailing edge — tracks the panel in real time during drag.
-/// Hides (opacity 0, non-interactive) once the panel passes the half-expanded
-/// threshold (normalized > 0.5), exactly as UIKit does with zPosition = 0.
 struct HomeSideActions: View {
-    /// Live Y of the panel's top edge in the shared ZStack coordinate space.
     let sheetTopY: CGFloat
-    /// 0 = collapsed, 0.5 = half-expanded, 1 = fully expanded.
     let normalizedOffset: CGFloat
     var onMapType: (() -> Void)? = nil
     var onZoomSelf: (() -> Void)? = nil
 
-    private let buttonStackHeight: CGFloat = 88  // 40 + 8 + 40
+    private let buttonStackHeight: CGFloat = 88
     private let gap: CGFloat = 16
     private let trailingPadding: CGFloat = 16
 
@@ -41,9 +33,6 @@ struct HomeSideActions: View {
 
 // MARK: - Glass circle button
 
-/// Matches UIKit `HomeGlassCircleButton`:
-/// ultraThinMaterialLight blur + white tint (56% opacity) + white 2pt border + shadow.
-/// Icon tinted brand purple (#9171F4), 20×20 pt centered in a 40×40 pt hit target.
 private struct GlassCircleButton: View {
     let asset: String
     var action: (() -> Void)?

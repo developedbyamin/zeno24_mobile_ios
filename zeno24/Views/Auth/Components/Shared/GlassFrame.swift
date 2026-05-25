@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Thin convenience wrapper around `glassSurface()` so call sites can
-/// continue using `GlassFrame { … }` semantically. The actual styling
-/// lives in `Theme/CardStyles.swift`.
 struct GlassFrame<Content: View>: View {
     var cornerRadius: CGFloat = 16
     var fillOpacity: Double = 0.12

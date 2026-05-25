@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Profile + account settings entry — mirrors profile_view.dart
 struct ProfileView: View {
     @Environment(SettingsStore.self) private var settings
     @Environment(AuthStore.self) private var auth

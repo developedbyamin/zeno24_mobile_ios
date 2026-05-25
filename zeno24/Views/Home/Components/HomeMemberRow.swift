@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Single member entry — SwiftUI port of Flutter iOS UIKit `HomeMemberCell`.
-/// Avatar (with battery pill overlapping its bottom edge) on the leading
-/// side, name + activity + since lines on the trailing side.
 struct HomeMemberRow: View {
     let member: MarkerModel
 
@@ -40,7 +37,7 @@ struct HomeMemberRow: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // MARK: - Derived strings (mirrors UIKit `activityFor` / `sinceFor`)
+    // MARK: - Derived strings
 
     private var clampedBattery: Int {
         max(0, min(100, member.batteryPercent))

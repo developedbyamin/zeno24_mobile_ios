@@ -1,6 +1,5 @@
 import Foundation
 
-/// Network logger — mirrors dio_logger.dart
 enum Logger {
     static func logRequest(_ request: URLRequest) {
         #if DEBUG

@@ -1,8 +1,5 @@
 import Foundation
 
-/// Markers repository — mirrors `markers_repository.dart`.
-/// Fetches the raw navimax payload and projects each `PanelObjectModel`
-/// onto the flat `MarkerModel` consumed by the map.
 final class MarkersRepository {
     private let service: MarkersService
 
@@ -16,7 +13,7 @@ final class MarkersRepository {
         return items.map(Self.toDomain)
     }
 
-    // MARK: - Mapping (mirrors Flutter `_toDomain` / `_pickName` / etc.)
+    // MARK: - Mapping
 
     private static func toDomain(_ o: PanelObjectModel) -> MarkerModel {
         let speed = o.speedVal ?? 0

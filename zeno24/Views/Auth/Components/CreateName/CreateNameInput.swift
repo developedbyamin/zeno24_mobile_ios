@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Display-name field — Figma 1829:2926 / 2796:2552.
-/// • Empty: "Enter your name" placeholder — Plus Jakarta Sans Medium 20, white 40%.
-/// • Typed: user input — Plus Jakarta Sans Bold 28, white.
 struct CreateNameInput: View {
     @Bindable var store: AuthStore
     @FocusState.Binding var isFocused: Bool

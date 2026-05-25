@@ -1,23 +1,5 @@
 import SwiftUI
 
-/// Full-screen "Create a Circle" overlay — 1:1 SwiftUI port of the Flutter
-/// project's UIKit `HomeCreateCircleOverlay`.
-///
-/// Behaviour parity:
-///   • Full-screen panel with bottom-only 30 pt radius (same backdrop as
-///     `CirclePickerSheet`: ultraThinMaterial α 0.7 + purple→pink gradient).
-///   • Header white capsule (48 pt): 32 pt gray back chip on the left, brand
-///     icon + "Create a Circle" centered.
-///   • Single white card containing one centered text field. Empty placeholder
-///     = Medium 20 pt gray; typed text = Bold 28 pt main-black.
-///   • Brand-purple "Save" button (52 pt). Pressing it disables the form and
-///     shows a spinner inside the button until the API resolves.
-///   • Backdrop tap / back chip = dismiss (only when not loading).
-///   • Error returned by the API is shown as a small inline banner above the
-///     save button so the user knows what went wrong (Flutter equivalent of
-///     the snackbar/toast).
-///   • Save card respects the keyboard — content shifts up so the field stays
-///     visible while typing.
 struct CreateCircleSheet: View {
     @Binding var isPresented: Bool
     @Environment(CirclesStore.self) private var circles
@@ -28,7 +10,6 @@ struct CreateCircleSheet: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            // 1. Background — full-screen, bottom-only 30pt radius. Tap = dismiss.
             backgroundShape
                 .ignoresSafeArea()
                 .contentShape(
@@ -39,7 +20,6 @@ struct CreateCircleSheet: View {
                 )
                 .onTapGesture { dismiss() }
 
-            // 2. Content stack — header + text card + save (keyboard-aware).
             VStack(spacing: 8) {
                 headerPill
                 textCard
@@ -50,8 +30,6 @@ struct CreateCircleSheet: View {
             .padding(.bottom, 16)
         }
         .onAppear {
-            // Mirror Flutter — focus the field as soon as the overlay appears
-            // so the keyboard slides up immediately.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 nameFocused = true
             }
@@ -89,7 +67,6 @@ struct CreateCircleSheet: View {
 
     private var headerPill: some View {
         ZStack {
-            // Center: icon + title
             HStack(spacing: 8) {
                 Image(AppVectors.circleGridInterface)
                     .renderingMode(.template)
@@ -102,7 +79,6 @@ struct CreateCircleSheet: View {
                     .foregroundStyle(AppColors.mainBlack)
             }
 
-            // Leading back chip
             HStack {
                 Button {
                     dismiss()
@@ -126,7 +102,7 @@ struct CreateCircleSheet: View {
         .background(Color.white, in: Capsule())
         .overlay(Capsule().strokeBorder(Color.white, lineWidth: 1))
         .contentShape(Capsule())
-        .onTapGesture { /* consume */ }
+        .onTapGesture { }
     }
 
     // MARK: - Text card
@@ -197,7 +173,6 @@ struct CreateCircleSheet: View {
                 dismiss()
             } catch {
                 isLoading = false
-                // Same toast pipeline as Auth (SignView / OtpView / CreateNameView).
                 OverlayHelper.shared.showFailure(error)
             }
         }
@@ -206,8 +181,6 @@ struct CreateCircleSheet: View {
     private func dismiss() {
         guard !isLoading else { return }
         nameFocused = false
-        // Symmetric with the open animation so the cross-fade against the
-        // picker behind us is perfectly even.
         withAnimation(.easeInOut(duration: 0.28)) {
             isPresented = false
         }

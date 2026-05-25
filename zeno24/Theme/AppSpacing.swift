@@ -1,6 +1,5 @@
 import CoreGraphics
 
-/// 8-point grid spacing tokens. Always reference these constants.
 enum AppSpacing {
     static let xs: CGFloat = 4
     static let s: CGFloat = 8
@@ -11,7 +10,6 @@ enum AppSpacing {
     static let xxxl: CGFloat = 32
     static let huge: CGFloat = 48
 
-    // Corner radii
     static let radiusSmall:  CGFloat = 10
     static let radiusMedium: CGFloat = 14
     static let radiusLarge:  CGFloat = 16

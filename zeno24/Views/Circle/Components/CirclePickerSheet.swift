@@ -1,23 +1,5 @@
 import SwiftUI
 
-/// Full-screen circle picker overlay — 1:1 SwiftUI port of the Flutter
-/// project's UIKit `HomeCirclesOverlay`.
-///
-/// Behaviour parity:
-///   • Hero transition: source pill morphs into the white selected pill at
-///     the top of the panel (`matchedGeometryEffect`).
-///   • Full-screen panel covering tab bar; bottom-only 30 pt corner radius
-///     so the panel itself looks like it slides down from the top.
-///   • Backdrop = `ultraThinMaterial` (α 0.7) under a purple→pink gradient
-///     (each stop α 0.7). Home/Map shows through.
-///   • Empty-area taps dismiss; interactive subviews consume their own.
-///   • Selected pill: brand-purple icon + attributed
-///     "Circle:" + " " + name + "X Pending" orange chip on the right.
-///   • Circles list card: 7 visible rows max, then scrollable; selected row
-///     uses F2F5F9 background, dividers only between two unselected rows.
-///   • Action row: "Join a circle" (white) + "Create a Circle" (brand).
-///   • Floating close button — white 48 pt circle, positioned 36 pt above
-///     the device's safe-area bottom.
 struct CirclePickerSheet: View {
     @Binding var isPresented: Bool
     let namespace: Namespace.ID
@@ -29,7 +11,6 @@ struct CirclePickerSheet: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            // 1. Background — full-screen, bottom-only 30pt radius. Tap = dismiss.
             backgroundShape
                 .ignoresSafeArea()
                 .contentShape(
@@ -39,12 +20,8 @@ struct CirclePickerSheet: View {
                     )
                 )
                 .onTapGesture { dismiss() }
-                // Refetch the list every time the sheet opens so it reflects
-                // any newly joined / created / removed circles from other
-                // surfaces. The store de-dupes concurrent loads internally.
                 .task { await circles.load() }
 
-            // 2. Stacked content — sits inside the device safe area (top).
             VStack(spacing: 8) {
                 selectedPill
                 circlesCard
@@ -53,7 +30,6 @@ struct CirclePickerSheet: View {
             .padding(.horizontal, 10)
             .padding(.top, 12)
 
-            // 3. Floating close — anchored to the bottom of the safe area.
             VStack {
                 Spacer(minLength: 0)
                 closeButton
@@ -110,7 +86,6 @@ struct CirclePickerSheet: View {
 
             if pendingCount > 0 {
                 Button {
-                    // TODO: open pending invites flow
                 } label: {
                     Text("\(pendingCount) Pending")
                         .font(AppTypography.bodyXsBold)
@@ -133,18 +108,16 @@ struct CirclePickerSheet: View {
             isSource: true
         )
         .contentShape(Capsule())
-        .onTapGesture { /* consume — don't dismiss */ }
+        .onTapGesture { }
     }
 
     private var pendingCount: Int {
-        // TODO: pull from backend once available.
         0
     }
 
     // MARK: - Circles list card
 
     private var circlesCard: some View {
-        // Figma 4991:17003 — outer py-16, inner gap-12 between header and rows.
         VStack(alignment: .leading, spacing: 12) {
             Text("Circles")
                 .font(AppTypography.bodyMdSemiBold)
@@ -164,7 +137,7 @@ struct CirclePickerSheet: View {
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
         .contentShape(Rectangle())
-        .onTapGesture { /* consume */ }
+        .onTapGesture { }
     }
 
     private var rowList: some View {
@@ -173,8 +146,6 @@ struct CirclePickerSheet: View {
         let dividerHeight: CGFloat = 1
         let maxVisible = 7
         let visibleCount = max(1, min(rows.count, maxVisible))
-        // Reserve a divider slot per gap between visible rows so the last
-        // circle never gets clipped by the scrollView's fixed frame.
         let height = rowHeight * CGFloat(visibleCount)
             + dividerHeight * CGFloat(max(0, visibleCount - 1))
         let isScrollable = rows.count > maxVisible
@@ -196,8 +167,6 @@ struct CirclePickerSheet: View {
     }
 
     private var rowDivider: some View {
-        // Figma 4991:17027 — flex-col items-end, h-px w-[276px] (right-aligned
-        // 276 pt line that starts after the avatar).
         HStack(spacing: 0) {
             Spacer(minLength: 0)
             Color(hex: 0xF2F5F9)
@@ -216,9 +185,6 @@ struct CirclePickerSheet: View {
         let isLoadingThis = loadingCircleId == circle.id
         let isBlocked = loadingCircleId != nil && !isLoadingThis
 
-        // Figma 4991:17009 row spec: px-[20px], py-[8px], gap-[10px].
-        // 48 pt avatar + 8+8 vertical padding = 64 pt natural height — never
-        // depends on selection state so the row never resizes when picked.
         return HStack(spacing: 10) {
             avatarBubble(displayName)
 
@@ -233,8 +199,6 @@ struct CirclePickerSheet: View {
 
             Spacer(minLength: 0)
 
-            // Separate Button — Flutter `CircleRow.actionDot` has its own
-            // tap target, independent of the row tap.
             Button {
                 handleActionTap(circle)
             } label: {
@@ -245,10 +209,7 @@ struct CirclePickerSheet: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 8)
-        // Static background — only the COLOR is animated, never the layout.
         .background((selected || isLoadingThis) ? Color(hex: 0xF2F5F9) : Color.clear)
-        // Always-mounted overlay; opacity fades the shimmer in/out without
-        // touching parent layout (which is what made the row resize before).
         .overlay(
             ShimmerOverlay()
                 .opacity(isLoadingThis ? 1 : 0)
@@ -271,7 +232,6 @@ struct CirclePickerSheet: View {
     }
 
     private func actionDot(selected: Bool) -> some View {
-        // Figma 4991:17016 — 24 pt circle with a 16 pt plus icon.
         ZStack {
             Circle().fill(selected ? AppColors.brand : Color(hex: 0xF2F5F9))
             Image(systemName: "plus")
@@ -283,15 +243,12 @@ struct CirclePickerSheet: View {
 
     private func handleRowTap(_ circle: CircleModel) {
         guard loadingCircleId == nil else { return }
-        // Immediately commit selection so the UI flips before the API call —
-        // this is the "smooth" feedback the Flutter overlay gives via shimmer.
         withAnimation(.easeInOut(duration: 0.18)) {
             circles.selectedCircleId = circle.id
             loadingCircleId = circle.id
         }
         Task {
             await circles.switchTo(circle.id)
-            // Let the shimmer animate at least one cycle before dismissing.
             try? await Task.sleep(for: .milliseconds(450))
             loadingCircleId = nil
             dismiss()
@@ -299,9 +256,6 @@ struct CirclePickerSheet: View {
     }
 
     private func handleActionTap(_ circle: CircleModel) {
-        // Flutter `circlesOverlayDidTapAddRole` — role sheet is presented OVER
-        // the still-alive circles overlay; the picker must stay open so the
-        // user lands back on it when the invite flow finishes.
         openInviteFlow(circle.id)
     }
 
@@ -310,13 +264,8 @@ struct CirclePickerSheet: View {
     private var actionRow: some View {
         HStack(spacing: 8) {
             actionButton(title: "Join a circle", style: .secondary) {
-                // TODO: join flow
             }
             actionButton(title: "Create a Circle", style: .primary) {
-                // Keep the picker open underneath so the gradient background
-                // never blinks during the cross-fade to the create sheet
-                // (Flutter `HomeCreateCircleOverlay` parity — it's presented
-                // over the still-alive circles overlay).
                 openCreate()
             }
         }
@@ -342,8 +291,6 @@ struct CirclePickerSheet: View {
         Button {
             dismiss()
         } label: {
-            // Figma 4991:17043 — 48 pt white capsule, 20 pt "Close remove"
-            // glyph, double Drop Shadow/400.
             Image(AppVectors.closeSmall)
                 .renderingMode(.template)
                 .resizable()
@@ -368,7 +315,7 @@ struct CirclePickerSheet: View {
     }
 }
 
-// MARK: - Press feedback (Flutter `isHighlighted` parity, alpha 0.7 / 0.12s)
+// MARK: - Press feedback
 
 private struct OverlayCapsuleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -378,8 +325,6 @@ private struct OverlayCapsuleButtonStyle: ButtonStyle {
     }
 }
 
-/// Slightly faster fade for row chrome (Flutter `CircleRow.isHighlighted`
-/// uses 0.6 / 0.12s).
 private struct RowPressStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -388,11 +333,6 @@ private struct RowPressStyle: ButtonStyle {
     }
 }
 
-/// Animated white sweep over the selected row's gray background — SwiftUI
-/// port of `CircleRow.startShimmer`. Mirrors the Flutter
-/// `CAGradientLayer.locations` animation: a 3-stop gradient
-/// (base → highlight → base) the full width of the row, sliding so the
-/// white peak crosses smoothly from the left to the right edge.
 private struct ShimmerOverlay: View {
     @State private var animating = false
 
@@ -402,10 +342,6 @@ private struct ShimmerOverlay: View {
             let base = Color(hex: 0xF2F5F9)
             let highlight = Color.white.opacity(0.9)
 
-            // Container is 2× row width so the highlight peak (at container
-            // center) can travel a full row width across the visible area.
-            // The `base` color matches the row background, so only the
-            // moving highlight is visible — same diffuse effect as Flutter.
             Rectangle()
                 .fill(
                     LinearGradient(

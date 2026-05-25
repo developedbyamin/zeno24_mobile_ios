@@ -1,9 +1,6 @@
 import SwiftUI
 import AuthenticationServices
 
-/// "Continue with Apple / Google" row used under the contact input.
-/// Apple is native via SignInWithAppleButton; Google is a glass button
-/// that delegates back to the store.
 struct SignSocialRow: View {
     @Bindable var store: AuthStore
 

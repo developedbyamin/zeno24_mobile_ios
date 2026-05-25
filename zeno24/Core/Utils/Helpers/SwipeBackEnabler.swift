@@ -1,13 +1,12 @@
 import SwiftUI
 
-/// Edge-swipe gesture that triggers `onSwipeBack` when the user pulls
-/// from the leading edge — mirrors the iOS native interactive pop that
-/// SwiftUI silently disables whenever `navigationBarBackButtonHidden(true)`
-/// is set. Apply via `.swipeBackGesture { ... }` on the screen root.
+/// Recreates the iOS interactive pop gesture. SwiftUI silently
+/// disables it whenever `navigationBarBackButtonHidden(true)` is set,
+/// so screens that hide the native back button need this manually.
 struct SwipeBackGesture: ViewModifier {
     var onSwipeBack: () -> Void
-    var edgeWidth: CGFloat = 24       // hit area from the leading edge
-    var minimumDistance: CGFloat = 60 // distance required to trigger pop
+    var edgeWidth: CGFloat = 24
+    var minimumDistance: CGFloat = 60
 
     @State private var startedFromEdge = false
 
@@ -33,8 +32,6 @@ struct SwipeBackGesture: ViewModifier {
 }
 
 extension View {
-    /// Recreates the iOS interactive pop gesture on screens that hide the
-    /// native back button. Call once per screen, passing the dismiss action.
     func swipeBackGesture(_ onSwipeBack: @escaping () -> Void) -> some View {
         modifier(SwipeBackGesture(onSwipeBack: onSwipeBack))
     }

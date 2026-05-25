@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Horizontal rule split by centered text. Figma node `4140:7055`:
-///   line color = white/30, height 1, gap 8, text 12pt Medium white.
 struct OnboardDividerWithText: View {
     let text: String
 

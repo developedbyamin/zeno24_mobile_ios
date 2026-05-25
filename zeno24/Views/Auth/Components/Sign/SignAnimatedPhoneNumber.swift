@@ -1,10 +1,5 @@
 import SwiftUI
 
-/// Phone digits field — Figma node `1829:2789`.
-///
-/// The TextField shows the **formatted** number (country-aware spacing
-/// like Flutter's `_PhoneInputFormatter`), while `digits` stays raw so
-/// the auth flow can send a clean E.164 payload.
 struct SignAnimatedPhoneNumber: View {
     @Binding var digits: String
     let placeholder: String

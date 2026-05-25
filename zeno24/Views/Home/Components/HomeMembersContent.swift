@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Members tab content — list of `HomeMemberRow` separated by right-
-/// aligned 1pt dividers. Mirrors the Flutter iOS UIKit `Section.members`
-/// layout (8pt section top inset + 12pt per-cell vertical padding).
 struct HomeMembersContent: View {
     let members: [MarkerModel]
 

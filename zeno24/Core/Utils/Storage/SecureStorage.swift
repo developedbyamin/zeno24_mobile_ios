@@ -1,7 +1,6 @@
 import Foundation
 import Security
 
-/// Keychain-backed key-value store — mirrors secure_storage.dart
 final class SecureStorage {
     private let service: String
 

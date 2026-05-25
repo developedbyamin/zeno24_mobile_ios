@@ -41,7 +41,6 @@ struct KidsProfileCard: View {
             .frame(maxWidth: .infinity, alignment: .leading)
 
             Button {
-                // TODO: add user
             } label: {
                 Image(AppVectors.addUser)
                     .renderingMode(.template)

@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Cross-fades phone ⇄ email — Figma 1829:2782 / 5376:2602.
 struct SignInputSection: View {
     @Bindable var store: AuthStore
     @FocusState.Binding var focus: SignFocus?

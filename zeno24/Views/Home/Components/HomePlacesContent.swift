@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Places tab content — Flutter iOS UIKit `HomePlacesPanel` (Places half).
-/// Top "Expand circle" invite row, then "Places" section with the
-/// "Manage Places" row. The Pets half ships separately as `HomePetsContent`.
 struct HomePlacesContent: View {
     var onInviteCircle: (() -> Void)? = nil
 

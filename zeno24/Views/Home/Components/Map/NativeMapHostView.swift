@@ -1,18 +1,12 @@
 import SwiftUI
 import UIKit
 
-/// SwiftUI host for the UIKit-based `NativeMapView`. Forwards the active
-/// marker list and self-marker config; updates the map in `updateUIView`
-/// without rebuilding the underlying `MKMapView`.
 struct NativeMapHostView: UIViewRepresentable {
 
-    /// Live circle members rendered on the map.
     let markers: [MarkerModel]
 
-    /// Optional self-marker avatar URL — drives the heading dot tile.
     var selfAvatarUrl: String? = nil
 
-    /// One of `"default" | "street" | "satellite"`.
     var mapType: String = "default"
 
     var onMarkerTap: ((String) -> Void)? = nil

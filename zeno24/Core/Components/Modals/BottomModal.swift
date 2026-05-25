@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// iOS-style bottom sheet container — mirrors ios_bottom_modal.dart
 struct BottomModal<Content: View>: View {
     let title: String?
     @ViewBuilder let content: () -> Content

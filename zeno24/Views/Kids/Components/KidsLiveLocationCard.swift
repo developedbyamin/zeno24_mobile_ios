@@ -15,7 +15,6 @@ struct KidsLiveLocationCard: View {
                     .background(Color(hex: 0xF6F7F9))
 
                 Button {
-                    // TODO: refresh
                 } label: {
                     Image(AppVectors.refresh)
                         .renderingMode(.template)

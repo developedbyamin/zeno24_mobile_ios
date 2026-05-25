@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Red glass pill that surfaces "Incorrect code" without shifting layout.
-/// Parent reserves a fixed-height slot so visibility is fully animated
-/// via opacity — matches the Flutter `AnimatedOpacity` behavior.
 struct OtpErrorPill: View {
     let message: String
 

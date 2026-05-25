@@ -1,14 +1,12 @@
 import Foundation
 
-/// Mirrors lib/src/data/models/auth/sign_step1_request_model.dart
-/// Encoded as snake_case to match the server contract.
 struct SignStep1RequestModel: Encodable {
-    var from: String?              // "whatsapp" for phone, omitted for email
+    var from: String?
     var email: String?
-    var phone: String?             // Full digits incl. country code, no '+'
+    var phone: String?
     var countryId: Int?
     var dialCode: String?
-    var idToken: String?           // Apple/Google
+    var idToken: String?
     var username: String?
     var deviceOtpHash: String?
 

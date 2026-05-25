@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Generic card that hosts a section's content with manual scroll offset
-/// driven by the parent's unified drag gesture.
 struct HomeSectionCard<Content: View>: View {
     let scrollOffset: CGFloat
     let visibleHeight: CGFloat
@@ -18,7 +16,6 @@ struct HomeSectionCard<Content: View>: View {
                 }
             )
             .onPreferenceChange(SectionContentHeightKey.self) { newHeight in
-                // Throttle height updates to reduce re-renders
                 guard abs(newHeight - contentHeight) > 0.5 else { return }
                 contentHeight = newHeight
             }

@@ -1,7 +1,5 @@
 import Foundation
 
-/// `/circles/invite` body — snake-cased; backend treats `role` as nullable
-/// (default role applied server-side).
 struct InviteCircleRequestModel: Encodable {
     let circleId: String
     let role: String?

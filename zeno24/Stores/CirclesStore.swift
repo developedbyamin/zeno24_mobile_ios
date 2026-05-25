@@ -1,6 +1,5 @@
 import Foundation
 
-/// Circles list + selection state — mirrors circles_provider.dart
 @MainActor
 @Observable
 final class CirclesStore {
@@ -24,8 +23,6 @@ final class CirclesStore {
         defer { isLoading = false }
         do {
             circles = try await repository.list()
-            // Backend marks the active circle with `current = 1`; fall back to
-            // the first item so the UI always shows a selection.
             if let serverSelected = circles.first(where: { $0.isCurrent })?.id {
                 selectedCircleId = serverSelected
             } else if selectedCircleId == nil {
@@ -36,8 +33,6 @@ final class CirclesStore {
         }
     }
 
-    /// Throws so callers can surface the real `Error` (e.g. `APIError.backend`)
-    /// via `OverlayHelper.showFailure(_:)`.
     @discardableResult
     func add(name: String) async throws -> CircleModel {
         errorMessage = nil
@@ -57,7 +52,6 @@ final class CirclesStore {
         try? await repository.switchTo(circleId: id)
     }
 
-    /// Throws so the calling sheet can surface API errors via `OverlayHelper`.
     func invite(circleId: String, role: String? = nil) async throws -> InviteCircleResponseModel {
         try await repository.invite(circleId: circleId, role: role)
     }

@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// "Haven't received the code? Resend" — Figma 4448:11753.
-/// Stateless text row. `isEnabled` controls the Resend tap + opacity.
 struct OtpResendRow: View {
     let isEnabled: Bool
     let onResend: () -> Void

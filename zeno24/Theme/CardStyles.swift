@@ -2,7 +2,6 @@ import SwiftUI
 
 // MARK: - Glass surface (auth icon holder, back button, mode toggle)
 
-/// Translucent surface with a soft white border. Apply via `.glassSurface()`.
 struct GlassSurface: ViewModifier {
     var cornerRadius: CGFloat = 16
     var fillOpacity: Double = 0.12
@@ -22,7 +21,6 @@ struct GlassSurface: ViewModifier {
 }
 
 extension View {
-    /// Translucent white surface used on the auth gradient.
     func glassSurface(cornerRadius: CGFloat = 16,
                       fillOpacity: Double = 0.12,
                       borderOpacity: Double = 0.4) -> some View {
@@ -34,8 +32,6 @@ extension View {
 
 // MARK: - Themed surface card (scheme-aware)
 
-/// Default card used outside the auth flow — `surface` background with
-/// `border` stroke from the active `AppTheme`.
 struct ThemedCard: ViewModifier {
     @Environment(\.appTheme) private var theme
     var cornerRadius: CGFloat?
@@ -56,7 +52,6 @@ struct ThemedCard: ViewModifier {
 }
 
 extension View {
-    /// Default scheme-aware card surface.
     func themedCard(cornerRadius: CGFloat? = nil) -> some View {
         modifier(ThemedCard(cornerRadius: cornerRadius))
     }

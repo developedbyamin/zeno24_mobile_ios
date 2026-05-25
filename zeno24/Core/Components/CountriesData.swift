@@ -1,10 +1,6 @@
 import Foundation
 
-/// Static country directory — mirrors `countries_data.dart`. The full
-/// E.164 set with popular markets surfaced to the top of the picker.
 enum CountriesData {
-    /// ISO2 → backend `country_id`. Lifted verbatim from
-    /// `lib/core/config/constants/countries_data.dart`.
     private static let dbIds: [String: Int] = [
         "AF": 8, "AL": 9, "DZ": 11, "AS": 12, "AD": 13, "AO": 14, "AQ": 20,
         "AG": 22, "AR": 25, "AW": 28, "AU": 29, "AT": 31, "AZ": 2, "BS": 32,
@@ -66,14 +62,12 @@ enum CountriesData {
     }
 
     private static let rawEntries: [Raw] = [
-        // Popular markets — float to the top of the picker.
         Raw(id: "AZ", name: "Azerbaijan",    dialCode: "+994", flag: "🇦🇿", isPopular: true),
         Raw(id: "TR", name: "Turkey",        dialCode: "+90",  flag: "🇹🇷", isPopular: true),
         Raw(id: "RU", name: "Russia",        dialCode: "+7",   flag: "🇷🇺", isPopular: true),
         Raw(id: "US", name: "United States", dialCode: "+1",   flag: "🇺🇸", isPopular: true),
         Raw(id: "GB", name: "United Kingdom", dialCode: "+44", flag: "🇬🇧", isPopular: true),
 
-        // Rest, alphabetical.
         Raw(id: "AF", name: "Afghanistan",   dialCode: "+93",  flag: "🇦🇫"),
         Raw(id: "AL", name: "Albania",       dialCode: "+355", flag: "🇦🇱"),
         Raw(id: "DZ", name: "Algeria",       dialCode: "+213", flag: "🇩🇿"),

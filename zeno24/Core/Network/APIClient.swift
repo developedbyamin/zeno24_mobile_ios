@@ -1,7 +1,5 @@
 import Foundation
 
-/// Thin URLSession wrapper — mirrors lib/core/network/custom_dio/custom_dio.dart
-/// Applies auth + logging interceptors and decodes JSON.
 final class APIClient {
     private let session: URLSession
     private let baseURL: URL
@@ -55,11 +53,6 @@ final class APIClient {
 
     // MARK: - AppRequest/AppResponse envelope
 
-    /// Wraps `data` in `AppRequestModel`, POSTs it, and decodes the
-    /// response as `AppResponseModel<R>`. Mirrors Flutter's per-service
-    /// `_dio.post(path, data: AppRequestModel(...).toMap())` pattern.
-    /// Pass `authenticated: true` to include the access token in the body
-    /// (Flutter does this for circles / settings; auth endpoints omit it).
     func send<D: Encodable, R: Decodable>(
         _ path: String,
         data: D,
@@ -72,8 +65,6 @@ final class APIClient {
         return try await post(path, body: body)
     }
 
-    /// Token-only variant — for endpoints like `/circles/list` that take
-    /// no payload other than the access token.
     func send<R: Decodable>(
         _ path: String,
         authenticated: Bool = true
@@ -134,7 +125,6 @@ final class APIClient {
             throw err
         }
 
-        // Backend-shaped error envelope — mirrors CustomDio._checkResponseStatus.
         // Backend uses HTTP 200/500 and signals failures through `status: "error"`
         // in the body, so we must inspect every response — not just non-2xx.
         if let backendError = parseBackendError(data) {

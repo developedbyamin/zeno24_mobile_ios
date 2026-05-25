@@ -2,9 +2,6 @@ import UIKit
 import MapKit
 import CoreLocation
 
-/// MKMapView-based native map host. Ported 1:1 from the Flutter project's
-/// `ios/Runner/Map/NativeMapView.swift` — Flutter `PlatformView` conformance
-/// stripped so it can be embedded directly via `UIViewRepresentable`.
 class NativeMapView: NSObject, MKMapViewDelegate,
     CLLocationManagerDelegate, UIGestureRecognizerDelegate {
 
@@ -18,8 +15,6 @@ class NativeMapView: NSObject, MKMapViewDelegate,
     private var stopLinkTimer: Timer?
 
     var onClusterTap: (([String]) -> Void)?
-    /// İstifadəçi xəritədə pan/pinch/double-tap etdikdə bir dəfə tetiklənir.
-    /// Bottom sheet-i collapsed state-ə çəkmək üçün istifadə olunur.
     var onUserMapGesture: (() -> Void)?
 
     override init() {
@@ -41,12 +36,7 @@ class NativeMapView: NSObject, MKMapViewDelegate,
         mapView.showsUserLocation = false
         mapView.showsCompass = false
         mapView.isPitchEnabled = false
-        // Map həmişə light mode-da render olunsun — system dark mode-a girəndə
-        // MKMapView avtomatik dark theme tətbiq edir, biz bunu söndürürük
-        // (brand tile-ları yalnız light variant üçün dizayn olunub).
         mapView.overrideUserInterfaceStyle = .light
-        // Marker overlay layer-i də eyni — popup-larda dark tint qarşısını
-        // alırıq (label rəngləri light bg-yə uyğun seçilib).
         overlay.overrideUserInterfaceStyle = .light
         container.overrideUserInterfaceStyle = .light
 
@@ -82,8 +72,6 @@ class NativeMapView: NSObject, MKMapViewDelegate,
         centerMapDefault()
     }
 
-    /// MKMapView pan/pinch/double-tap-ı **paralel** olaraq qəbul edən
-    /// recognizer-lər — map-in öz scroll-zoom-unu sındırmırlar.
     private func installUserGestureRecognizers() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handleUserGesture(_:)))
         pan.delegate = self
@@ -103,7 +91,6 @@ class NativeMapView: NSObject, MKMapViewDelegate,
     }
 
     @objc private func handleUserGesture(_ rec: UIGestureRecognizer) {
-        // Pan/pinch üçün .began (long-press əvəzi); tap üçün .ended.
         if rec.state == .began || (rec is UITapGestureRecognizer && rec.state == .ended) {
             onUserMapGesture?()
         }
@@ -118,8 +105,6 @@ class NativeMapView: NSObject, MKMapViewDelegate,
 
     func view() -> UIView { container }
 
-    /// Public accessor for the SwiftUI host — same view returned by `view()`,
-    /// kept under the legacy name for parity with the Flutter port.
     var containerView: UIView { container }
 
     @objc private func displayLinkTick() {
@@ -292,8 +277,6 @@ class NativeMapView: NSObject, MKMapViewDelegate,
         }
     }
 
-    /// Strongly-typed bulk upsert. Replaces the dict-based bridge that
-    /// existed for Flutter `MethodChannel` compatibility.
     func setMarkers(_ markers: [MarkerModel], fallbackColorHex: Int = 0xFFFF5F03) {
         guard let mgr = flutterMarkerManager else { return }
         mgr.beginBatch()

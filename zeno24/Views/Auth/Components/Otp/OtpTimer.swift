@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Countdown clock. Restart by bumping the parent's `nonce` (the same
-/// trick Flutter uses with `ValueKey('otp-timer-$nonce')`).
 @MainActor
 @Observable
 final class OtpCountdown {
@@ -36,9 +34,6 @@ final class OtpCountdown {
     var isFinished: Bool { remaining == 0 }
 }
 
-/// Glass capsule countdown — Figma 4076:6618.
-/// `white 12%` fill, `white 16%` stroke, px-10 py-6 padding,
-/// SemiBold 14 white text. Auto-fades when the countdown hits zero.
 struct OtpTimerPill: View {
     let formatted: String
     let isVisible: Bool
