@@ -276,7 +276,12 @@ enum AppStrings {
 
     enum Chat {
         static var title: String       { String(localized: "chat.title",       defaultValue: "Chat") }
-        static var placeholder: String { String(localized: "chat.placeholder", defaultValue: "Type a message") }
+        static var placeholder: String { String(localized: "chat.placeholder", defaultValue: "Write a message") }
+        static var quickLoveYou: String { String(localized: "chat.quick.loveYou", defaultValue: "Love you") }
+        static var quickSayHello: String { String(localized: "chat.quick.sayHello", defaultValue: "Say Hello") }
+        static var quickWriteMe: String { String(localized: "chat.quick.writeMe", defaultValue: "Write me") }
+        static var quickCallMe: String { String(localized: "chat.quick.callMe", defaultValue: "Call me") }
+        static var defaultCircle: String { String(localized: "chat.defaultCircle", defaultValue: "Family") }
     }
 
     enum Profile {
@@ -299,6 +304,20 @@ enum AppStrings {
         static var appearance: String { String(localized: "settings.appearance", defaultValue: "Appearance") }
         static var theme: String      { String(localized: "settings.theme",      defaultValue: "Theme") }
         static var logout: String     { String(localized: "settings.logout",     defaultValue: "Log out") }
+        static var logoutConfirmTitle: String {
+            String(localized: "settings.logout.confirm.title",
+                   defaultValue: "Are you sure you want to leave?")
+        }
+        static var logoutConfirmMessage: String {
+            String(localized: "settings.logout.confirm.message",
+                   defaultValue: "You\u{2019}ll lose access to circle members\nand their updates.")
+        }
+        static var logoutConfirmCancel: String {
+            String(localized: "settings.logout.confirm.cancel", defaultValue: "Cancel")
+        }
+        static var logoutConfirmAction: String {
+            String(localized: "settings.logout.confirm.action", defaultValue: "Leave")
+        }
 
         static var userName: String   { String(localized: "settings.user.name",  defaultValue: "Nigar") }
         static var userEmail: String  { String(localized: "settings.user.email", defaultValue: "Fidanguluzada@gmail.com") }
@@ -365,6 +384,11 @@ enum AppStrings {
         static var preview: String      { String(localized: "notifications.preview",     defaultValue: "Lorem ipsum dololor lorem dolor mess...") }
         static var circlePill: String   { String(localized: "notifications.circle.pill", defaultValue: "Circle:") }
         static var circleName: String   { String(localized: "notifications.circle.name", defaultValue: "Family") }
+        static var filterPlaceAlerts: String { String(localized: "notifications.filter.placeAlerts", defaultValue: "Place Alerts") }
+        static var filterSafeDrive: String   { String(localized: "notifications.filter.safeDrive",   defaultValue: "Safe Drive") }
+        static var filterPets: String        { String(localized: "notifications.filter.pets",        defaultValue: "Pets") }
+        static var filterOffers: String      { String(localized: "notifications.filter.offers",      defaultValue: "Offers") }
+        static var filterAll: String         { String(localized: "notifications.filter.all",         defaultValue: "All Notifications") }
     }
 
     enum Health {

@@ -14,12 +14,18 @@ final class MarkersStore {
         self.repository = repository ?? ServiceLocator.shared.markersRepository
     }
 
-    func startSyncing(interval: TimeInterval = 5) {
-        syncTask?.cancel()
+    /// Idempotent: no-op if polling is already running. Lets the bootstrap
+    /// flow kick off the long-running sync without stacking tasks on every
+    /// re-entry into Home / navigation churn.
+    func startSyncing(interval: TimeInterval = 20) {
+        guard syncTask == nil else { return }
         syncTask = Task { [weak self] in
+            // The bootstrap path already issued an immediate `syncOnce`, so
+            // sleep first to avoid an instant duplicate request.
             while !Task.isCancelled {
-                await self?.syncOnce()
                 try? await Task.sleep(for: .seconds(interval))
+                if Task.isCancelled { break }
+                await self?.syncOnce()
             }
         }
     }
@@ -35,5 +41,12 @@ final class MarkersStore {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+
+    func reset() {
+        stopSyncing()
+        markers = []
+        isLoading = false
+        errorMessage = nil
     }
 }

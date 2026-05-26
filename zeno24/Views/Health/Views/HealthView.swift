@@ -23,10 +23,6 @@ struct HealthView: View {
                     .padding(.bottom, tabBarHeight)
             }
         }
-        .safeAreaInset(edge: .top, spacing: 0) {
-            AppTopBar(title: AppStrings.Health.title)
-        }
-        .navigationBarBackButtonHidden(true)
-        .toolbar(.hidden, for: .navigationBar)
+        .appTopBar(title: AppStrings.Health.title, bottomCornerRadius: 16, spacing: 8)
     }
 }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RootView: View {
     @Environment(AuthStore.self) private var authStore
+    @Environment(BootstrapStore.self) private var bootstrap
     @Environment(PremiumStore.self) private var premium
     @State private var router = AppRouter()
 
@@ -10,22 +11,31 @@ struct RootView: View {
 
         ZStack(alignment: .top) {
             switch authStore.state {
-            case .loading:        SplashView()
-            case .unauthenticated: AuthCoordinator()
+            case .loading:
+                SplashView()
+            case .unauthenticated:
+                AuthCoordinator()
+                    .onAppear { bootstrap.reset() }
             case .authenticated:
-                // Single root-level NavigationStack. `router.push(.messages)`
-                // from anywhere inside the tab shell pushes a new screen ON
-                // TOP of the entire shell — tab bar isn't part of the pushed
-                // view, so it naturally disappears (no hide/show logic).
-                NavigationStack(path: $router.path) {
-                    CircleFlowHost {
-                        MainView()
+                if bootstrap.state == .ready {
+                    // Single root-level NavigationStack. `router.push(.messages)`
+                    // from anywhere inside the tab shell pushes a new screen
+                    // ON TOP of the entire shell — tab bar isn't part of the
+                    // pushed view, so it naturally disappears (no hide/show
+                    // logic).
+                    NavigationStack(path: $router.path) {
+                        CircleFlowHost {
+                            MainView()
+                        }
+                        .navigationDestination(for: AppRoute.self) { route in
+                            AppRouteBuilder.view(for: route)
+                        }
                     }
-                    .navigationDestination(for: AppRoute.self) { route in
-                        AppRouteBuilder.view(for: route)
-                    }
+                    .environment(self.router)
+                } else {
+                    SplashView()
+                        .onAppear { bootstrap.start() }
                 }
-                .environment(self.router)
             }
 
             // Premium sheet + outcome dialog sit above EVERY route — tabs,

@@ -7,6 +7,7 @@ final class CirclesStore {
     var selectedCircleId: String?
     var isLoading: Bool = false
     var errorMessage: String?
+    var hasLoaded: Bool = false
 
     private let repository: CirclesRepository
 
@@ -18,8 +19,22 @@ final class CirclesStore {
         circles.first { $0.id == selectedCircleId }
     }
 
+    func reset() {
+        circles = []
+        selectedCircleId = nil
+        isLoading = false
+        errorMessage = nil
+        hasLoaded = false
+    }
+
     func load() async {
+        guard !hasLoaded, !isLoading else { return }
+        await reload()
+    }
+
+    func reload() async {
         isLoading = true
+        errorMessage = nil
         defer { isLoading = false }
         do {
             circles = try await repository.list()
@@ -28,6 +43,7 @@ final class CirclesStore {
             } else if selectedCircleId == nil {
                 selectedCircleId = circles.first?.id
             }
+            hasLoaded = true
         } catch {
             errorMessage = error.localizedDescription
         }

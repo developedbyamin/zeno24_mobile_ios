@@ -4,9 +4,8 @@ struct HomeView: View {
     @Environment(AppRouter.self) private var router
     @Environment(\.openCirclePicker) private var openCirclePicker
     @Environment(CirclesStore.self) private var circles
-    @Environment(PremiumStore.self) private var premium
+    @Environment(MarkersStore.self) private var markers
     @State private var home = HomeStore()
-    @State private var markers = MarkersStore()
     @State private var mapType: HomeMapType = .auto
     @State private var showMapTypePicker = false
     @State private var sheetTopY: CGFloat = 0
@@ -62,13 +61,6 @@ struct HomeView: View {
                 HomeMapTypePicker(isPresented: $showMapTypePicker, selected: $mapType)
                     .zIndex(999)
             }
-        }
-        .task { markers.startSyncing() }
-        .onDisappear { markers.stopSyncing() }
-        .onAppear {
-            // Surface the premium upsell on first home mount (1:1 with the
-            // Flutter `addPostFrameCallback` on home_view.dart).
-            premium.presentOnFirstLaunchIfNeeded()
         }
         .navigationTitle(AppStrings.Tab.home)
         .toolbar(.hidden, for: .navigationBar)

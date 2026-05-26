@@ -1,9 +1,10 @@
 import SwiftUI
 
 /// Unified circle pill — the only entry point for switching circles across
-/// the entire app. Tapping it surfaces a native iOS context menu anchored
-/// to the pill: one row per circle (with a checkmark on the active one),
-/// then a divider, then "Create a circle" and "Join a circle" actions.
+/// the entire app. Tapping it surfaces a full-screen overlay (Figma
+/// 5421:8762) with a translucent lavender gradient background, a "Circles"
+/// card listing every circle (the active one highlighted with a gray row),
+/// and a circular close button below.
 ///
 /// Two visual variants:
 ///   • `.dark`  — 224×46 dark capsule with chevron-up button. Used on
@@ -19,70 +20,64 @@ struct CirclePill: View {
 
     var variant: Variant = .dark
     let fallbackTitle: String
-    /// Called when the user selects a different circle from the built-in
-    /// menu. Default no-op.
+    /// Called when the user selects a different circle from the picker.
     var onCircleChange: (_ circleId: String) -> Void = { _ in }
     /// Optional override for the tap action. When provided the pill behaves
     /// as a plain button and fires this closure instead of opening the
-    /// built-in `Menu` — used by the Home top bar, which opens its own full
-    /// circle picker overlay rather than a context menu.
+    /// built-in picker — used by the Home top bar, which opens its own full
+    /// circle picker overlay rather than the pill's default one.
     var onTap: (() -> Void)? = nil
 
     @Environment(CirclesStore.self) private var circles
-    @Environment(\.openCreateCircle) private var openCreate
-    @Environment(\.openJoinCircle) private var openJoin
+    @State private var isPickerOpen = false
 
     private var title: String {
         circles.selectedCircle?.name ?? fallbackTitle
     }
 
     var body: some View {
-        if let onTap {
-            Button(action: onTap) { label }
-                .buttonStyle(.plain)
-        } else {
-            Menu {
-                menuContent
-            } label: {
-                label
+        Button {
+            if let onTap {
+                onTap()
+            } else {
+                openPickerWithoutSystemTransition()
             }
-            .menuStyle(.button)
+        } label: {
+            label
+        }
+        .buttonStyle(.plain)
+        .fullScreenCover(isPresented: $isPickerOpen) {
+            CirclePickerOverlay(
+                circles: circles.circles,
+                selectedId: circles.selectedCircleId,
+                onSelect: { id in
+                    // The overlay already performs `circlesStore.switchTo`
+                    // before invoking this. Surface the change to the host so
+                    // it can react (e.g. update titles) — dismissal is
+                    // animated inside the overlay itself.
+                    onCircleChange(id)
+                },
+                onClose: dismissPicker
+            )
+            .presentationBackground(.clear)
+        }
+        .transaction(value: isPickerOpen) { txn in
+            // Suppress the default bottom-up modal slide so the overlay can
+            // fade/scale in instead (handled inside CirclePickerOverlay).
+            txn.disablesAnimations = true
         }
     }
 
-    @ViewBuilder
-    private var menuContent: some View {
-        Section {
-            ForEach(circles.circles) { circle in
-                Button {
-                    let id = circle.id
-                    Task { await circles.switchTo(id) }
-                    onCircleChange(id)
-                } label: {
-                    if circle.id == circles.selectedCircleId {
-                        // SwiftUI renders a leading checkmark automatically
-                        // when a Menu Button uses `Label` with the
-                        // "checkmark" system image as part of the title.
-                        Label(circle.name, systemImage: "checkmark")
-                    } else {
-                        Text(circle.name)
-                    }
-                }
-            }
-        }
+    private func openPickerWithoutSystemTransition() {
+        var txn = Transaction()
+        txn.disablesAnimations = true
+        withTransaction(txn) { isPickerOpen = true }
+    }
 
-        Section {
-            Button {
-                openCreate()
-            } label: {
-                Label("Create a circle", systemImage: "plus.circle")
-            }
-            Button {
-                openJoin()
-            } label: {
-                Label("Join a circle", systemImage: "person.badge.plus")
-            }
-        }
+    private func dismissPicker() {
+        var txn = Transaction()
+        txn.disablesAnimations = true
+        withTransaction(txn) { isPickerOpen = false }
     }
 
     @ViewBuilder

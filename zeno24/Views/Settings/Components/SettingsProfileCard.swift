@@ -1,8 +1,28 @@
 import SwiftUI
 
 struct SettingsProfileCard: View {
+    var name: String = ""
+    var email: String = ""
+    var avatarURL: URL? = nil
+    var isLoading: Bool = false
     var onProfileTap: (() -> Void)? = nil
     var onUpgradeTap: (() -> Void)? = nil
+
+    private var resolvedName: String {
+        name.isEmpty ? AppStrings.Settings.userName : name
+    }
+
+    private var resolvedEmail: String {
+        email.isEmpty ? AppStrings.Settings.userEmail : email
+    }
+
+    private var initial: String {
+        let source = name.isEmpty ? resolvedEmail : name
+        return source
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .first
+            .map { String($0).uppercased() } ?? "?"
+    }
 
     var body: some View {
         VStack(spacing: 16) {
@@ -10,19 +30,18 @@ struct SettingsProfileCard: View {
                 onProfileTap?()
             } label: {
                 HStack(spacing: 10) {
-                    Image(AppImages.avatarNigar)
-                        .resizable()
-                        .scaledToFill()
+                    avatar
                         .frame(width: 56, height: 56)
-                        .clipShape(Circle())
 
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(AppStrings.Settings.userName)
+                        Text(resolvedName)
                             .font(AppTypography.bodyMdSemiBold)
                             .foregroundStyle(AppColors.mainBlack)
-                        Text(AppStrings.Settings.userEmail)
+                            .redacted(reason: isLoading ? .placeholder : [])
+                        Text(resolvedEmail)
                             .font(AppTypography.bodyXsMedium)
                             .foregroundStyle(Color(hex: 0x8B98A8))
+                            .redacted(reason: isLoading ? .placeholder : [])
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -42,6 +61,36 @@ struct SettingsProfileCard: View {
         .padding(.vertical, 12)
         .frame(maxWidth: .infinity)
         .background(Color.white, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    @ViewBuilder
+    private var avatar: some View {
+        if let avatarURL {
+            AsyncImage(url: avatarURL) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                case .empty, .failure:
+                    initialFallback
+                @unknown default:
+                    initialFallback
+                }
+            }
+            .clipShape(Circle())
+        } else {
+            initialFallback
+        }
+    }
+
+    private var initialFallback: some View {
+        ZStack {
+            Circle().fill(Color(hex: 0x0F85EB))
+            Text(initial)
+                .font(AppTypography.bodyMdBold)
+                .foregroundStyle(.white)
+        }
     }
 
     private var upgradeBanner: some View {

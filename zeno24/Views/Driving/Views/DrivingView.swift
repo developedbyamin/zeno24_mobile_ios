@@ -30,10 +30,6 @@ struct DrivingView: View {
                     .padding(.bottom, tabBarHeight)
             }
         }
-        .safeAreaInset(edge: .top, spacing: 0) {
-            AppTopBar(title: AppStrings.Driving.title)
-        }
-        .navigationBarBackButtonHidden(true)
-        .toolbar(.hidden, for: .navigationBar)
+        .appTopBar(title: AppStrings.Driving.title, bottomCornerRadius: 16, spacing: 8)
     }
 }

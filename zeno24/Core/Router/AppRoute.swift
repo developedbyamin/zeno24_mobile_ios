@@ -6,7 +6,7 @@ import Foundation
 /// and switch with `.transition`.
 enum AppRoute: Hashable {
     case messages
-    case chat(circleId: String)
+    case chat(ChatThread)
     case notifications
     case profile
     case settings

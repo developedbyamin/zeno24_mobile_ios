@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NotificationsView: View {
     @Environment(\.dismiss) private var dismiss
+    @State private var isFilterOpen = false
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -19,13 +20,14 @@ struct NotificationsView: View {
                     Color.clear.frame(height: 80)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .background(Color(hex: 0xF6F6F6).ignoresSafeArea())
+            .ignoresSafeArea(edges: .bottom)
 
             HStack {
                 Spacer()
-                NotificationsFAB()
+                NotificationsFAB { openFilter() }
                     .padding(.trailing, 16)
             }
             .overlay {
@@ -33,11 +35,31 @@ struct NotificationsView: View {
             }
             .padding(.bottom, 14)
         }
-        .safeAreaInset(edge: .top, spacing: 0) {
-            AppTopBar(title: AppStrings.Notifications.title) { dismiss() }
+        .appTopBar(title: AppStrings.Notifications.title, onBack: { dismiss() })
+        .fullScreenCover(isPresented: $isFilterOpen) {
+            NotificationFilterOverlay(
+                onSelect: { _ in },
+                onClose: { closeFilter() }
+            )
+            .presentationBackground(.clear)
         }
-        .navigationBarBackButtonHidden(true)
-        .toolbar(.hidden, for: .navigationBar)
+        .transaction(value: isFilterOpen) { txn in
+            // Suppress the default bottom-up modal slide so the overlay can
+            // fade/scale in instead (handled inside NotificationFilterOverlay).
+            txn.disablesAnimations = true
+        }
+    }
+
+    private func openFilter() {
+        var txn = Transaction()
+        txn.disablesAnimations = true
+        withTransaction(txn) { isFilterOpen = true }
+    }
+
+    private func closeFilter() {
+        var txn = Transaction()
+        txn.disablesAnimations = true
+        withTransaction(txn) { isFilterOpen = false }
     }
 
     // MARK: - Sections

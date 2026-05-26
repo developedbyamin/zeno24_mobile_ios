@@ -10,6 +10,8 @@ struct zeno24App: App {
     @State private var deepLinkStore = DeepLinkStore()
     @State private var premiumStore = PremiumStore()
     @State private var circlesStore = CirclesStore()
+    @State private var markersStore = MarkersStore()
+    @State private var bootstrapStore = BootstrapStore()
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
@@ -24,10 +26,20 @@ struct zeno24App: App {
                 .environment(deepLinkStore)
                 .environment(premiumStore)
                 .environment(circlesStore)
+                .environment(markersStore)
+                .environment(bootstrapStore)
                 .environment(\.appTheme, .default)
                 .environment(\.locale, localeStore.locale)
                 .preferredColorScheme(.light)
                 .id(localeStore.languageCode)
+                .onAppear {
+                    bootstrapStore.attach(
+                        settings: settingsStore,
+                        circles: circlesStore,
+                        markers: markersStore,
+                        premium: premiumStore
+                    )
+                }
         }
     }
 }
