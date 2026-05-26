@@ -61,20 +61,36 @@ struct CirclePickerOverlay: View {
     // MARK: - Card
 
     private var card: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        // Match the home-top-bar `CirclePickerSheet` cap — past 7 rows the
+        // list scrolls internally instead of pushing the close button off
+        // the bottom of the screen. Rows are a fixed 64pt with 1pt dividers
+        // between non-selected neighbours.
+        let rowHeight: CGFloat = 64
+        let dividerHeight: CGFloat = 1
+        let maxVisible = 7
+        let visibleCount = max(1, min(circles.count, maxVisible))
+        let listHeight = rowHeight * CGFloat(visibleCount)
+            + dividerHeight * CGFloat(max(0, visibleCount - 1))
+        let isScrollable = circles.count > maxVisible
+
+        return VStack(alignment: .leading, spacing: 12) {
             Text("Circles")
                 .font(AppTypography.bodyMdSemiBold)
                 .foregroundStyle(AppColors.mainBlack)
                 .padding(.horizontal, 20)
 
-            VStack(spacing: 0) {
-                ForEach(Array(circles.enumerated()), id: \.element.id) { index, circle in
-                    row(for: circle)
-                    if index < circles.count - 1 {
-                        rowDivider
+            ScrollView(.vertical, showsIndicators: isScrollable) {
+                VStack(spacing: 0) {
+                    ForEach(Array(circles.enumerated()), id: \.element.id) { index, circle in
+                        row(for: circle)
+                        if index < circles.count - 1 {
+                            rowDivider
+                        }
                     }
                 }
             }
+            .frame(height: listHeight)
+            .scrollDisabled(!isScrollable)
         }
         .padding(.vertical, 16)
         .frame(maxWidth: .infinity)

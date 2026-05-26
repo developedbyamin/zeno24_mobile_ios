@@ -1,6 +1,9 @@
 import SwiftUI
 
-struct MessageChatRow: View {
+/// Single conversation row in the Messages list (Figma 5421:7234). 48pt
+/// circular avatar (image or first-letter fallback), name + relative time on
+/// the top row, seen tick + preview + unread count on the bottom row.
+struct MessageRow: View {
     let title: String
     let preview: String
     let time: String
@@ -9,13 +12,15 @@ struct MessageChatRow: View {
     let unreadCount: Int
     let highlighted: Bool
 
-    init(title: String,
-         preview: String,
-         time: String,
-         avatarAsset: String? = nil,
-         initialBackground: Color = .gray,
-         unreadCount: Int = 0,
-         highlighted: Bool = false) {
+    init(
+        title: String,
+        preview: String,
+        time: String,
+        avatarAsset: String? = nil,
+        initialBackground: Color = .gray,
+        unreadCount: Int = 0,
+        highlighted: Bool = false
+    ) {
         self.title = title
         self.preview = preview
         self.time = time
@@ -64,8 +69,10 @@ struct MessageChatRow: View {
         }
         .padding(8)
         .frame(maxWidth: .infinity)
-        .background(highlighted ? Color(hex: 0xF2F5F9) : .clear,
-                    in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .background(
+            highlighted ? Color(hex: 0xF2F5F9) : .clear,
+            in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+        )
     }
 
     @ViewBuilder

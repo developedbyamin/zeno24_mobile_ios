@@ -108,10 +108,11 @@ extension View {
         avatarAsset: String? = nil,
         avatarInitialColor: Color = Color(hex: 0xFF5F03),
         bottomCornerRadius: CGFloat = 16,
+        spacing: CGFloat = 0,
         onBack: @escaping () -> Void,
         onAvatarTap: (() -> Void)? = nil
     ) -> some View {
-        safeAreaInset(edge: .top, spacing: 0) {
+        safeAreaInset(edge: .top, spacing: spacing) {
             ChatTopBar(
                 title: title,
                 subtitle: subtitle,
@@ -166,15 +167,21 @@ struct ChatTopBar: View {
 
                 Spacer()
 
-                Button {
-                    onAvatarTap?()
-                } label: {
+                // No tap handler → render plain, otherwise SwiftUI dims a
+                // disabled Button's label to ~40% opacity and the avatar
+                // reads as washed out.
+                if let onAvatarTap {
+                    Button(action: onAvatarTap) {
+                        avatar
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                    }
+                    .buttonStyle(.plain)
+                } else {
                     avatar
                         .frame(width: 40, height: 40)
                         .clipShape(Circle())
                 }
-                .buttonStyle(.plain)
-                .disabled(onAvatarTap == nil)
             }
         }
         .frame(height: 40)

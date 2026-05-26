@@ -14,7 +14,7 @@ struct MessagesView: View {
                         Button {
                             router.push(.chat(item.thread))
                         } label: {
-                            MessageChatRow(
+                            MessageRow(
                                 title: item.thread.title,
                                 preview: item.preview,
                                 time: item.time,
@@ -43,7 +43,13 @@ struct MessagesView: View {
             CirclePill(fallbackTitle: AppStrings.Messages.circleName)
                 .padding(.bottom, 14)
         }
-        .appTopBar(title: AppStrings.Messages.title, onBack: { dismiss() })
+        .background(Color(hex: 0xF6F6F6).ignoresSafeArea())
+        .appTopBar(
+            title: AppStrings.Messages.title,
+            onBack: { dismiss() },
+            bottomCornerRadius: 16,
+            spacing: 4
+        )
     }
 
     private var divider: some View {
@@ -52,14 +58,6 @@ struct MessagesView: View {
             Color(hex: 0xF2F5F9).frame(height: 1)
         }
         .frame(width: 291, height: 1)
-    }
-}
-
-private struct MessageRowPressStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .opacity(configuration.isPressed ? 0.6 : 1.0)
-            .animation(.easeInOut(duration: 0.12), value: configuration.isPressed)
     }
 }
 
