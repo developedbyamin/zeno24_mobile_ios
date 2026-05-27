@@ -135,6 +135,9 @@ enum AppStrings {
             static var continueWithGoogle: String {
                 String(localized: "auth.social.continue_google", defaultValue: "Continue with Google")
             }
+            static var continueWithApple: String {
+                String(localized: "auth.social.continue_apple", defaultValue: "Continue with Apple")
+            }
         }
     }
 

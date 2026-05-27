@@ -1,6 +1,9 @@
 import SwiftUI
-import AuthenticationServices
 
+/// Auth flow's "or continue with..." row. Buttons just call into `AuthStore`
+/// — all native (Apple `ASAuthorizationController`, Google `GIDSignIn`) and
+/// Firebase exchange plumbing lives in `AuthService`, so this view stays
+/// pure SwiftUI.
 struct SignSocialRow: View {
     @Bindable var store: AuthStore
 
@@ -18,16 +21,33 @@ struct SignSocialRow: View {
                     .frame(height: 1)
             }
 
-            SignInWithAppleButton(.continue) { request in
-                SocialSignInLauncher.prepareAppleRequest(request)
-            } onCompletion: { result in
-                SocialSignInLauncher.handleApple(result: result, into: store)
-            }
-            .signInWithAppleButtonStyle(.white)
-            .frame(height: 52)
-            .clipShape(RoundedRectangle(cornerRadius: AppSpacing.radiusLarge, style: .continuous))
+            Button {
+                Task { await store.signInWithApple() }
+            } label: {
+                ZStack {
+                    HStack(spacing: AppSpacing.s) {
+                        Image(systemName: "applelogo")
+                            .font(.system(size: 18, weight: .semibold))
+                        Text(AppStrings.Auth.Social.continueWithApple)
+                            .font(AppTypography.bodyLgSemiBold)
+                    }
+                    .opacity(store.isAppleSubmitting ? 0 : 1)
 
-            Button(action: handleGoogle) {
+                    if store.isAppleSubmitting {
+                        ProgressView().tint(.black)
+                    }
+                }
+                .foregroundStyle(.black)
+                .frame(maxWidth: .infinity)
+                .frame(height: 52)
+                .background(Color.white, in: RoundedRectangle(cornerRadius: AppSpacing.radiusLarge, style: .continuous))
+            }
+            .buttonStyle(.plain)
+            .disabled(store.isAppleSubmitting)
+
+            Button {
+                Task { await store.signInWithGoogle() }
+            } label: {
                 ZStack {
                     HStack(spacing: AppSpacing.s) {
                         Image(systemName: "g.circle.fill")
@@ -54,9 +74,5 @@ struct SignSocialRow: View {
             .disabled(store.isGoogleSubmitting)
         }
         .padding(.horizontal, AppSpacing.l)
-    }
-
-    private func handleGoogle() {
-        SocialSignInLauncher.launchGoogle(into: store)
     }
 }

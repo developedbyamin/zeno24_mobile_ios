@@ -37,23 +37,35 @@ final class AuthRepository {
 
     // MARK: - Social
 
+    /// End-to-end Apple Sign-In: drives the native sheet via `AuthService`,
+    /// then ships the resulting Firebase id-token through `/auth/sign/step1`.
+    @MainActor
+    func signInWithApple() async throws -> (response: SignStep2ResponseModel, username: String?) {
+        let credential = try await service.signInWithApple()
+        let response = try await exchangeWithBackend(credential)
+        return (response, credential.username)
+    }
+
+    /// End-to-end Google Sign-In — same shape as Apple.
+    @MainActor
+    func signInWithGoogle() async throws -> (response: SignStep2ResponseModel, username: String?) {
+        let credential = try await service.signInWithGoogle()
+        let response = try await exchangeWithBackend(credential)
+        return (response, credential.username)
+    }
+
     /// Mirrors the Flutter contract for `/auth/sign/step1` social sign-in:
     /// `from` is `"apple"` or `"google"`, `id_token` is the **Firebase** ID
     /// token (not the raw Apple/Google one — Flutter wraps the credential in
     /// Firebase first), plus `email`, `username`, and a hard-coded
     /// `country_id` of 1 to match the Flutter payload exactly.
-    func signInWithSocial(
-        from: String,
-        idToken: String,
-        email: String?,
-        username: String?
-    ) async throws -> SignStep2ResponseModel {
+    private func exchangeWithBackend(_ credential: SocialCredential) async throws -> SignStep2ResponseModel {
         let step1Response = try await service.signStep1(.init(
-            from: from,
-            email: email,
+            from: credential.provider,
+            email: credential.email,
             countryId: 1,
-            idToken: idToken,
-            username: username
+            idToken: credential.idToken,
+            username: credential.username
         ))
         // Some social sign-ins authenticate directly on step1 (Flutter checks
         // `response.token` here, not `data.hash`). Handle both shapes.

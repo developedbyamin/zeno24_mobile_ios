@@ -1,5 +1,7 @@
 import Foundation
 import SwiftUI
+import AuthenticationServices
+import GoogleSignIn
 
 @MainActor
 @Observable
@@ -197,26 +199,38 @@ final class AuthStore {
 
     // MARK: - Social
 
-    func signInWithSocial(
-        from provider: String,
-        idToken: String,
-        email: String?,
-        username: String?
+    func signInWithApple() async {
+        guard !isAppleSubmitting else { return }
+        isAppleSubmitting = true
+        await runSocialSignIn { try await self.repository.signInWithApple() }
+        isAppleSubmitting = false
+    }
+
+    func signInWithGoogle() async {
+        guard !isGoogleSubmitting else { return }
+        isGoogleSubmitting = true
+        await runSocialSignIn { try await self.repository.signInWithGoogle() }
+        isGoogleSubmitting = false
+    }
+
+    private func runSocialSignIn(
+        _ request: () async throws -> (response: SignStep2ResponseModel, username: String?)
     ) async {
         do {
-            let response = try await repository.signInWithSocial(
-                from: provider,
-                idToken: idToken,
-                email: email,
-                username: username
-            )
-            if let token = response.token, !token.isEmpty {
+            let result = try await request()
+            if let token = result.response.token, !token.isEmpty {
                 await finishAuthentication()
-            } else if let hash = response.hash {
+            } else if let hash = result.response.hash {
                 self.otpHash = hash
-                self.displayName = username ?? ""
+                self.displayName = result.username ?? ""
                 authPath.append(AuthRoute.createName)
             }
+        } catch let error as NSError where error.domain == ASAuthorizationError.errorDomain
+                                        && error.code == ASAuthorizationError.canceled.rawValue {
+            // User dismissed the Apple sheet — silently drop, matches Flutter.
+        } catch let error as NSError where error.code == GIDSignInError.canceled.rawValue
+                                        && error.domain == kGIDSignInErrorDomain {
+            // User dismissed the Google sheet.
         } catch {
             errorMessage = error.localizedDescription
         }

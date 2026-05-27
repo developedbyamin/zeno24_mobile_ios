@@ -31,14 +31,14 @@ struct OnboardBottomSection: View {
                     provider: .apple,
                     isLoading: store.isAppleSubmitting
                 ) {
-                    SocialSignInLauncher.launchApple(into: store)
+                    Task { await store.signInWithApple() }
                 }
 
                 OnboardSocialButton(
                     provider: .google,
                     isLoading: store.isGoogleSubmitting
                 ) {
-                    SocialSignInLauncher.launchGoogle(into: store)
+                    Task { await store.signInWithGoogle() }
                 }
             }
             .frame(height: 48)
