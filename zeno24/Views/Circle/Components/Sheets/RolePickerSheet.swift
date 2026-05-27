@@ -93,9 +93,6 @@ private struct RolePanel: View {
         VStack(spacing: 12) {
             ForEach(roles, id: \.self) { role in
                 rolePill(title: role, filled: false) {
-                    // Dismiss first, fire selection only after the role
-                    // card is fully gone — keeps invite from racing into
-                    // a half-dismissed role.
                     dismissBottomSheet { onSelect(role) }
                 }
             }

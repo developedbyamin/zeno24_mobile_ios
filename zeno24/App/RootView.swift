@@ -15,7 +15,15 @@ struct RootView: View {
                 SplashView()
             case .unauthenticated:
                 AuthCoordinator()
-                    .onAppear { bootstrap.reset() }
+                    .onAppear {
+                        bootstrap.reset()
+                        // Logging out (or any drop back to .unauthenticated)
+                        // must wipe the in-app NavigationStack — otherwise
+                        // the next sign-in lands the user on whatever screen
+                        // they were on before (e.g. Settings) instead of the
+                        // tab root.
+                        router.popToRoot()
+                    }
             case .authenticated:
                 if bootstrap.state == .ready {
                     // Single root-level NavigationStack. `router.push(.messages)`
@@ -33,6 +41,14 @@ struct RootView: View {
                     }
                     .environment(self.router)
                 } else {
+                    // Cold launch (token already in keychain) — no auth view
+                    // to keep on screen, so the splash is the only graceful
+                    // surface while `/main/settings`, `/circles/list`, and
+                    // the marker sync warm up. The fresh-sign-in path takes
+                    // a different branch: see `signInThroughBootstrap` in
+                    // AuthStore — it runs bootstrap *before* flipping
+                    // `state` to `.authenticated`, so the user never sees
+                    // this splash after tapping Apple/Google/OTP.
                     SplashView()
                         .onAppear { bootstrap.start() }
                 }

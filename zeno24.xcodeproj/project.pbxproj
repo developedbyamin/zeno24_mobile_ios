@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		27E500AC2FC74EE00081166F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 27E500AB2FC74EE00081166F /* FirebaseAuth */; };
+		C0AA000001000000000000A1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C0AA000001000000000000B1 /* GoogleSignIn */; };
+		C0AA000001000000000000A2 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C0AA000001000000000000B2 /* GoogleSignInSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		275F30CC2FC0EE9E00211010 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +71,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0AA000001000000000000A1 /* GoogleSignIn in Frameworks */,
+				27E500AC2FC74EE00081166F /* FirebaseAuth in Frameworks */,
+				C0AA000001000000000000A2 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +100,7 @@
 				275F30C02FC0EE9D00211010 /* zeno24 */,
 				275F30CE2FC0EE9E00211010 /* zeno24Tests */,
 				275F30D82FC0EE9E00211010 /* zeno24UITests */,
+				27E500AA2FC74EE00081166F /* Frameworks */,
 				275F30BF2FC0EE9D00211010 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +113,13 @@
 				275F30D52FC0EE9E00211010 /* zeno24UITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		27E500AA2FC74EE00081166F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +142,9 @@
 			);
 			name = zeno24;
 			packageProductDependencies = (
+				C0AA000001000000000000B1 /* GoogleSignIn */,
+				C0AA000001000000000000B2 /* GoogleSignInSwift */,
+				27E500AB2FC74EE00081166F /* FirebaseAuth */,
 			);
 			productName = zeno24;
 			productReference = 275F30BE2FC0EE9D00211010 /* zeno24.app */;
@@ -208,6 +228,10 @@
 			);
 			mainGroup = 275F30B52FC0EE9D00211010;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C0AA000001000000000000C1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				27E500A92FC74E560081166F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 275F30BF2FC0EE9D00211010 /* Products */;
 			projectDirPath = "";
@@ -408,6 +432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = zeno24/zeno24.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -444,6 +469,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = zeno24/zeno24.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -599,6 +625,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		27E500A92FC74E560081166F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.14.0;
+			};
+		};
+		C0AA000001000000000000C1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		27E500AB2FC74EE00081166F /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27E500A92FC74E560081166F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		C0AA000001000000000000B1 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C0AA000001000000000000C1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		C0AA000001000000000000B2 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C0AA000001000000000000C1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 275F30B62FC0EE9D00211010 /* Project object */;
 }

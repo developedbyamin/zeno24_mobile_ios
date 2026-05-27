@@ -1,10 +1,12 @@
 import SwiftUI
 
-// Adds a leading-edge swipeBackGesture so the screen can be dismissed the way
-// iOS users expect — SwiftUI disables the native one whenever
-// `navigationBarBackButtonHidden(true)` is set.
+// Hides the system nav bar and re-enables the native interactive pop gesture
+// so the screen can be swiped back. SwiftUI silently disables the gesture
+// whenever `navigationBarBackButtonHidden(true)` is set, so we restore it
+// via the UIKit bridge — this gives Apple's finger-tracking animation and,
+// crucially, keeps the underlying view rendered during the drag (a custom
+// SwiftUI offset gesture would show an empty white window behind).
 struct AuthScreen<Content: View>: View {
-    @Environment(AuthStore.self) private var auth
     @ViewBuilder var content: () -> Content
 
     var body: some View {
@@ -15,6 +17,6 @@ struct AuthScreen<Content: View>: View {
         .preferredColorScheme(.dark)
         .navigationBarBackButtonHidden(true)
         .toolbarBackground(.hidden, for: .navigationBar)
-        .swipeBackGesture { auth.goBack() }
+        .enableInteractivePopGesture()
     }
 }

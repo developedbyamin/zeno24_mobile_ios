@@ -7,7 +7,7 @@ struct KidsView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 4) {
+                VStack(spacing: 4) { 
                     KidsProfileCard()
                     KidsPromoActionsCard()
                     KidsLiveLocationCard()

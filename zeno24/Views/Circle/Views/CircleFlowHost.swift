@@ -4,91 +4,43 @@ struct CircleFlowHost<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
     @Environment(CirclesStore.self) private var circles
-    @State private var showCirclePicker = false
-    @State private var showCreateCircle = false
-    @State private var showJoinCircle = false
-    @State private var joinInvitation: JoinInvitationPayload?
-    @State private var rolePickerCircleId: String?
-    @State private var inviteCircleId: String?
-    @Namespace private var circlePillNS
-
-    private struct JoinInvitationPayload: Equatable {
-        let code: String
-        let circleName: String
-        let memberCount: Int
-        let avatarUrls: [String]
-    }
+    @Environment(DeepLinkStore.self) private var deepLink
+    @State private var flowStep: CircleFlowStep?
+    @State private var rolePickerSheetCircleId: String?
+    @State private var inviteMemberSheetCircleId: String?
+    @State private var invitationInFlight: Bool = false
 
     var body: some View {
         ZStack {
             content()
 
-            if showCirclePicker {
-                CirclePickerSheet(isPresented: $showCirclePicker, namespace: circlePillNS)
-                    .zIndex(1000)
+            ZStack {
+                if let step = flowStep {
+                    CircleFlowOverlay(step: bindingForStep(step))
+                        .zIndex(1000)
+                }
             }
+            .ignoresSafeArea(.keyboard, edges: .all)
 
-            if showCreateCircle {
-                CreateCircleSheet(isPresented: $showCreateCircle)
-                    .transition(.opacity)
-                    .zIndex(1001)
-            }
-
-            if showJoinCircle {
-                JoinCircleSheet(
-                    isPresented: $showJoinCircle,
-                    onInvitationLoaded: { code, info in
-                        let payload = JoinInvitationPayload(
-                            code: code,
-                            circleName: info.circleData?.title ?? "Circle",
-                            memberCount: info.membersData?.count ?? 0,
-                            avatarUrls: (info.membersData ?? []).compactMap(\.avatarUrl)
-                        )
-                        // Code sheet-i yıxılır, invitation sheet onun yerini
-                        // alır — Flutter HomeJoinCircleOverlay ardınca
-                        // presentJoinInvitationOverlay çağrısı 1:1.
-                        showJoinCircle = false
-                        joinInvitation = payload
-                    }
-                )
-                .transition(.opacity)
-                .zIndex(1001)
-            }
-
-            if let payload = joinInvitation {
-                JoinInvitationSheet(
-                    isPresented: Binding(
-                        get: { joinInvitation != nil },
-                        set: { if !$0 { joinInvitation = nil } }
-                    ),
-                    code: payload.code,
-                    circleName: payload.circleName,
-                    memberCount: payload.memberCount,
-                    avatarUrls: payload.avatarUrls
-                )
-                .transition(.opacity)
-                .zIndex(1002)
-            }
-
-            if let id = rolePickerCircleId {
+            if let id = rolePickerSheetCircleId {
                 let title = circles.circles.first(where: { $0.id == id })?.name ?? "Family"
                 RolePickerSheet(
                     isPresented: Binding(
-                        get: { rolePickerCircleId != nil },
-                        set: { if !$0 { rolePickerCircleId = nil } }
+                        get: { rolePickerSheetCircleId != nil },
+                        set: { if !$0 { rolePickerSheetCircleId = nil } }
                     ),
                     circleTitle: title,
-                    onSelect: { _ in inviteCircleId = id },
-                    onSkip: { inviteCircleId = id }
+                    onSelect: { _ in inviteMemberSheetCircleId = id },
+                    onSkip: { inviteMemberSheetCircleId = id }
                 )
                 .zIndex(1002)
             }
 
-            if let id = inviteCircleId {
+            if let id = inviteMemberSheetCircleId {
                 InviteMemberSheet(
                     isPresented: Binding(
-                        get: { inviteCircleId != nil },
-                        set: { if !$0 { inviteCircleId = nil } }
+                        get: { inviteMemberSheetCircleId != nil },
+                        set: { if !$0 { inviteMemberSheetCircleId = nil } }
                     ),
                     circleId: id,
                     avatarUrl: circles.circles.first(where: { $0.id == id })?.avatarUrl,
@@ -98,26 +50,50 @@ struct CircleFlowHost<Content: View>: View {
             }
         }
         .environment(circles)
-        .environment(\.circlePillNamespace, circlePillNS)
-        .environment(\.circlePickerOpen, showCirclePicker)
-        .environment(\.openCirclePicker, OpenCirclePickerAction {
-            withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) {
-                showCirclePicker = true
-            }
-        })
-        .environment(\.openCreateCircle, OpenCirclePickerAction {
-            withAnimation(.easeInOut(duration: 0.28)) {
-                showCreateCircle = true
-            }
-        })
-        .environment(\.openJoinCircle, OpenCirclePickerAction {
-            withAnimation(.easeInOut(duration: 0.28)) {
-                showJoinCircle = true
-            }
-        })
+        .environment(\.circlePickerOpen, flowStep != nil)
+        .environment(\.openCirclePicker, OpenCirclePickerAction { open(.picker) })
+        .environment(\.openCreateCircle, OpenCirclePickerAction { open(.create) })
+        .environment(\.openJoinCircle, OpenCirclePickerAction { open(.join) })
         .environment(\.openInviteFlow, OpenInviteFlowAction { circleId in
-            rolePickerCircleId = circleId
+            rolePickerSheetCircleId = circleId
         })
         .task { await circles.load() }
+        .onAppear { processPendingInvite() }
+        .onChange(of: deepLink.pendingInviteCode) { _, _ in
+            processPendingInvite()
+        }
+    }
+
+    private func open(_ step: CircleFlowStep) {
+        flowStep = step
+    }
+
+    private func processPendingInvite() {
+        guard !invitationInFlight else { return }
+        guard let code = deepLink.pendingInviteCode, !code.isEmpty else { return }
+        invitationInFlight = true
+        Task {
+            defer { invitationInFlight = false }
+            do {
+                let info = try await circles.info(code: code)
+                deepLink.clearPendingInvite()
+                flowStep = .invitation(.init(
+                    code: code,
+                    circleName: info.circleData?.title ?? "Circle",
+                    memberCount: info.membersData?.count ?? 0,
+                    avatarUrls: (info.membersData ?? []).compactMap(\.avatarUrl)
+                ))
+            } catch {
+                deepLink.clearPendingInvite()
+                OverlayHelper.shared.showFailure(error)
+            }
+        }
+    }
+
+    private func bindingForStep(_ current: CircleFlowStep) -> Binding<CircleFlowStep?> {
+        Binding(
+            get: { flowStep },
+            set: { flowStep = $0 }
+        )
     }
 }

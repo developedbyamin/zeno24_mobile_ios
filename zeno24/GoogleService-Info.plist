@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1052139532546-lp3d1uvrdrv3fnkfpht9q312udmb3r9s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1052139532546-lp3d1uvrdrv3fnkfpht9q312udmb3r9s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1052139532546-hk73sc54500cmu418q0i89c11hsa6112.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDW1JLW_AnA6yT8VNmncX6mjHtWzVdiyVg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1052139532546</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.zenocompany.zeno24</string>
+	<key>PROJECT_ID</key>
+	<string>zeno24-5970b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>zeno24-5970b.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1052139532546:ios:ee98f4f4a33a6efc35d21b</string>
+</dict>
+</plist>

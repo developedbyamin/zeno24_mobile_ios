@@ -1,4 +1,5 @@
 import SwiftUI
+import GoogleSignIn
 
 @main
 struct zeno24App: App {
@@ -39,6 +40,22 @@ struct zeno24App: App {
                         markers: markersStore,
                         premium: premiumStore
                     )
+                    // Lets `AuthStore` run bootstrap inline at the end of a
+                    // sign-in so the auth screen's spinner stays up until
+                    // MainView is actually ready — no SplashView flash
+                    // between auth completion and MainView render.
+                    authStore.bootstrap = bootstrapStore
+                }
+                .onOpenURL { url in
+                    // Google's OAuth callback comes back via the reversed-
+                    // client URL scheme; let the SDK consume it first. If
+                    // it isn't a Google URL, fall through to deep-link
+                    // routing (invite codes, universal-link fallbacks).
+                    if GIDSignIn.sharedInstance.handle(url) { return }
+                    deepLinkStore.handle(url)
+                }
+                .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
+                    deepLinkStore.handle(userActivity: activity)
                 }
         }
     }

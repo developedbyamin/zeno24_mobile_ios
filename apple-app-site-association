@@ -1,0 +1,25 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "BYU8YV7643.com.zenocompany.zeno24",
+        "paths": [
+          "/api/join",
+          "/api/join/*",
+          "/api/join?*"
+        ],
+        "components": [
+          {
+            "/": "/api/join",
+            "comment": "Invite link landing — matches with or without query string"
+          },
+          {
+            "/": "/api/join/*",
+            "comment": "Any sub-path under /api/join"
+          }
+        ]
+      }
+    ]
+  }
+}

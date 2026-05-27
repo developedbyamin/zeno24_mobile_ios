@@ -31,6 +31,8 @@ final class AuthStore {
 
     // MARK: - Network
     var isSubmitting: Bool = false
+    var isAppleSubmitting: Bool = false
+    var isGoogleSubmitting: Bool = false
     var errorMessage: String?
 
     // MARK: - Validation
@@ -47,6 +49,13 @@ final class AuthStore {
     // MARK: - Dependencies
     private let repository: AuthRepository
 
+    /// BootstrapStore is wired in from `zeno24App` after both stores exist.
+    /// When sign-in succeeds we run bootstrap **before** flipping `state` to
+    /// `.authenticated` so the user goes straight from the auth screen (with
+    /// its spinner still showing) into MainView — no SplashView flash in
+    /// between.
+    weak var bootstrap: BootstrapStore?
+
     private var lastSignStep1Request: SignStep1RequestModel?
 
     init(repository: AuthRepository? = nil) {
@@ -54,7 +63,7 @@ final class AuthStore {
         // the implicit init context isn't main-actor-isolated. Resolve
         // inside the body where `@MainActor` on the class applies.
         self.repository = repository ?? ServiceLocator.shared.authRepository
-        bootstrap()
+        restoreInitialState()
         observeSessionExpiry()
     }
 
@@ -79,7 +88,7 @@ final class AuthStore {
 
     // MARK: - Lifecycle
 
-    private func bootstrap() {
+    private func restoreInitialState() {
         state = ServiceLocator.shared.authTokens.isAuthenticated
             ? .authenticated
             : .unauthenticated
@@ -149,18 +158,19 @@ final class AuthStore {
     func verifyOtp() async {
         guard isOtpValid, let otpHash, !isSubmitting else { return }
         isSubmitting = true
-        defer { isSubmitting = false }
         do {
             let response = try await repository.verifyOtp(hash: otpHash, code: otpCode)
             if let token = response.token, !token.isEmpty {
-                withTransition { state = .authenticated }
+                await finishAuthentication()
             } else {
                 self.otpHash = response.hash ?? otpHash
                 authPath.append(AuthRoute.createName)
+                isSubmitting = false
             }
         } catch {
             showOtpError = true
             Haptics.notify(.error)
+            isSubmitting = false
         }
     }
 
@@ -173,31 +183,35 @@ final class AuthStore {
     func completeProfile() async {
         guard isNameValid, let otpHash, !isSubmitting else { return }
         isSubmitting = true
-        defer { isSubmitting = false }
         do {
             try await repository.completeProfile(
                 hash: otpHash,
                 username: displayName.trimmingCharacters(in: .whitespaces)
             )
-            withTransition { state = .authenticated }
+            await finishAuthentication()
         } catch {
             errorMessage = error.localizedDescription
+            isSubmitting = false
         }
     }
 
     // MARK: - Social
 
-    func signInWithApple(idToken: String, username: String?) async {
-        guard !isSubmitting else { return }
-        isSubmitting = true
-        defer { isSubmitting = false }
+    func signInWithSocial(
+        from provider: String,
+        idToken: String,
+        email: String?,
+        username: String?
+    ) async {
         do {
-            let response = try await repository.signInWithApple(
+            let response = try await repository.signInWithSocial(
+                from: provider,
                 idToken: idToken,
+                email: email,
                 username: username
             )
             if let token = response.token, !token.isEmpty {
-                withTransition { state = .authenticated }
+                await finishAuthentication()
             } else if let hash = response.hash {
                 self.otpHash = hash
                 self.displayName = username ?? ""
@@ -208,7 +222,24 @@ final class AuthStore {
         }
     }
 
-    func signInWithGoogle() async {
+    /// Runs `/main/settings` + `/circles/list` + the marker sync *while* the
+    /// user is still looking at the auth screen (its button keeps its
+    /// spinner). Only after bootstrap reports `.ready` do we flip `state` to
+    /// `.authenticated` — RootView then renders MainView directly, with no
+    /// SplashView in between.
+    private func finishAuthentication() async {
+        if let bootstrap, bootstrap.state != .ready {
+            bootstrap.start()
+            // Wait for bootstrap to land on `.ready` by polling — keeps the
+            // store free of Combine boilerplate and works against an
+            // `@Observable` whose changes propagate via the SwiftUI runtime
+            // rather than a publisher we can `.values` on directly.
+            while bootstrap.state != .ready {
+                try? await Task.sleep(for: .milliseconds(40))
+            }
+        }
+        isSubmitting = false
+        withTransition { state = .authenticated }
     }
 
     // MARK: - Navigation helpers

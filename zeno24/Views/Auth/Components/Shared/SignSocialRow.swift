@@ -19,22 +19,27 @@ struct SignSocialRow: View {
             }
 
             SignInWithAppleButton(.continue) { request in
-                request.requestedScopes = [.fullName, .email]
+                SocialSignInLauncher.prepareAppleRequest(request)
             } onCompletion: { result in
-                handleApple(result)
+                SocialSignInLauncher.handleApple(result: result, into: store)
             }
             .signInWithAppleButtonStyle(.white)
             .frame(height: 52)
             .clipShape(RoundedRectangle(cornerRadius: AppSpacing.radiusLarge, style: .continuous))
 
-            Button {
-                Task { await store.signInWithGoogle() }
-            } label: {
-                HStack(spacing: AppSpacing.s) {
-                    Image(systemName: "g.circle.fill")
-                        .font(.system(size: 18))
-                    Text(AppStrings.Auth.Social.continueWithGoogle)
-                        .font(AppTypography.bodyLgSemiBold)
+            Button(action: handleGoogle) {
+                ZStack {
+                    HStack(spacing: AppSpacing.s) {
+                        Image(systemName: "g.circle.fill")
+                            .font(.system(size: 18))
+                        Text(AppStrings.Auth.Social.continueWithGoogle)
+                            .font(AppTypography.bodyLgSemiBold)
+                    }
+                    .opacity(store.isGoogleSubmitting ? 0 : 1)
+
+                    if store.isGoogleSubmitting {
+                        ProgressView().tint(.white)
+                    }
                 }
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
@@ -46,24 +51,12 @@ struct SignSocialRow: View {
                 }
             }
             .buttonStyle(.plain)
+            .disabled(store.isGoogleSubmitting)
         }
         .padding(.horizontal, AppSpacing.l)
     }
 
-    private func handleApple(_ result: Result<ASAuthorization, Error>) {
-        guard case .success(let authorization) = result,
-              let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
-              let identityData = credential.identityToken,
-              let identityToken = String(data: identityData, encoding: .utf8)
-        else { return }
-
-        let name = [credential.fullName?.givenName, credential.fullName?.familyName]
-            .compactMap { $0 }
-            .joined(separator: " ")
-
-        Task {
-            await store.signInWithApple(idToken: identityToken,
-                                        username: name.isEmpty ? nil : name)
-        }
+    private func handleGoogle() {
+        SocialSignInLauncher.launchGoogle(into: store)
     }
 }

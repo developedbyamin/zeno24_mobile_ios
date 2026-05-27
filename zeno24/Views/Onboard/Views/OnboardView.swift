@@ -3,7 +3,6 @@ import SwiftUI
 struct OnboardView: View {
     @Environment(AuthStore.self) private var auth
     @State private var splashVisible: Bool = !Self.hasShownSplash
-    @State private var isActive: Bool = true
 
     private static var hasShownSplash: Bool = false
 
@@ -16,7 +15,7 @@ struct OnboardView: View {
     var body: some View {
         @Bindable var auth = auth
         ZStack {
-            OnboardVideoBackground(isPlaying: isActive)
+            OnboardVideoBackground(isPlaying: true)
 
             OnboardBottomGradient()
 
@@ -32,7 +31,6 @@ struct OnboardView: View {
         .navigationBarBackButtonHidden(true)
         .toolbarBackground(.hidden, for: .navigationBar)
         .onAppear {
-            isActive = true
             if splashVisible {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     splashVisible = false
@@ -40,7 +38,6 @@ struct OnboardView: View {
                 }
             }
         }
-        .onDisappear { isActive = false }
     }
 
     @ViewBuilder

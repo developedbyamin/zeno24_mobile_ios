@@ -20,5 +20,30 @@
 		<string>PlusJakartaSans-SemiBold.ttf</string>
 		<string>PlusJakartaSans-Bold.ttf</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.zenocompany.zeno24</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>zeno24</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.googleusercontent.apps</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1052139532546-lp3d1uvrdrv3fnkfpht9q312udmb3r9s</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDClientID</key>
+	<string>1052139532546-lp3d1uvrdrv3fnkfpht9q312udmb3r9s.apps.googleusercontent.com</string>
 </dict>
 </plist>

@@ -52,6 +52,7 @@ struct SettingsProfileCard: View {
                         .frame(width: 16, height: 16)
                         .foregroundStyle(AppColors.mainBlack)
                 }
+                .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
 

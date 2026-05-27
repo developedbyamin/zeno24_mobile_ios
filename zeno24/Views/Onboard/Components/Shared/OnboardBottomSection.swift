@@ -1,5 +1,4 @@
 import SwiftUI
-import AuthenticationServices
 
 struct OnboardBottomSection: View {
     @Bindable var store: AuthStore
@@ -24,24 +23,22 @@ struct OnboardBottomSection: View {
                 .frame(height: 14)
 
             HStack(spacing: 8) {
-                OnboardSocialButton(provider: .apple) {
-                    triggerApple()
-                }
-                .overlay {
-                    // HIG-required native button hidden on top of the glass
-                    // pill so the visual stays exactly the Figma design.
-                    SignInWithAppleButton(.continue) { request in
-                        request.requestedScopes = [.fullName, .email]
-                    } onCompletion: { result in
-                        handleApple(result)
-                    }
-                    .signInWithAppleButtonStyle(.white)
-                    .clipShape(Capsule())
-                    .opacity(0.001)
+                // Figma's glass pill style — Apple HIG allows custom buttons
+                // as long as they're prominent and use the Apple logo; we
+                // trigger ASAuthorizationController directly so the visible
+                // button can be our SwiftUI control.
+                OnboardSocialButton(
+                    provider: .apple,
+                    isLoading: store.isAppleSubmitting
+                ) {
+                    SocialSignInLauncher.launchApple(into: store)
                 }
 
-                OnboardSocialButton(provider: .google) {
-                    Task { await store.signInWithGoogle() }
+                OnboardSocialButton(
+                    provider: .google,
+                    isLoading: store.isGoogleSubmitting
+                ) {
+                    SocialSignInLauncher.launchGoogle(into: store)
                 }
             }
             .frame(height: 48)
@@ -50,27 +47,5 @@ struct OnboardBottomSection: View {
                 .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity)
-    }
-
-    // MARK: - Apple
-
-    private func triggerApple() {
-    }
-
-    private func handleApple(_ result: Result<ASAuthorization, Error>) {
-        guard case .success(let authorization) = result,
-              let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
-              let identityData = credential.identityToken,
-              let identityToken = String(data: identityData, encoding: .utf8)
-        else { return }
-
-        let name = [credential.fullName?.givenName, credential.fullName?.familyName]
-            .compactMap { $0 }
-            .joined(separator: " ")
-
-        Task {
-            await store.signInWithApple(idToken: identityToken,
-                                        username: name.isEmpty ? nil : name)
-        }
     }
 }

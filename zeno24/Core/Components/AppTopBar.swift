@@ -96,6 +96,7 @@ extension View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        .enableInteractivePopGesture()
     }
 
     /// Chat-screen variant (Figma 5865:7143). Two-line centered header
@@ -125,6 +126,7 @@ extension View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        .enableInteractivePopGesture()
     }
 }
 

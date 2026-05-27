@@ -1,38 +1,33 @@
 import SwiftUI
+import UIKit
 
-/// Recreates the iOS interactive pop gesture. SwiftUI silently
-/// disables it whenever `navigationBarBackButtonHidden(true)` is set,
-/// so screens that hide the native back button need this manually.
-struct SwipeBackGesture: ViewModifier {
-    var onSwipeBack: () -> Void
-    var edgeWidth: CGFloat = 24
-    var minimumDistance: CGFloat = 60
+/// SwiftUI silently disables the `UINavigationController.interactivePopGestureRecognizer`
+/// whenever a route hides the back button (`navigationBarBackButtonHidden(true)` /
+/// `toolbar(.hidden, for: .navigationBar)`). Re-enabling it keeps Apple's
+/// interactive, animated edge-swipe — the screen tracks the finger and snaps
+/// to the dismiss/restore position based on translation/velocity. Using the
+/// native gesture is important because it also keeps the underlying view
+/// rendered during the drag; a SwiftUI offset-based gesture leaves an empty
+/// window background behind the swiped screen.
+struct InteractivePopGestureEnabler: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController { .init() }
 
-    @State private var startedFromEdge = false
-
-    func body(content: Content) -> some View {
-        content
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                    .onChanged { value in
-                        if !startedFromEdge && value.startLocation.x <= edgeWidth {
-                            startedFromEdge = true
-                        }
-                    }
-                    .onEnded { value in
-                        defer { startedFromEdge = false }
-                        guard startedFromEdge,
-                              value.translation.width > minimumDistance,
-                              abs(value.translation.height) < 80
-                        else { return }
-                        onSwipeBack()
-                    }
-            )
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        DispatchQueue.main.async {
+            guard let nav = uiViewController.navigationController else { return }
+            nav.interactivePopGestureRecognizer?.isEnabled = true
+            // Clearing the delegate lets the gesture fire even when the
+            // toolbar is hidden — by default UIKit consults the delegate,
+            // which says "no back button → no swipe".
+            nav.interactivePopGestureRecognizer?.delegate = nil
+        }
     }
 }
 
 extension View {
-    func swipeBackGesture(_ onSwipeBack: @escaping () -> Void) -> some View {
-        modifier(SwipeBackGesture(onSwipeBack: onSwipeBack))
+    /// Restores the native iOS interactive edge-swipe pop gesture on a
+    /// NavigationStack route that hides the system navigation bar.
+    func enableInteractivePopGesture() -> some View {
+        background(InteractivePopGestureEnabler().frame(width: 0, height: 0))
     }
 }

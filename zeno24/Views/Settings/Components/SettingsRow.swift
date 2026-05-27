@@ -32,6 +32,7 @@ struct SettingsRow: View {
                     .frame(width: 14, height: 14)
                     .foregroundStyle(AppColors.mainBlack)
             }
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }

@@ -11,6 +11,13 @@ struct InviteMemberSheet: View {
     var initialQRBase64: String?
     var initialLink: String?
 
+    // BottomSheetContainer presents its content inside a fresh UIHostingController
+    // (UIKit modal), which breaks the SwiftUI environment chain. Capture the
+    // stores at the outer view's level — where the app-level environment is
+    // intact — and forward them explicitly into the sheet content.
+    @Environment(SettingsStore.self) private var settings
+    @Environment(CirclesStore.self) private var circles
+
     var body: some View {
         BottomSheetContainer(
             isPresented: $isPresented,
@@ -24,6 +31,8 @@ struct InviteMemberSheet: View {
                 initialQRBase64: initialQRBase64,
                 initialLink: initialLink
             )
+            .environment(settings)
+            .environment(circles)
         }
     }
 
@@ -49,6 +58,7 @@ private struct InvitePanel: View {
     var initialLink: String?
 
     @Environment(\.dismissBottomSheet) private var dismissBottomSheet
+    @Environment(SettingsStore.self) private var settings
     @State private var inviteCode: String = ""
     @State private var qrBase64: String?
     @State private var shareLink: String?
@@ -133,14 +143,34 @@ private struct InvitePanel: View {
     @ViewBuilder
     private var avatarView: some View {
         if let urlStr = avatarUrl, let url = URL(string: urlStr) {
-            AsyncImage(url: url) { img in
-                img.resizable().scaledToFill()
-            } placeholder: {
-                Color(hex: 0xEDBBD6)
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .success(let img):
+                    img.resizable().scaledToFill()
+                case .empty, .failure:
+                    initialFallback
+                @unknown default:
+                    initialFallback
+                }
             }
         } else {
-            Color(hex: 0xEDBBD6)
+            initialFallback
         }
+    }
+
+    private var initialFallback: some View {
+        ZStack {
+            Circle().fill(Color(hex: 0x0F85EB))
+            Text(userInitial)
+                .font(AppTypography.bodyMdBold)
+                .foregroundStyle(.white)
+        }
+    }
+
+    private var userInitial: String {
+        let source = settings.account?.firstname?.trimmingCharacters(in: .whitespacesAndNewlines)
+            ?? settings.displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        return source.first.map { String($0).uppercased() } ?? "?"
     }
 
     // MARK: - Divider row
@@ -242,7 +272,7 @@ private struct InvitePanel: View {
         if let initialCode, !initialCode.isEmpty {
             inviteCode = initialCode
             qrBase64 = initialQRBase64
-            shareLink = initialLink
+            shareLink = resolveShareLink(backendLink: initialLink, qrBase64: initialQRBase64)
             isLoading = false
             return
         }
@@ -251,13 +281,60 @@ private struct InvitePanel: View {
             let response = try await invite(circleId)
             inviteCode = response.code ?? ""
             qrBase64 = response.qr
-            shareLink = response.link
+            shareLink = resolveShareLink(backendLink: response.link, qrBase64: response.qr)
             isLoading = false
         } catch {
             OverlayHelper.shared.showFailure(error)
             isLoading = false
             dismiss()
         }
+    }
+
+    /// Backend stopped returning the `link` field but still embeds the real
+    /// universal link inside the QR PNG. Decode it so the share sheet posts
+    /// the same link the QR scanner would surface. If the QR payload is just
+    /// the bare code (not a URL), the caller falls back to constructing one.
+    private func resolveShareLink(backendLink: String?, qrBase64: String?) -> String? {
+        if let backendLink, !backendLink.isEmpty { return backendLink }
+        if let qrBase64,
+           let image = imageFromBase64(qrBase64),
+           let payload = Self.decodeQRString(from: image),
+           Self.looksLikeURL(payload) {
+            return payload
+        }
+        return nil
+    }
+
+    private static func looksLikeURL(_ value: String) -> Bool {
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        return trimmed.hasPrefix("http://")
+            || trimmed.hasPrefix("https://")
+            || trimmed.hasPrefix("zeno24://")
+    }
+
+    private static func decodeQRString(from image: UIImage) -> String? {
+        guard let cg = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cg)
+        let detector = CIDetector(
+            ofType: CIDetectorTypeQRCode,
+            context: CIContext(options: nil),
+            options: [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+        )
+        // Try original then upscaled — small QR PNGs sometimes need additional
+        // pixels for the detector to lock onto the finder patterns.
+        let candidates: [CIImage] = [
+            ciImage,
+            ciImage.transformed(by: CGAffineTransform(scaleX: 4, y: 4)),
+        ]
+        for candidate in candidates {
+            let features = detector?.features(in: candidate) ?? []
+            for case let feature as CIQRCodeFeature in features {
+                if let message = feature.messageString, !message.isEmpty {
+                    return message
+                }
+            }
+        }
+        return nil
     }
 
     private func handleCodeTap() {
@@ -279,11 +356,15 @@ private struct InvitePanel: View {
     private func handleSendInvite() {
         guard !isLoading else { return }
         let code = inviteCode
-        if let link = shareLink, !link.isEmpty {
-            presentShareSheet(text: shareMessage(link: link, code: code))
-        } else {
-            dismiss()
-        }
+        let link = (shareLink?.isEmpty == false ? shareLink! : Self.buildInviteLink(code: code))
+        let message = shareMessage(link: link, code: code)
+        Self.presentShareSheet(text: message)
+    }
+
+    private static func buildInviteLink(code: String) -> String {
+        let cleaned = code.filter { !$0.isWhitespace && $0 != "-" }
+        guard !cleaned.isEmpty else { return "" }
+        return "https://zeno24.com/api/join?code=\(cleaned)"
     }
 
     private func dismiss() {
@@ -292,27 +373,41 @@ private struct InvitePanel: View {
     }
 
     private func shareMessage(link: String, code: String) -> String {
-        "Join my circle on Zeno24. Use code \(code) or open \(link)"
-    }
-
-    private func presentShareSheet(text: String) {
-        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let root = scene.keyWindow?.rootViewController else { return }
-        let topMost = topMostController(root)
-        let activity = UIActivityViewController(activityItems: [text], applicationActivities: nil)
-        if let popover = activity.popoverPresentationController {
-            popover.sourceView = topMost.view
-            popover.sourceRect = CGRect(x: topMost.view.bounds.midX,
-                                        y: topMost.view.bounds.midY,
-                                        width: 0, height: 0)
-            popover.permittedArrowDirections = []
+        if link.isEmpty {
+            return "Join my circle on Zeno24. Use code \(code)"
         }
-        topMost.present(activity, animated: true)
+        return "Join my circle on Zeno24. Use code \(code) or open \(link)"
     }
 
-    private func topMostController(_ base: UIViewController) -> UIViewController {
-        if let presented = base.presentedViewController { return topMostController(presented) }
-        return base
+    private static func presentShareSheet(text: String) {
+        // Present the share sheet on top of the bottom sheet without
+        // dismissing it. `topMostController()` walks the `presentedViewController`
+        // chain so the activity controller is presented from the bottom
+        // sheet's own card container.
+        DispatchQueue.main.async {
+            guard let topMost = topMostController() else { return }
+            let activity = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+            if let popover = activity.popoverPresentationController {
+                popover.sourceView = topMost.view
+                popover.sourceRect = CGRect(x: topMost.view.bounds.midX,
+                                            y: topMost.view.bounds.midY,
+                                            width: 0, height: 0)
+                popover.permittedArrowDirections = []
+            }
+            topMost.present(activity, animated: true)
+        }
+    }
+
+    private static func topMostController() -> UIViewController? {
+        let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+        let scene = scenes.first(where: { $0.activationState == .foregroundActive }) ?? scenes.first
+        guard let scene else { return nil }
+        let window = scene.windows.first(where: \.isKeyWindow) ?? scene.windows.first
+        guard var top = window?.rootViewController else { return nil }
+        while let presented = top.presentedViewController, !presented.isBeingDismissed {
+            top = presented
+        }
+        return top
     }
 
     // MARK: - Helpers

@@ -39,7 +39,8 @@ struct BottomSheetContainer<Content, Fill>: View where Content: View, Fill: Shap
                     )
             )
         }
-        .frame(width: 0, height: 0)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .allowsHitTesting(false)
     }
 }
 
@@ -109,18 +110,9 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
     }
 
     final class Coordinator {
-        // Strong reference — without it the freshly-built card is
-        // deallocated before the deferred `present(_:animated:)` call
-        // (`DispatchQueue.main.async`) ever runs, and the modal silently
-        // never appears.
         private var presentedVC: BottomSheetCardContainerVC?
-        // Latches once a dismiss is initiated and clears only when SwiftUI
-        // settles the binding back to `false`. Without it, a SwiftUI
-        // re-render that lands while the card is mid-dismiss would see
-        // `presentedVC == nil` + `isPresented == true` and re-present the
-        // sheet (this is exactly what made the role sheet's back button
-        // appear to "reopen" itself).
         private var isDismissing = false
+        private var hasConsumedPresentation = false
 
         func sync(
             isPresented: Bool,
@@ -130,7 +122,7 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
             onDismissed: @escaping () -> Void
         ) {
             if isPresented {
-                if presentedVC != nil || isDismissing { return }
+                if presentedVC != nil || isDismissing || hasConsumedPresentation { return }
 
                 let dismissAction = BottomSheetDismissAction { [weak self] completion in
                     guard let self, let card = self.presentedVC else {
@@ -138,6 +130,7 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
                         return
                     }
                     self.isDismissing = true
+                    self.hasConsumedPresentation = true
                     card.animatedDismiss(completion: completion)
                 }
                 let rootView = buildContent(dismissAction)
@@ -152,6 +145,7 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
                 )
                 card.onDismissed = { [weak self] in
                     self?.presentedVC = nil
+                    self?.hasConsumedPresentation = true
                     onDismissed()
                 }
                 presentedVC = card
@@ -163,6 +157,7 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
                 card.animatedDismiss()
             } else {
                 isDismissing = false
+                hasConsumedPresentation = false
             }
         }
 
@@ -174,14 +169,6 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
             isDismissing = false
         }
 
-        // SwiftUI can run `updateUIViewController` before the host view
-        // is attached to a window. Scene-based lookup + retry survives
-        // that race so the modal actually appears.
-        //
-        // Additionally retries while the topmost presenter is mid-
-        // dismiss/present — without this, the follow-on invite sheet
-        // could land on a still-dismissing role card and end up nested
-        // inside it.
         private static func present(card: BottomSheetCardContainerVC, attempts: Int) {
             DispatchQueue.main.async {
                 if let presenter = topmostPresenter(),
@@ -208,10 +195,6 @@ private struct _BottomSheetPresenter: UIViewControllerRepresentable {
                 ?? scene.windows.first
             guard let window else { return nil }
             var top = window.rootViewController
-            // Walk past any VC currently being dismissed — its
-            // `presentedViewController` link is still set even though it
-            // will momentarily be gone, and presenting onto it would
-            // anchor the new modal beneath the old one.
             while let presented = top?.presentedViewController,
                   !presented.isBeingDismissed {
                 top = presented
@@ -302,8 +285,6 @@ final class BottomSheetCardContainerVC: UIViewController {
         ])
 
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-        // Don't steal touches from SwiftUI buttons inside the card — let
-        // taps reach them, and only intercept once a real drag starts.
         pan.cancelsTouchesInView = false
         card.addGestureRecognizer(pan)
     }
@@ -366,9 +347,6 @@ final class BottomSheetCardContainerVC: UIViewController {
     }
 
     func animatedDismiss(completion: @escaping () -> Void = {}) {
-        // Guard against double-dismiss (e.g. drag-end + button tap landing
-        // in the same runloop). Without it, two parallel UIView.animate
-        // calls fight over the constraint and the card visibly bounces.
         guard !isDismissing else {
             completion()
             return
@@ -399,8 +377,6 @@ final class BottomSheetCardContainerVC: UIViewController {
 }
 
 // MARK: - UIHostingController safe-area override
-// Allows the hosted SwiftUI content's `ignoresSafeArea` declarations to
-// extend past the device safe area inside the card.
 
 private extension UIHostingController {
     var _disableSafeArea: Bool {

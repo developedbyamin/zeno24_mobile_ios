@@ -37,16 +37,34 @@ final class AuthRepository {
 
     // MARK: - Social
 
-    func signInWithApple(idToken: String, username: String?) async throws -> SignStep2ResponseModel {
-        let step1 = try await service.signStep1(.init(
-            from: "apple",
+    /// Mirrors the Flutter contract for `/auth/sign/step1` social sign-in:
+    /// `from` is `"apple"` or `"google"`, `id_token` is the **Firebase** ID
+    /// token (not the raw Apple/Google one — Flutter wraps the credential in
+    /// Firebase first), plus `email`, `username`, and a hard-coded
+    /// `country_id` of 1 to match the Flutter payload exactly.
+    func signInWithSocial(
+        from: String,
+        idToken: String,
+        email: String?,
+        username: String?
+    ) async throws -> SignStep2ResponseModel {
+        let step1Response = try await service.signStep1(.init(
+            from: from,
+            email: email,
+            countryId: 1,
             idToken: idToken,
             username: username
         ))
-        guard let hash = step1.data?.hash else { throw APIError.invalidResponse }
-        let response = try await service.signStep2(.init(hash: hash, code: ""))
-        if let token = response.token { tokens.accessToken = token }
-        return SignStep2ResponseModel(token: response.token, hash: response.data?.hash)
+        // Some social sign-ins authenticate directly on step1 (Flutter checks
+        // `response.token` here, not `data.hash`). Handle both shapes.
+        if let token = step1Response.token, !token.isEmpty {
+            tokens.accessToken = token
+            return SignStep2ResponseModel(token: token, hash: nil)
+        }
+        guard let hash = step1Response.data?.hash else { throw APIError.invalidResponse }
+        let step2 = try await service.signStep2(.init(hash: hash, code: ""))
+        if let token = step2.token { tokens.accessToken = token }
+        return SignStep2ResponseModel(token: step2.token, hash: step2.data?.hash)
     }
 
     // MARK: - Logout

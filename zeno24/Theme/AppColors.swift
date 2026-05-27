@@ -27,6 +27,11 @@ enum AppColors {
     static let glassStroke    = Color.white.opacity(0.4)
     static let glassHighlight = Color.white.opacity(0.06)
 
+    // MARK: Neutral surfaces & text
+    static let surfaceMuted = Color(hex: 0xF2F5F9)   // Soft gray card / badge fill
+    static let textMuted    = Color(hex: 0x8B98A8)   // Secondary label colour
+    static let warningSoft  = Color(hex: 0xFAB923)   // Used on incorrect-code badge
+
     // MARK: Legacy aliases (kept until callers migrate to `AppTheme`)
     static let primary     = brand
     static let primaryDark = brandDeep
