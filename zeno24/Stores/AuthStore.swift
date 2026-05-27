@@ -27,6 +27,13 @@ final class AuthStore {
     var otpHash: String?
     var otpResendNonce: Int = 0
     var showOtpError: Bool = false
+    /// Drives the OTP screen header copy: returning users get
+    /// "Welcome back!", first-time users get "Enter the code sent to ...".
+    /// `nil` (e.g. legacy responses) is treated as returning.
+    var isRegistered: Bool = true
+    /// Masked contact string from step1 (`a****ay@gmail.com`). Shown
+    /// underneath the OTP header for first-time users.
+    var maskedContact: String?
 
     // MARK: - Create name
     var displayName: String = ""
@@ -133,6 +140,8 @@ final class AuthStore {
             lastSignStep1Request = request
             let response = try await repository.signStep1(request)
             otpHash = response.hash
+            isRegistered = (response.isRegistered ?? 1) == 1
+            maskedContact = response.text
             otpResendNonce += 1
             authPath.append(AuthRoute.otp)
         } catch {
@@ -147,6 +156,8 @@ final class AuthStore {
         do {
             let response = try await repository.signStep1(request)
             if let hash = response.hash { otpHash = hash }
+            if let registered = response.isRegistered { isRegistered = registered == 1 }
+            if let masked = response.text { maskedContact = masked }
             otpCode = ""
             showOtpError = false
             otpResendNonce += 1

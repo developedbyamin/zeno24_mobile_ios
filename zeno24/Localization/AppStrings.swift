@@ -102,6 +102,14 @@ enum AppStrings {
             static var checkYourWhatsapp: String {
                 String(localized: "auth.otp.check_whatsapp", defaultValue: "Check your WhatsApp")
             }
+            static var enterCodeSentTo: String {
+                String(localized: "auth.otp.enter_code_sent_to",
+                       defaultValue: "Enter the code sent to")
+            }
+            static var codeSentToWhatsapp: String {
+                String(localized: "auth.otp.code_sent_to_whatsapp",
+                       defaultValue: "Code sent to WhatsApp")
+            }
             static var incorrect: String {
                 String(localized: "auth.otp.incorrect",
                        defaultValue: "Incorrect verification code")

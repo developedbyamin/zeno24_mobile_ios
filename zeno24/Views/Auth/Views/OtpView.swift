@@ -16,7 +16,13 @@ struct OtpView: View {
 
                 Spacer().frame(height: 20)
 
-                OtpVerificationHeader(channel: store.lastOtpChannel)
+                OtpVerificationHeader(
+                    channel: store.lastOtpChannel,
+                    isRegistered: store.isRegistered,
+                    maskedContact: store.maskedContact,
+                    formattedContact: store.contactDisplay,
+                    rawEmail: store.email
+                )
 
                 Spacer().frame(height: 24)
 

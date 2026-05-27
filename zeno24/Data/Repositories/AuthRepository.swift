@@ -13,7 +13,7 @@ final class AuthRepository {
 
     func signStep1(_ request: SignStep1RequestModel) async throws -> SignStep1ResponseModel {
         let response = try await service.signStep1(request)
-        return response.data ?? SignStep1ResponseModel(hash: nil, text: nil)
+        return response.data ?? SignStep1ResponseModel(hash: nil, text: nil, isRegistered: nil)
     }
 
     // MARK: - Step 2
