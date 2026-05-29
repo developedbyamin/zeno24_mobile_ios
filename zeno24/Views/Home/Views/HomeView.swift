@@ -6,26 +6,9 @@ struct HomeView: View {
     @Environment(CirclesStore.self) private var circles
     @Environment(MarkersStore.self) private var markers
     @State private var home = HomeStore()
+    @State private var sheetMetrics = HomeSheetMetrics()
     @State private var mapType: HomeMapType = .auto
     @State private var showMapTypePicker = false
-    @State private var sheetTopY: CGFloat = 0
-    @State private var normalizedSheetOffset: CGFloat = 0
-    
-    private var topBarOpacity: CGFloat {
-        if normalizedSheetOffset <= 0.5 {
-            return 1.0
-        } else {
-            return max(0, 1.0 - (normalizedSheetOffset - 0.5) * 2)
-        }
-    }
-
-    private var topBarScale: CGFloat {
-        if normalizedSheetOffset <= 0.5 {
-            return 1.0
-        } else {
-            return 1.0 + (normalizedSheetOffset - 0.5) * 0.3
-        }
-    }
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -37,8 +20,7 @@ struct HomeView: View {
 
             HomeTopBar(
                 circleTitle: circles.selectedCircle?.name ?? AppStrings.Home.panelTitle,
-                opacity: topBarOpacity,
-                scale: topBarScale,
+                metrics: sheetMetrics,
                 onSettings:     { router.push(.settings) },
                 onCircle:       { openCirclePicker() },
                 onNotification: { router.push(.notifications) },
@@ -46,16 +28,16 @@ struct HomeView: View {
             )
 
             HomeSideActions(
-                sheetTopY: sheetTopY,
-                normalizedOffset: normalizedSheetOffset,
+                metrics: sheetMetrics,
                 onMapType: { showMapTypePicker = true },
                 onZoomSelf: { }
             )
 
-            HomeBottomPanel(store: home, members: markers.markers) { topY, normalized in
-                sheetTopY = topY
-                normalizedSheetOffset = normalized
-            }
+            HomeBottomPanel(
+                store: home,
+                members: markers.markers,
+                metrics: sheetMetrics
+            )
 
             if showMapTypePicker {
                 HomeMapTypePicker(isPresented: $showMapTypePicker, selected: $mapType)

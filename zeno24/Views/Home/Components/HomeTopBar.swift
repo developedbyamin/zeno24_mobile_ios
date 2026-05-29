@@ -2,12 +2,21 @@ import SwiftUI
 
 struct HomeTopBar: View {
     let circleTitle: String
-    var opacity: CGFloat = 1.0
-    var scale: CGFloat = 1.0
+    let metrics: HomeSheetMetrics
     var onSettings: (() -> Void)? = nil
     var onCircle: (() -> Void)? = nil
     var onNotification: (() -> Void)? = nil
     var onChat: (() -> Void)? = nil
+
+    private var opacity: CGFloat {
+        let n = metrics.normalized
+        return n <= 0.5 ? 1.0 : max(0, 1.0 - (n - 0.5) * 2)
+    }
+
+    private var scale: CGFloat {
+        let n = metrics.normalized
+        return n <= 0.5 ? 1.0 : 1.0 + (n - 0.5) * 0.3
+    }
 
     var body: some View {
         HStack(alignment: .top, spacing: 4) {

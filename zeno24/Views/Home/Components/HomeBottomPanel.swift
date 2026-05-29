@@ -3,7 +3,7 @@ import SwiftUI
 struct HomeBottomPanel: View {
     let store: HomeStore
     let members: [MarkerModel]
-    var onSheetOffset: ((_ sheetTopY: CGFloat, _ normalized: CGFloat) -> Void)? = nil
+    let metrics: HomeSheetMetrics
 
     @State private var vm = HomeBottomPanelViewModel()
     @Environment(\.tabBarHeight) private var tabBarHeight
@@ -25,16 +25,19 @@ struct HomeBottomPanel: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .offset(y: liveY)
                 .gesture(unifiedGesture(height: height, cardHeight: visibleCardHeight))
-                .onChange(of: liveY) { oldValue, newValue in
-                    guard abs(newValue - oldValue) > 0.5 else { return }
-                    onSheetOffset?(newValue, normalized)
+                .onChange(of: liveY) { _, newValue in
+                    if abs(newValue - metrics.topY) > 0.5 {
+                        metrics.topY = newValue
+                    }
                 }
-                .onChange(of: normalized) { oldValue, newValue in
-                    guard abs(newValue - oldValue) > 0.01 else { return }
-                    onSheetOffset?(liveY, newValue)
+                .onChange(of: normalized) { _, newValue in
+                    if abs(newValue - metrics.normalized) > 0.01 {
+                        metrics.normalized = newValue
+                    }
                 }
                 .onAppear {
-                    onSheetOffset?(liveY, normalized)
+                    metrics.topY = liveY
+                    metrics.normalized = normalized
                 }
         }
         .background(
@@ -140,7 +143,7 @@ struct HomeBottomPanel: View {
     // MARK: - Gesture
 
     private func unifiedGesture(height: CGFloat, cardHeight: CGFloat) -> some Gesture {
-        DragGesture(minimumDistance: 0)
+        DragGesture(minimumDistance: 2)
             .onChanged { value in
                 let delta = value.translation.height - vm.lastTranslation
                 vm.lastTranslation = value.translation.height
@@ -194,6 +197,15 @@ private struct SectionAnchorKey: PreferenceKey {
                        nextValue: () -> [HomeBottomSection: CGFloat]) {
         value.merge(nextValue()) { _, new in new }
     }
+}
+
+// MARK: - Sheet metrics
+
+@MainActor
+@Observable
+final class HomeSheetMetrics {
+    var topY: CGFloat = 0
+    var normalized: CGFloat = 0
 }
 
 // MARK: - Models

@@ -1,8 +1,7 @@
 import SwiftUI
 
 struct HomeSideActions: View {
-    let sheetTopY: CGFloat
-    let normalizedOffset: CGFloat
+    let metrics: HomeSheetMetrics
     var onMapType: (() -> Void)? = nil
     var onZoomSelf: (() -> Void)? = nil
 
@@ -10,7 +9,7 @@ struct HomeSideActions: View {
     private let gap: CGFloat = 16
     private let trailingPadding: CGFloat = 16
 
-    private var isHidden: Bool { normalizedOffset > 0.5 }
+    private var isHidden: Bool { metrics.normalized > 0.5 }
 
     var body: some View {
         GeometryReader { proxy in
@@ -21,11 +20,10 @@ struct HomeSideActions: View {
             .frame(width: 40)
             .position(
                 x: proxy.size.width - trailingPadding - 20,
-                y: sheetTopY - gap - buttonStackHeight / 2
+                y: metrics.topY - gap - buttonStackHeight / 2
             )
             .opacity(isHidden ? 0 : 1)
             .allowsHitTesting(!isHidden)
-            .animation(.spring(response: 0.3, dampingFraction: 0.85), value: sheetTopY)
             .animation(.easeInOut(duration: 0.2), value: isHidden)
         }
     }
